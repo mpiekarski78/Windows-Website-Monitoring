@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Power On Button.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,6 +47,15 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="t2tWinFormAppBarLib, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\tip2tail.WinFormAppBarLib.1.1.1\lib\net46\t2tWinFormAppBarLib.dll</HintPath>
+    </Reference>
+    <Reference Include="VirtualDesktop, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VirtualDesktop.1.0.3\lib\net46\VirtualDesktop.dll</HintPath>
+    </Reference>
+    <Reference Include="VirtualDesktop.WinForms, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VirtualDesktop.WinForms.1.0.3\lib\net46\VirtualDesktop.WinForms.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Form1.cs">
@@ -76,6 +88,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -96,7 +109,9 @@
     <None Include="Resources\61685.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Power On Button.ico" />
     <Content Include="Resources\data.txt" />
+    <Content Include="Resources\Power On Button.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

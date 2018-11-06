@@ -28,13 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.titleText = new System.Windows.Forms.Label();
             this.labelStatusOverview = new System.Windows.Forms.Label();
             this.pictureBoxConfiguration = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
+            this.listViewMain = new System.Windows.Forms.ListView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxConfiguration)).BeginInit();
+            this.flowLayoutPanel.SuspendLayout();
             this.tableLayoutPanelMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,6 +87,7 @@
             // flowLayoutPanel
             // 
             this.tableLayoutPanelMain.SetColumnSpan(this.flowLayoutPanel, 2);
+            this.flowLayoutPanel.Controls.Add(this.listViewMain);
             this.flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel.Location = new System.Drawing.Point(0, 85);
             this.flowLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -112,6 +116,16 @@
             this.tableLayoutPanelMain.Size = new System.Drawing.Size(250, 795);
             this.tableLayoutPanelMain.TabIndex = 4;
             // 
+            // listViewMain
+            // 
+            this.listViewMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listViewMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.listViewMain.Location = new System.Drawing.Point(3, 3);
+            this.listViewMain.Name = "listViewMain";
+            this.listViewMain.Size = new System.Drawing.Size(247, 249);
+            this.listViewMain.TabIndex = 0;
+            this.listViewMain.UseCompatibleStateImageBehavior = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -121,11 +135,15 @@
             this.Controls.Add(this.tableLayoutPanelMain);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.Text = "Website Monitoring";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxConfiguration)).EndInit();
+            this.flowLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanelMain.ResumeLayout(false);
             this.tableLayoutPanelMain.PerformLayout();
             this.ResumeLayout(false);
@@ -139,6 +157,7 @@
         private System.Windows.Forms.PictureBox pictureBoxConfiguration;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
+        private System.Windows.Forms.ListView listViewMain;
     }
 }
 

@@ -19,6 +19,9 @@ namespace Windows_Website_Monitoring
         private readonly string _filePath = string.Empty;
         private List<string> removedUrls = new List<string>();
 
+        
+
+
         Form originalForm;
         public Form2(Form incomingForm, string filePath)
         {
@@ -31,7 +34,7 @@ namespace Windows_Website_Monitoring
         //zamykanie okineka przez kliknięcie na image (na dole strony po prawej stronie)
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(originalForm);
+            //Console.WriteLine(originalForm);
             //update Form1 
             foreach (var removedUrl in removedUrls) {
                 originalForm.Controls.Find("flowLayoutPanel", true).First().Controls.RemoveByKey($"txtUrl{removedUrl}");
@@ -78,17 +81,27 @@ namespace Windows_Website_Monitoring
         //Kliknięcie w przycisk "Add" powoduje dodanie pozycji z pól (textBox) textBoxNewUrl i textBoxWebsiteName
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            add(textBoxNewUrl.Text, textBoxWebsiteName.Text);
 
-            //zapisywanie do pliku
-            using (StreamWriter w = File.AppendText(_filePath))
+            if (Uri.IsWellFormedUriString(textBoxNewUrl.Text, UriKind.Absolute))
             {
-                w.WriteLine(textBoxNewUrl.Text + "#" + textBoxWebsiteName.Text);
+
+                add(textBoxNewUrl.Text, textBoxWebsiteName.Text);
+
+                //zapisywanie do pliku
+                using (StreamWriter w = File.AppendText(_filePath))
+                {
+                    w.WriteLine(textBoxNewUrl.Text + "#" + textBoxWebsiteName.Text);
+                }
+                //wyczyszczenie pól
+                textBoxNewUrl.Text = "";
+                textBoxWebsiteName.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Incorrect URL. Please verify the URL and try again.",  "Error");
             }
 
-            //wyczyszczenie pól
-            textBoxNewUrl.Text = "";
-            textBoxWebsiteName.Text = "";
+        
         }
 
         //usuwanie pozycji po kliknięciu "Remove selected"
@@ -100,8 +113,8 @@ namespace Windows_Website_Monitoring
                 //usuwanie z pliku
                 RemoveLineFromTxtFile(listView1.SelectedItems[0].Text.ToString() + "#" + listView1.SelectedItems[0].SubItems[1].Text.ToString(), _filePath);
 
-                Console.WriteLine(listView1.SelectedItems[0].Text.ToString());
-                Console.WriteLine(listView1.SelectedItems[0].SubItems[1].Text.ToString());
+                // Console.WriteLine(listView1.SelectedItems[0].Text.ToString());
+                // Console.WriteLine(listView1.SelectedItems[0].SubItems[1].Text.ToString());
 
                 //usuwanie z boxa
                 listView1.SelectedItems[0].Remove();
