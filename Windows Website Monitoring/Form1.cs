@@ -8,7 +8,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Globalization;
+using System.Threading;
 
 //Formularz (Form1) - głowny form - strona głowna
 namespace Windows_Website_Monitoring
@@ -30,23 +31,23 @@ namespace Windows_Website_Monitoring
         // Form1 Load
         private void Form1_Load(object sender, EventArgs e)
         {
-
-
             bool urlStatus;
 
             int urlLocX = 10; //pozycja URLS 
             int statusesLocX = 180; //pozycja Statuses
             int urlLocY = 30; //przerwy pomiędzy liniami
 
+
+            CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+            TextInfo textInfo = cultureInfo.TextInfo;
+
             //wczytywanie z pliku
             string[] lines = System.IO.File.ReadAllLines(_filePath);
-
 
             // string[] urlList = { "http://www.google.com", "http://safdasd.dds", "http://edisonproperties.com" };
 
             List<string> urlList = new List<string>();
 
-                       
             if (lines.Length > 0)
              {
                 int i = 0;
@@ -61,26 +62,16 @@ namespace Windows_Website_Monitoring
                 }
             }
 
+            List<Label> labelsURL = new List<Label>();
+            List<Label> labelsStatus = new List<Label>();
 
-            int n = 0;
-            foreach (string url in urlList)
-            {
-                n += 1;
-            }
-            
-
-            Label[] labelsURL = new Label[n];
-            Label[] labelsStatus = new Label[n];
-
-
-
-            for (int i = 0; i < n; i++)
+            foreach (var url in urlList)
             {
                 //checking websites
+                var i = urlList.IndexOf(url);
+                Console.WriteLine(url);
 
-                Console.WriteLine(urlList[i]);
-
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlList[i]);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Timeout = 15000;
                 request.Method = "HEAD"; 
                 try
@@ -95,41 +86,44 @@ namespace Windows_Website_Monitoring
                     urlStatus = false;
                 }
 
+                // URLS   
+                var labelUrl = new Label();
 
-                // URLS    
-                labelsURL[i] = new Label();
-                labelsURL[i].Top = 100 + (urlLocY * i); // umiejscowienie
-                labelsURL[i].Left = urlLocX; // umiejscowienie
-                labelsURL[i].Font = new Font("Century Gothic", 10, FontStyle.Regular);  //font i rozmiar
-                labelsURL[i].Width = 170;
-                labelsURL[i].Text  = (i+1).ToString() + "."  + urlList[i]; // Text
+                labelUrl.Name = $"txtUrl{textInfo.ToTitleCase(url.Split('#')[1])}";
+                labelUrl.Top = 100 + (urlLocY * i); // umiejscowienie
+                labelUrl.Left = urlLocX; // umiejscowienie
+                labelUrl.Font = new Font("Century Gothic", 10, FontStyle.Regular);  //font i rozmiar
+                labelUrl.Width = 170;
+                labelUrl.Text  = (i+1).ToString() + "."  + url; // Text
+
+                labelsURL.Add(labelUrl);
 
                 // Statuses
-                labelsStatus[i] = new Label();
-                labelsStatus[i].Top = 100 + (urlLocY * i); // umiejscowienie
-                labelsStatus[i].Left = statusesLocX; // umiejscowienie
-                labelsStatus[i].Font = new Font("Century Gothic", 10, FontStyle.Regular);  //font i rozmiar
-                labelsStatus[i].Width = 60;
-                
-                labelsStatus[i].ForeColor = Color.White;
+                var labelStatus = new Label();
+
+                labelStatus.Name = $"txtStatus{textInfo.ToTitleCase(url.Split('#')[1])}";
+                labelStatus.Top = 100 + (urlLocY * i); // umiejscowienie
+                labelStatus.Left = statusesLocX; // umiejscowienie
+                labelStatus.Font = new Font("Century Gothic", 10, FontStyle.Regular);  //font i rozmiar
+                labelStatus.Width = 60;
+
+                labelStatus.ForeColor = Color.White;
                 if (urlStatus == true)
                 {
-                    labelsStatus[i].BackColor = Color.ForestGreen;
-                    labelsStatus[i].Text = "Online"; // Text
+                    labelStatus.BackColor = Color.ForestGreen;
+                    labelStatus.Text = "Online"; // Text
                 }
                 else
                 {
-                    labelsStatus[i].BackColor = Color.Red;
-                    labelsStatus[i].Text = "Error!"; // Text
+                    labelStatus.BackColor = Color.Red;
+                    labelStatus.Text = "Error!"; // Text
                 }
+
+                labelsStatus.Add(labelStatus);
             }
 
-            
-            for (int i = 0; i < n; i++)
-            {
-                this.Controls.Add(labelsURL[i]);
-                this.Controls.Add(labelsStatus[i]);
-            }
+            this.Controls.AddRange(labelsURL.ToArray());
+            this.Controls.AddRange(labelsStatus.ToArray());
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -137,16 +131,11 @@ namespace Windows_Website_Monitoring
 
         }
 
-
         //kliknięcie w obrazek (opcje) powoduje otwarcie nowego okna Form2
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             Form2 f2 = new Form2(this, _filePath);
             f2.Show(); // Shows Form2
         }
-
-  
-
-
     }
 }

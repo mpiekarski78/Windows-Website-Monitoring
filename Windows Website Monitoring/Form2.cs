@@ -14,10 +14,10 @@ using System.Windows.Forms;
 
 namespace Windows_Website_Monitoring
 {
-
     public partial class Form2 : Form
     {
         private readonly string _filePath = string.Empty;
+        private List<string> removedUrls = new List<string>();
 
         Form originalForm;
         public Form2(Form incomingForm, string filePath)
@@ -33,20 +33,18 @@ namespace Windows_Website_Monitoring
         {
             Console.WriteLine(originalForm);
             //update Form1 
-            //originalForm.Controls.Clear(); //czysci Form1 i.. tyle
-            //Fucking nie działa..
+            foreach (var removedUrl in removedUrls) {
+                originalForm.Controls.RemoveByKey($"txtUrl{removedUrl}");
+                originalForm.Controls.RemoveByKey($"txtStatus{removedUrl}");
+            }
             this.Close();
-
         }
 
         //Load Form2
         private void Form2_Load(object sender, EventArgs e)
         {
-            
-
             listView1.View = View.Details;
             listView1.FullRowSelect = true; //kliknięcie zaznacza wszystkie pozycje w danej lini (nie tylko jedną)
-
 
             //add columns
             listView1.Columns.Add("Website URL",200);
@@ -65,7 +63,6 @@ namespace Windows_Website_Monitoring
                     }
                 }
             }
-
         }
 
         //add rows - nowa metoda do dodawania nowych pozycji URL + name
@@ -76,32 +73,23 @@ namespace Windows_Website_Monitoring
 
 
             listView1.Items.Add(item);
-
-       
-
-
         }
 
         //Kliknięcie w przycisk "Add" powoduje dodanie pozycji z pól (textBox) textBoxNewUrl i textBoxWebsiteName
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             add(textBoxNewUrl.Text, textBoxWebsiteName.Text);
-         
 
             //zapisywanie do pliku
             using (StreamWriter w = File.AppendText(_filePath))
             {
-
                 w.WriteLine(textBoxNewUrl.Text + "#" + textBoxWebsiteName.Text);
             }
-
 
             //wyczyszczenie pól
             textBoxNewUrl.Text = "";
             textBoxWebsiteName.Text = "";
-
         }
-
 
         //usuwanie pozycji po kliknięciu "Remove selected"
         private void buttonRemove_Click(object sender, EventArgs e)
@@ -110,6 +98,8 @@ namespace Windows_Website_Monitoring
             {
                 if (listView1.Items[i].Selected)
                 {
+                    removedUrls.Add(listView1.Items[i].SubItems[1].Text.ToString());
+
                     //usuwanie z pliku
                     RemoveLineFromTxtFile(listView1.Items[i].Text.ToString() + "#" + listView1.Items[i].SubItems[1].Text.ToString(), _filePath);
                     
@@ -118,7 +108,6 @@ namespace Windows_Website_Monitoring
 
                     //usuwanie z boxa
                     listView1.Items[i].Remove();
-                    
                 }
             }
         }
@@ -147,8 +136,5 @@ namespace Windows_Website_Monitoring
                 sw.Close();
             }
         }
-
-
-
     }
 }
