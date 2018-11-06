@@ -29,7 +29,7 @@ namespace Windows_Website_Monitoring
         {
             Console.WriteLine(originalForm);
             //update Form1 
-            originalForm.Controls.Clear(); //czysci Form1 i.. tyle
+            //originalForm.Controls.Clear(); //czysci Form1 i.. tyle
             //Fucking nie działa..
             this.Close();
 
