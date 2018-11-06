@@ -94,21 +94,17 @@ namespace Windows_Website_Monitoring
         //usuwanie pozycji po kliknięciu "Remove selected"
         private void buttonRemove_Click(object sender, EventArgs e)
         {
-            for (int i = listView1.Items.Count - 1; i >= 0; i--)
-            {
-                if (listView1.Items[i].Selected)
-                {
-                    removedUrls.Add(listView1.Items[i].SubItems[1].Text.ToString());
+            if (listView1.SelectedItems.Count == 1) {
+                removedUrls.Add(listView1.SelectedItems[0].SubItems[1].Text.ToString());
 
-                    //usuwanie z pliku
-                    RemoveLineFromTxtFile(listView1.Items[i].Text.ToString() + "#" + listView1.Items[i].SubItems[1].Text.ToString(), _filePath);
-                    
-                    Console.WriteLine(listView1.Items[i].Text.ToString());
-                    Console.WriteLine(listView1.Items[i].SubItems[1].Text.ToString());
+                //usuwanie z pliku
+                RemoveLineFromTxtFile(listView1.SelectedItems[0].Text.ToString() + "#" + listView1.SelectedItems[0].SubItems[1].Text.ToString(), _filePath);
 
-                    //usuwanie z boxa
-                    listView1.Items[i].Remove();
-                }
+                Console.WriteLine(listView1.SelectedItems[0].Text.ToString());
+                Console.WriteLine(listView1.SelectedItems[0].SubItems[1].Text.ToString());
+
+                //usuwanie z boxa
+                listView1.SelectedItems[0].Remove();
             }
         }
 
