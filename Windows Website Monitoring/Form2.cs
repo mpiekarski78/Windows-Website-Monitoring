@@ -34,8 +34,8 @@ namespace Windows_Website_Monitoring
             Console.WriteLine(originalForm);
             //update Form1 
             foreach (var removedUrl in removedUrls) {
-                originalForm.Controls.RemoveByKey($"txtUrl{removedUrl}");
-                originalForm.Controls.RemoveByKey($"txtStatus{removedUrl}");
+                originalForm.Controls.Find("flowLayoutPanel", true).First().Controls.RemoveByKey($"txtUrl{removedUrl}");
+                originalForm.Controls.Find("flowLayoutPanel", true).First().Controls.RemoveByKey($"txtStatus{removedUrl}");
             }
             this.Close();
         }

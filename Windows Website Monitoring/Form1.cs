@@ -23,11 +23,6 @@ namespace Windows_Website_Monitoring
             InitializeComponent();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        
         // Form1 Load
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -120,19 +115,18 @@ namespace Windows_Website_Monitoring
                 }
 
                 labelsStatus.Add(labelStatus);
-            }
 
-            this.Controls.AddRange(labelsURL.ToArray());
-            this.Controls.AddRange(labelsStatus.ToArray());
+                flowLayoutPanel.Controls.AddRange(new Control[] { labelUrl, labelStatus });
+            }
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void labelStatusOverview_Click(object sender, EventArgs e)
         {
 
         }
 
         //kliknięcie w obrazek (opcje) powoduje otwarcie nowego okna Form2
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void pictureBoxConfiguration_Click(object sender, EventArgs e)
         {
             Form2 f2 = new Form2(this, _filePath);
             f2.Show(); // Shows Form2

@@ -28,91 +28,117 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.panelBottom = new System.Windows.Forms.FlowLayoutPanel();
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.titleText = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.panelBottom.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.labelStatusOverview = new System.Windows.Forms.Label();
+            this.pictureBoxConfiguration = new System.Windows.Forms.PictureBox();
+            this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxConfiguration)).BeginInit();
+            this.tableLayoutPanelMain.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelBottom
-            // 
-            this.panelBottom.BackColor = System.Drawing.Color.Coral;
-            this.panelBottom.Controls.Add(this.titleText);
-            this.panelBottom.Location = new System.Drawing.Point(0, 0);
-            this.panelBottom.Margin = new System.Windows.Forms.Padding(0);
-            this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(361, 46);
-            this.panelBottom.TabIndex = 0;
             // 
             // titleText
             // 
-            this.titleText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.titleText.AutoSize = true;
-            this.titleText.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.titleText.BackColor = System.Drawing.Color.Coral;
+            this.tableLayoutPanelMain.SetColumnSpan(this.titleText, 2);
+            this.titleText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.titleText.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.titleText.ForeColor = System.Drawing.Color.White;
-            this.titleText.Location = new System.Drawing.Point(5, 5);
-            this.titleText.Margin = new System.Windows.Forms.Padding(5, 5, 100, 150);
+            this.titleText.Location = new System.Drawing.Point(0, 0);
+            this.titleText.Margin = new System.Windows.Forms.Padding(0);
             this.titleText.Name = "titleText";
-            this.titleText.Size = new System.Drawing.Size(243, 30);
+            this.titleText.Size = new System.Drawing.Size(250, 45);
             this.titleText.TabIndex = 0;
             this.titleText.Text = "Website Monitoring";
+            this.titleText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label1
+            // labelStatusOverview
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(6, 55);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(129, 19);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Status Overview";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.labelStatusOverview.AutoSize = true;
+            this.labelStatusOverview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelStatusOverview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelStatusOverview.Location = new System.Drawing.Point(0, 45);
+            this.labelStatusOverview.Margin = new System.Windows.Forms.Padding(0);
+            this.labelStatusOverview.Name = "labelStatusOverview";
+            this.labelStatusOverview.Size = new System.Drawing.Size(220, 30);
+            this.labelStatusOverview.TabIndex = 1;
+            this.labelStatusOverview.Text = "Status Overview";
+            this.labelStatusOverview.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelStatusOverview.Click += new System.EventHandler(this.labelStatusOverview_Click);
             // 
-            // pictureBox1
+            // pictureBoxConfiguration
             // 
-            this.pictureBox1.Image = global::Windows_Website_Monitoring.Properties.Resources._9252;
-            this.pictureBox1.Location = new System.Drawing.Point(228, 54);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(20, 20);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBoxConfiguration.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBoxConfiguration.Image = global::Windows_Website_Monitoring.Properties.Resources._9252;
+            this.pictureBoxConfiguration.Location = new System.Drawing.Point(225, 50);
+            this.pictureBoxConfiguration.Margin = new System.Windows.Forms.Padding(5);
+            this.pictureBoxConfiguration.MaximumSize = new System.Drawing.Size(20, 20);
+            this.pictureBoxConfiguration.Name = "pictureBoxConfiguration";
+            this.pictureBoxConfiguration.Size = new System.Drawing.Size(20, 20);
+            this.pictureBoxConfiguration.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxConfiguration.TabIndex = 2;
+            this.pictureBoxConfiguration.TabStop = false;
+            this.pictureBoxConfiguration.Click += new System.EventHandler(this.pictureBoxConfiguration_Click);
+            // 
+            // flowLayoutPanel
+            // 
+            this.tableLayoutPanelMain.SetColumnSpan(this.flowLayoutPanel, 2);
+            this.flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel.Location = new System.Drawing.Point(0, 85);
+            this.flowLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel.Name = "flowLayoutPanel";
+            this.flowLayoutPanel.Size = new System.Drawing.Size(250, 700);
+            this.flowLayoutPanel.TabIndex = 3;
+            // 
+            // tableLayoutPanelMain
+            // 
+            this.tableLayoutPanelMain.ColumnCount = 2;
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelMain.Controls.Add(this.titleText, 0, 0);
+            this.tableLayoutPanelMain.Controls.Add(this.flowLayoutPanel, 0, 3);
+            this.tableLayoutPanelMain.Controls.Add(this.labelStatusOverview, 0, 1);
+            this.tableLayoutPanelMain.Controls.Add(this.pictureBoxConfiguration, 1, 1);
+            this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
+            this.tableLayoutPanelMain.RowCount = 5;
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+            this.tableLayoutPanelMain.Size = new System.Drawing.Size(250, 795);
+            this.tableLayoutPanelMain.TabIndex = 4;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(250, 795);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.panelBottom);
-            this.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Controls.Add(this.tableLayoutPanelMain);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.panelBottom.ResumeLayout(false);
-            this.panelBottom.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxConfiguration)).EndInit();
+            this.tableLayoutPanelMain.ResumeLayout(false);
+            this.tableLayoutPanelMain.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.FlowLayoutPanel panelBottom;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.Label titleText;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label labelStatusOverview;
+        private System.Windows.Forms.PictureBox pictureBoxConfiguration;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
     }
 }
 
