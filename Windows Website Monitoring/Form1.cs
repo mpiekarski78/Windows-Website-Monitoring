@@ -15,8 +15,8 @@ namespace Windows_Website_Monitoring
 {
     public partial class Form1 : Form
     {
+        private string _filePath = System.IO.Path.Combine(System.IO.Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).Parent.Parent.FullName, @"Resources\data.txt");
 
-        
         public Form1()
         {
             InitializeComponent();
@@ -39,7 +39,7 @@ namespace Windows_Website_Monitoring
             int urlLocY = 30; //przerwy pomiędzy liniami
 
             //wczytywanie z pliku
-            string[] lines = System.IO.File.ReadAllLines(@"D:\.Net Projects\Windows Website Monitoring\Windows Website Monitoring\Resources\data.txt");
+            string[] lines = System.IO.File.ReadAllLines(_filePath);
 
 
             // string[] urlList = { "http://www.google.com", "http://safdasd.dds", "http://edisonproperties.com" };
@@ -141,7 +141,7 @@ namespace Windows_Website_Monitoring
         //kliknięcie w obrazek (opcje) powoduje otwarcie nowego okna Form2
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            Form2 f2 = new Form2(this);
+            Form2 f2 = new Form2(this, _filePath);
             f2.Show(); // Shows Form2
         }
 

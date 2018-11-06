@@ -17,10 +17,14 @@ namespace Windows_Website_Monitoring
 
     public partial class Form2 : Form
     {
+        private readonly string _filePath = string.Empty;
+
         Form originalForm;
-        public Form2(Form incomingForm)
+        public Form2(Form incomingForm, string filePath)
         {
             originalForm = incomingForm;
+            _filePath = filePath;
+
             InitializeComponent();
         }
 
@@ -49,7 +53,7 @@ namespace Windows_Website_Monitoring
             listView1.Columns.Add("Website Name", 150);
 
             //wczytanie danych z pliku
-            string[] lines = System.IO.File.ReadAllLines(@"D:\.Net Projects\Windows Website Monitoring\Windows Website Monitoring\Resources\data.txt");
+            string[] lines = System.IO.File.ReadAllLines(_filePath);
             if (lines.Length > 0)
             {
                 foreach (string line in lines)
@@ -85,7 +89,7 @@ namespace Windows_Website_Monitoring
          
 
             //zapisywanie do pliku
-            using (StreamWriter w = File.AppendText(@"D:\.Net Projects\Windows Website Monitoring\Windows Website Monitoring\Resources\data.txt"))
+            using (StreamWriter w = File.AppendText(_filePath))
             {
 
                 w.WriteLine(textBoxNewUrl.Text + "#" + textBoxWebsiteName.Text);
@@ -107,7 +111,7 @@ namespace Windows_Website_Monitoring
                 if (listView1.Items[i].Selected)
                 {
                     //usuwanie z pliku
-                    RemoveLineFromTxtFile(listView1.Items[i].Text.ToString() + "#" + listView1.Items[i].SubItems[1].Text.ToString(), @"D:\.Net Projects\Windows Website Monitoring\Windows Website Monitoring\Resources\data.txt");
+                    RemoveLineFromTxtFile(listView1.Items[i].Text.ToString() + "#" + listView1.Items[i].SubItems[1].Text.ToString(), _filePath);
                     
                     Console.WriteLine(listView1.Items[i].Text.ToString());
                     Console.WriteLine(listView1.Items[i].SubItems[1].Text.ToString());
