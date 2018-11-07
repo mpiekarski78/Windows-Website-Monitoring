@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Globalization;
 using System.Threading;
 using tip2tail.WinFormAppBarLib;
+using System.Diagnostics;
 
 
 
@@ -40,74 +41,97 @@ namespace Windows_Website_Monitoring
             
         }
 
+        private List<string> websiteStatusCheck (string url)
+        {
+            //checking websites
 
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            System.Diagnostics.Stopwatch timer = new Stopwatch();
+            timer.Start();
+            request.Timeout = 15000;
+            request.Method = "HEAD";
+            bool urlStatus;
+            var status = new List<string>();
+
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    urlStatus = (response.StatusCode == HttpStatusCode.OK);
+                }
+            }
+            catch (WebException)
+            {
+                urlStatus = false;
+            }
+
+            timer.Stop();
+            TimeSpan ts = timer.Elapsed;
+            var elapsedTime = ts.ToString(@"ms\.ff");
+
+
+            status.Add(elapsedTime);
+             status.Add(urlStatus.ToString());
+            
+            return status;
+
+        }
 
 
         private void status_check()
         {
             
-                bool urlStatus;
+               listViewMain.Items.Clear(); //czyszczenie listeView
 
-                //add columns
-
-                listViewMain.Items.Clear(); //czyszczenie listeView
-
-                string status;
-
-
-                //wczytanie z pliku 
+              //wczytanie z pliku 
                 string[] lines = System.IO.File.ReadAllLines(_filePath);
                 if (lines.Length > 0)
 
                 {
                     int s = 0; // liczenie pól w listView
+                
                     foreach (string line in lines)
                     {
                         if (line != "")
                         {
 
-                            List<string> stringList = line.Split('#').ToList();
-
-                            //checking websites
-
-                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(stringList[0]);
-                            request.Timeout = 15000;
-                            request.Method = "HEAD";
-                            try
-                            {
-                                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                                {
-                                    urlStatus = (response.StatusCode == HttpStatusCode.OK);
-                                }
-                            }
-                            catch (WebException)
-                            {
-                                urlStatus = false;
-                            }
-
-                            if (urlStatus == true)
-                            {
-                                status = "Online"; // Text
-                            }
-                            else
-                            {
-                                status = "Error"; // Text
-                            }
+                        //checking websites
 
 
-                            add(stringList[0], stringList[1], status);
-                            if (urlStatus == true)
+                        List<string> stringList = line.Split('#').ToList();
+
+
+                        new Thread(() => {
+
+               
+                            
+                            List<string> statusCheck = websiteStatusCheck(stringList[0]);
+                            Console.WriteLine(stringList[0] + statusCheck[1]);
+                            
+                            if (statusCheck[1] == "True")
                             {
+
+                                
+
+                                add(stringList[0], stringList[1], "OK", statusCheck[0]);
+                    
                                 listViewMain.Items[s].BackColor = Color.Green;
                                 listViewMain.Items[s].ForeColor = Color.White;
                             }
                             else
                             {
+                                
+
+                                add(stringList[0], stringList[1], "Error", "-");
+                                
+                                
                                 listViewMain.Items[s].BackColor = Color.Red;
                                 listViewMain.Items[s].ForeColor = Color.White;
                             }
 
                             s += 1;
+
+                        }).Start();
                         }
                     }
 
@@ -122,7 +146,7 @@ namespace Windows_Website_Monitoring
         // Form1 Load
         private void Form1_Load(object sender, EventArgs e)
         {
-        
+            Control.CheckForIllegalCrossThreadCalls = false;
 
             // przekierowanie okienka na prawą stronię
             AppBarHelper.AppBarMessage = "TestAppBarApplication";
@@ -134,11 +158,12 @@ namespace Windows_Website_Monitoring
             listViewMain.View = View.Details;
             listViewMain.FullRowSelect = true; //kliknięcie zaznacza wszystkie pozycje w danej lini (nie tylko jedną)
             listViewMain.Columns.Add("Website URL", 80);
-            listViewMain.Columns.Add("Website Name", 100);
-            listViewMain.Columns.Add("Status", 50);
+            listViewMain.Columns.Add("Website Name", 50);
+            listViewMain.Columns.Add("status", 30);
+            listViewMain.Columns.Add("response_time", 50);
 
-          
-                status_check(); //pierwsze sprawdzenie
+
+            status_check(); //pierwsze sprawdzenie
 
                 InitTimer(); //uruchomienie sprawdzania działania stron
           
@@ -147,80 +172,21 @@ namespace Windows_Website_Monitoring
 
         
         }
-
-        
+       
 
         //add rows - nowa metoda do dodawania nowych pozycji URL + name
-        public void add(string url, String name, string status)
+        public void add(string url, String name, string status, string response_time)
         {
-            String[] row = { url, name, status };
+            String[] row = { url, name, status,response_time };
             ListViewItem item = new ListViewItem(row);
 
-
+     
             listViewMain.Items.Add(item);
         }
 
-        /*
-            foreach (var url in urlList)
-            {
-                //checking websites
-                var i = urlList.IndexOf(url);
-                Console.WriteLine(url);
+     
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.Timeout = 15000;
-                request.Method = "HEAD"; 
-                try
-                {
-                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                    {
-                        urlStatus = (response.StatusCode == HttpStatusCode.OK);
-                    }
-                }
-                catch (WebException)
-                {
-                    urlStatus = false;
-                }
 
-                // URLS   
-                var labelUrl = new Label();
-
-                labelUrl.Name = $"txtUrl{textInfo.ToTitleCase(url.Split('#')[1])}";
-                labelUrl.Top = 100 + (urlLocY * i); // umiejscowienie
-                labelUrl.Left = urlLocX; // umiejscowienie
-                labelUrl.Font = new Font("Century Gothic", 10, FontStyle.Regular);  //font i rozmiar
-                labelUrl.Width = 170;
-                labelUrl.Text  = (i+1).ToString() + "."  + url; // Text
-
-                labelsURL.Add(labelUrl);
-
-                // Statuses
-                var labelStatus = new Label();
-
-                labelStatus.Name = $"txtStatus{textInfo.ToTitleCase(url.Split('#')[1])}";
-                labelStatus.Top = 100 + (urlLocY * i); // umiejscowienie
-                labelStatus.Left = statusesLocX; // umiejscowienie
-                labelStatus.Font = new Font("Century Gothic", 10, FontStyle.Regular);  //font i rozmiar
-                labelStatus.Width = 60;
-
-                labelStatus.ForeColor = Color.White;
-                if (urlStatus == true)
-                {
-                    labelStatus.BackColor = Color.ForestGreen;
-                    labelStatus.Text = "Online"; // Text
-                }
-                else
-                {
-                    labelStatus.BackColor = Color.Red;
-                    labelStatus.Text = "Error!"; // Text
-                }
-
-                labelsStatus.Add(labelStatus);
-
-                flowLayoutPanel.Controls.AddRange(new Control[] { labelUrl, labelStatus });
-            }
-        }
-    */
         private void labelStatusOverview_Click(object sender, EventArgs e)
         {
 
