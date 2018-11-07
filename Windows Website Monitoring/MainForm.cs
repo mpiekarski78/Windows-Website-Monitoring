@@ -33,7 +33,7 @@ namespace Windows_Website_Monitoring
         {
             timer1 = new System.Windows.Forms.Timer();
             timer1.Tick += new EventHandler(timer1_Tick);
-            timer1.Interval = 20000; // in miliseconds
+            timer1.Interval = 2000; // in miliseconds
             timer1.Start();
         }
 
@@ -48,7 +48,7 @@ namespace Windows_Website_Monitoring
             }
         }
 
-        private void UpdateStatus(ListViewItem item) {
+        private async Task UpdateStatus(ListViewItem item) {
             bool urlStatus;
             string status;
 
@@ -58,13 +58,22 @@ namespace Windows_Website_Monitoring
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(item.Text);
                 request.Timeout = 15000;
                 request.Method = "HEAD";
-                try {
-                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse()) {
-                        urlStatus = (response.StatusCode == HttpStatusCode.OK);
+
+                List<Task> tasks = new List<Task>();
+                tasks.Add(Task.Run(() =>
+                {
+                    try
+                    {
+                        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                        {
+                            urlStatus = (response.StatusCode == HttpStatusCode.OK);
+                        }
                     }
-                } catch (WebException) {
-                    urlStatus = false;
-                }
+                    catch (WebException)
+                    {
+                        urlStatus = false;
+                    }
+
 
                 if (urlStatus == true) {
                     status = "Online"; // Text
@@ -81,17 +90,38 @@ namespace Windows_Website_Monitoring
                     item.BackColor = Color.Red;
                     item.ForeColor = Color.White;
                 }
+
+                }));
+
             }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            status_check();
+        status_check();
         }
+
+        //pierwsze uruchomienie
+        private void first_run()
+        {
+            if (listViewMain.Items.Count > 0)
+            {
+                foreach (ListViewItem item in listViewMain.Items)
+                {
+                    item.SubItems[2].Text = "Pending";
+                    item.BackColor = Color.Yellow;
+                    item.ForeColor = Color.Black;
+
+                }
+            }
+        }
+
 
         // MainForm Load
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Control.CheckForIllegalCrossThreadCalls = false;
+
             // przekierowanie okienka na prawą stronię
             AppBarHelper.AppBarMessage = "TestAppBarApplication";
             AppBarHelper.SetAppBar(this, AppBarEdge.Right);
@@ -100,9 +130,9 @@ namespace Windows_Website_Monitoring
 
             PopulateWebsiteList();
 
-            status_check(); //pierwsze sprawdzenie
-
+            first_run(); //pierwsze sprawdzenie
             InitTimer(); //uruchomienie sprawdzania działania stron
+       
         }
 
         //add rows - nowa metoda do dodawania nowych pozycji URL + name
@@ -135,6 +165,7 @@ namespace Windows_Website_Monitoring
         //kliknięcie w obrazek (opcje) powoduje otwarcie nowego okna SettingsForm
         private void pictureBoxConfiguration_Click(object sender, EventArgs e)
         {
+
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.InitializeForm(_websitesList);
             settingsForm.WebstitesListChanged += settingsForm_WebstitesListChanged;
