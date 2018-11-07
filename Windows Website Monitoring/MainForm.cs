@@ -13,6 +13,7 @@ using System.Configuration;
 using tip2tail.WinFormAppBarLib;
 using Windows_Website_Monitoring.Library;
 using FontAwesome.Sharp;
+using System.Diagnostics;
 
 //Formularz (MainForm) - głowny form - strona głowna
 namespace Windows_Website_Monitoring
@@ -59,6 +60,9 @@ namespace Windows_Website_Monitoring
                 request.Timeout = 15000;
                 request.Method = "HEAD";
 
+                System.Diagnostics.Stopwatch timer = new Stopwatch(); //response time
+                timer.Start(); //response time
+
                 List<Task> tasks = new List<Task>();
                 tasks.Add(Task.Run(() =>
                 {
@@ -74,22 +78,27 @@ namespace Windows_Website_Monitoring
                         urlStatus = false;
                     }
 
+                    timer.Stop(); //response time
+                    TimeSpan ts = timer.Elapsed;  //response time
+                    var elapsedTime = ts.ToString(@"ms\:ff");  //response time
 
-                if (urlStatus == true) {
-                    status = "Online"; // Text
-                } else {
-                    status = "Error"; // Text
-                }
+                    if (urlStatus == true) {
+                        status = "Online"; // Text
+                        item.SubItems[3].Text = elapsedTime + " sec";
+                    } else {
+                        status = "Error"; // Text
+                        item.SubItems[3].Text = "-" ;
+                    }
 
-                item.SubItems[2].Text = status;
+                    item.SubItems[2].Text = status;
 
-                if (urlStatus == true) {
-                    item.BackColor = Color.Green;
-                    item.ForeColor = Color.White;
-                } else {
-                    item.BackColor = Color.Red;
-                    item.ForeColor = Color.White;
-                }
+                    if (urlStatus == true) {
+                        item.BackColor = Color.Green;
+                        item.ForeColor = Color.White;
+                    } else {
+                        item.BackColor = Color.Red;
+                        item.ForeColor = Color.White;
+                    }
 
                 }));
 
@@ -108,7 +117,7 @@ namespace Windows_Website_Monitoring
             {
                 foreach (ListViewItem item in listViewMain.Items)
                 {
-                    item.SubItems[2].Text = "Pending";
+                    item.SubItems[2].Text = "Wait";
                     item.BackColor = Color.Yellow;
                     item.ForeColor = Color.Black;
 
@@ -121,6 +130,8 @@ namespace Windows_Website_Monitoring
         private void MainForm_Load(object sender, EventArgs e)
         {
             Control.CheckForIllegalCrossThreadCalls = false;
+
+            listViewMain.Columns[0].Width = 0;
 
             // przekierowanie okienka na prawą stronię
             AppBarHelper.AppBarMessage = "TestAppBarApplication";
@@ -136,9 +147,9 @@ namespace Windows_Website_Monitoring
         }
 
         //add rows - nowa metoda do dodawania nowych pozycji URL + name
-        public void Add(string url, String name, string status)
+        public void Add(string url, String name, string status, string response)
         {
-            String[] row = { url, name, status };
+            String[] row = { url, name, status, response };
             ListViewItem item = new ListViewItem(row);
             item.Name = url;
 
@@ -148,7 +159,7 @@ namespace Windows_Website_Monitoring
         public void PopulateWebsiteList() {
             foreach (var website in _websitesList) {
                 if (website.Key != "" && website.Value != "") {
-                    String[] row = { website.Value, website.Key, "Pending" };
+                    String[] row = { website.Value, website.Key, "Wait","-"};
                     ListViewItem item = new ListViewItem(row);
                     item.Name = website.Value;
 
@@ -181,7 +192,7 @@ namespace Windows_Website_Monitoring
 
             foreach (var website in _websitesList) {
                 if (!listViewMain.Items.ContainsKey(website.Value)) {
-                    Add(website.Value, website.Key, "Pending");
+                    Add(website.Value, website.Key, "Wait","-");
                     UpdateStatus(listViewMain.Items[listViewMain.Items.IndexOfKey(website.Value)]);
                 }
             }

@@ -38,6 +38,7 @@
             this.columnHeaderWebsiteName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
+            this.columnHeaderResponse = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxConfiguration)).BeginInit();
             this.tableLayoutPanelMain.SuspendLayout();
             this.SuspendLayout();
@@ -89,7 +90,8 @@
             this.listViewMain.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderWebsiteUrl,
             this.columnHeaderWebsiteName,
-            this.columnHeaderStatus});
+            this.columnHeaderStatus,
+            this.columnHeaderResponse});
             this.tableLayoutPanelMain.SetColumnSpan(this.listViewMain, 2);
             this.listViewMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -139,6 +141,11 @@
             this.tableLayoutPanelMain.Size = new System.Drawing.Size(250, 795);
             this.tableLayoutPanelMain.TabIndex = 4;
             // 
+            // columnHeaderResponse
+            // 
+            this.columnHeaderResponse.Text = "Response";
+            this.columnHeaderResponse.Width = 70;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -172,6 +179,7 @@
         private System.Windows.Forms.ColumnHeader columnHeaderWebsiteUrl;
         private System.Windows.Forms.ColumnHeader columnHeaderWebsiteName;
         private System.Windows.Forms.ColumnHeader columnHeaderStatus;
+        private System.Windows.Forms.ColumnHeader columnHeaderResponse;
     }
 }
 
