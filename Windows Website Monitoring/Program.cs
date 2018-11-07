@@ -26,7 +26,7 @@ namespace Windows_Website_Monitoring
             });
                 icon.Visible = true;
 
-                Application.Run(new Form1());
+                Application.Run(new MainForm());
                 icon.Visible = false;
             }
 
