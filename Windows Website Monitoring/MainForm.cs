@@ -23,12 +23,17 @@ namespace Windows_Website_Monitoring
         private Dictionary<string, string> _websitesList = new Dictionary<string, string>();
         private System.Windows.Forms.Timer timer1;
 
+        int layout = 0; //początkowy layout
+
         public MainForm()
         {
             InitializeComponent();
 
             buttonConfig.Image = IconChar.Cog.ToBitmap(30, Color.Black);
             buttonDetails.Image = IconChar.List.ToBitmap(30, Color.Black);
+            buttonLayout.Image = IconChar.WindowMaximize.ToBitmap(30, Color.Black);
+                     
+
         }
 
         public void InitTimer()
@@ -134,10 +139,6 @@ namespace Windows_Website_Monitoring
 
             listViewMain.Columns[0].Width = 0;
 
-            // przekierowanie okienka na prawą stronię
-            AppBarHelper.AppBarMessage = "TestAppBarApplication";
-            AppBarHelper.SetAppBar(this, AppBarEdge.Right);
-
             _websitesList = ConfigManager.GetSectionSettings(CustomConfigSections.Websites);
 
             PopulateWebsiteList();
@@ -204,6 +205,26 @@ namespace Windows_Website_Monitoring
             formDetailedView.InitializeForm(_websitesList);
             formDetailedView.WebstitesListChanged += settingsForm_WebstitesListChanged;
             formDetailedView.ShowDialog(); // Shows SettingsForm
+        }
+
+        private void buttonLayout_Click(object sender, EventArgs e)
+        {
+            if (layout == 0)
+            {
+                // przekierowanie okienka na prawą stronię
+                AppBarHelper.AppBarMessage = "Website Monitoring";
+                AppBarHelper.SetAppBar(this, AppBarEdge.Right);
+                layout = 1;
+            }
+
+            else if (layout == 1)
+            {
+                // przekierowanie okienka -reset
+                AppBarHelper.AppBarMessage = "Website Monitoring";
+                AppBarHelper.SetAppBar(this, AppBarEdge.None);
+                
+                layout = 0;
+            }
         }
     }
 }
