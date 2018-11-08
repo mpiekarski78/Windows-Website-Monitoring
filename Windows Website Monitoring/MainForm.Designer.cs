@@ -181,6 +181,7 @@
             this.buttonDetails.Size = new System.Drawing.Size(40, 40);
             this.buttonDetails.TabIndex = 1;
             this.buttonDetails.UseVisualStyleBackColor = false;
+            this.buttonDetails.Click += new System.EventHandler(this.buttonDetails_Click);
             // 
             // MainForm
             // 
