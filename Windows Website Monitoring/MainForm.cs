@@ -179,7 +179,7 @@ namespace Windows_Website_Monitoring
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.InitializeForm(_websitesList);
             settingsForm.WebstitesListChanged += settingsForm_WebstitesListChanged;
-            settingsForm.Show(); // Shows SettingsForm
+            settingsForm.ShowDialog(); // Shows SettingsForm
         }
 
         void settingsForm_WebstitesListChanged(List<string> removedWebsites) {
