@@ -27,7 +27,8 @@ namespace Windows_Website_Monitoring
         {
             InitializeComponent();
 
-            pictureBoxConfiguration.Image = IconChar.Cog.ToBitmap(30, Color.Black);
+            buttonConfig.Image = IconChar.Cog.ToBitmap(30, Color.Black);
+            buttonDetails.Image = IconChar.List.ToBitmap(30, Color.Black);
         }
 
         public void InitTimer()
@@ -174,9 +175,7 @@ namespace Windows_Website_Monitoring
         }
 
         //kliknięcie w obrazek (opcje) powoduje otwarcie nowego okna SettingsForm
-        private void pictureBoxConfiguration_Click(object sender, EventArgs e)
-        {
-
+        private void buttonConfig_Click(object sender, EventArgs e) {
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.InitializeForm(_websitesList);
             settingsForm.WebstitesListChanged += settingsForm_WebstitesListChanged;
