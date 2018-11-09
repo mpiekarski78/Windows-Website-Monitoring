@@ -73,9 +73,16 @@
     <Compile Include="FormDetailedView.Designer.cs">
       <DependentUpon>FormDetailedView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Library\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Library\BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Library\LayoutTypes.cs" />
     <Compile Include="Library\CustomConfigSections.cs" />
     <Compile Include="Library\ConfigManager.cs" />
+    <Compile Include="Library\ListViewExtensions.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,6 +99,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormDetailedView.resx">
       <DependentUpon>FormDetailedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Library\BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

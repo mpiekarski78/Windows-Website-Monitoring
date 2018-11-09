@@ -14,23 +14,11 @@ using tip2tail.WinFormAppBarLib;
 using Windows_Website_Monitoring.Library;
 using FontAwesome.Sharp;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 //Formularz (MainForm) - głowny form - strona głowna
 namespace Windows_Website_Monitoring
 {
-    public partial class MainForm : Form, IMessageFilter {
-        #region Imports
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
-        public const int WM_LBUTTONDOWN = 0x0201;
-
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture(); 
-        #endregion
-
+    public partial class MainForm : BaseForm {
         #region Private Members
         private HashSet<Control> _controlsToMove = new HashSet<Control>();
         private Dictionary<string, string> _websitesList = new Dictionary<string, string>();
@@ -47,21 +35,7 @@ namespace Windows_Website_Monitoring
             buttonLayout.Image = IconChar.WindowMaximize.ToBitmap(30, Color.Black);
             buttonExit.Image = IconChar.PowerOff.ToBitmap(30, Color.Black);
 
-            Application.AddMessageFilter(this);
-
-            _controlsToMove.Add(this);
-            _controlsToMove.Add(this.labelTitleBar);
-        }
-        #endregion
-
-        #region Public Methods
-        public bool PreFilterMessage(ref Message m) {
-            if (m.Msg == WM_LBUTTONDOWN && _controlsToMove.Contains(Control.FromHandle(m.HWnd))) {
-                ReleaseCapture();
-                SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-                return true;
-            }
-            return false;
+            this.AddMoveEnabledControl(this.labelTitleBar);
         }
         #endregion
 
@@ -198,11 +172,15 @@ namespace Windows_Website_Monitoring
                 AppBarHelper.AppBarMessage = "Website Monitoring";
                 AppBarHelper.SetAppBar(this, AppBarEdge.Right);
 
+                this.ShowInTaskbar = false;
+
                 _layout = LayoutTypes.Docked;
             } else if (_layout == LayoutTypes.Docked) {
                 // przekierowanie okienka -reset
                 AppBarHelper.AppBarMessage = "Website Monitoring";
                 AppBarHelper.SetAppBar(this, AppBarEdge.None);
+
+                this.ShowInTaskbar = true;
 
                 _layout = LayoutTypes.Standard;
             }
@@ -225,7 +203,6 @@ namespace Windows_Website_Monitoring
                     UpdateStatus(listViewMain.Items[listViewMain.Items.IndexOfKey(website.Key)]);
                 }
             }
-
         }
 
         private void timer_Tick(object sender, EventArgs e) {
@@ -239,5 +216,17 @@ namespace Windows_Website_Monitoring
             }
         }
         #endregion
+
+        private void listViewMain_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {
+            ListViewExtensions.ListView_DrawColumnHeader(this.listViewMain, sender, e);
+        }
+
+        private void listViewMain_DrawItem(object sender, DrawListViewItemEventArgs e) {
+            ListViewExtensions.ListView_DrawItem(sender, e);
+        }
+
+        private void listViewMain_DrawSubItem(object sender, DrawListViewSubItemEventArgs e) {
+            ListViewExtensions.ListView_DrawSubItem(sender, e);
+        }
     }
 }

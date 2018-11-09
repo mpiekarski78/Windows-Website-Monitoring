@@ -15,7 +15,7 @@ using Windows_Website_Monitoring.Library;
 
 namespace Windows_Website_Monitoring
 {
-    public partial class SettingsForm : Form
+    public partial class SettingsForm : BaseForm
     {
         #region Private Members
         private Dictionary<string, string> _websitesList = new Dictionary<string, string>();
@@ -31,16 +31,19 @@ namespace Windows_Website_Monitoring
         public SettingsForm() {
             InitializeComponent();
 
-            buttonAdd.Image = IconChar.Plus.ToBitmap(30, Color.Black);
-            buttonRemove.Image = IconChar.Minus.ToBitmap(30, Color.Black);
-            buttonSave.Image = IconChar.CheckSquare.ToBitmap(30, Color.Black);
-            buttonCancel.Image = IconChar.Times.ToBitmap(30, Color.Black);
+            buttonAdd.Image = IconChar.Plus.ToBitmap(30, Color.FromArgb(63, 63, 63));
+            buttonRemove.Image = IconChar.Minus.ToBitmap(30, Color.FromArgb(63, 63, 63));
+            buttonSaveAndClose.Image = IconChar.CheckSquare.ToBitmap(30, Color.FromArgb(63, 63, 63));
+            buttonCancel.Image = IconChar.Times.ToBitmap(30, Color.FromArgb(63,63,63));
+
+            this.AddMoveEnabledControl(this.labelTitleBar);
         }
         #endregion
 
         #region Public Methods
         public void InitializeForm(Dictionary<string, string> websitesList) {
             _websitesList = websitesList;
+            ListViewExtensions.SetLastColumnTofill(this.listViewWebsites);
         }
         #endregion
 
@@ -55,7 +58,7 @@ namespace Windows_Website_Monitoring
             item.Tag = url;
 
             listViewWebsites.Items.Add(item);
-        } 
+        }
         #endregion
 
         #region Private Event Handlers
@@ -80,7 +83,7 @@ namespace Windows_Website_Monitoring
                 textBoxWebsiteName.Text = "";
                 textBoxWebSiteUrl.Text = "";
 
-                this.buttonSave.Enabled = true;
+                this.buttonSaveAndClose.Enabled = true;
             } else {
                 MessageBox.Show("Incorrect URL. Please verify the URL and try again.", "Error");
             }
@@ -93,7 +96,7 @@ namespace Windows_Website_Monitoring
 
                 //usuwanie z boxa
                 listViewWebsites.SelectedItems[0].Remove();
-                this.buttonSave.Enabled = true;
+                this.buttonSaveAndClose.Enabled = true;
             }
         }
 
@@ -115,7 +118,7 @@ namespace Windows_Website_Monitoring
         }
 
         private void buttonCancel_Click(object sender, EventArgs e) {
-            if (this.buttonSave.Enabled) {
+            if (this.buttonSaveAndClose.Enabled) {
                 if (MessageBox.Show("Your changes will be lost.\nPress OK to continue,\n or Cancel to stay on the current form.", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK) {
                     this.Close();
                 }
@@ -128,6 +131,26 @@ namespace Windows_Website_Monitoring
                 buttonRemove.Visible = true;
             else
                 buttonRemove.Visible = false;
+        }
+
+        private void textBox_OnTextChanged(object sender, EventArgs e) {
+            if (!string.IsNullOrWhiteSpace(textBoxWebSiteUrl.Text) && !string.IsNullOrWhiteSpace(textBoxWebSiteUrl.Text)) {
+                buttonAdd.Enabled = true;
+            } else {
+                buttonAdd.Enabled = false;
+            }
+        }
+
+        private void listViewWebsites_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {
+            ListViewExtensions.ListView_DrawColumnHeader(this.listViewWebsites, sender, e);
+        }
+
+        private void listViewWebsites_DrawItem(object sender, DrawListViewItemEventArgs e) {
+            ListViewExtensions.ListView_DrawItem(sender, e);
+        }
+
+        private void listViewWebsites_DrawSubItem(object sender, DrawListViewSubItemEventArgs e) {
+            ListViewExtensions.ListView_DrawSubItem(sender, e);
         }
         #endregion
     }

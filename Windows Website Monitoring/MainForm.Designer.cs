@@ -126,16 +126,21 @@
             this.listViewMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.listViewMain.FullRowSelect = true;
+            this.listViewMain.GridLines = true;
             this.listViewMain.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewMain.Location = new System.Drawing.Point(0, 70);
             this.listViewMain.Margin = new System.Windows.Forms.Padding(0);
             this.listViewMain.MultiSelect = false;
             this.listViewMain.Name = "listViewMain";
+            this.listViewMain.OwnerDraw = true;
             this.tableLayoutPanelMain.SetRowSpan(this.listViewMain, 2);
             this.listViewMain.Size = new System.Drawing.Size(230, 705);
             this.listViewMain.TabIndex = 0;
             this.listViewMain.UseCompatibleStateImageBehavior = false;
             this.listViewMain.View = System.Windows.Forms.View.Details;
+            this.listViewMain.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.listViewMain_DrawColumnHeader);
+            this.listViewMain.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.listViewMain_DrawItem);
+            this.listViewMain.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.listViewMain_DrawSubItem);
             // 
             // columnHeaderWebsiteName
             // 
@@ -237,15 +242,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(270, 795);
             this.Controls.Add(this.tableLayoutPanelMain);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "MainForm";
-            this.ShowInTaskbar = false;
             this.Text = "Website Monitoring";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
