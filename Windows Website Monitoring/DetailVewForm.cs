@@ -147,8 +147,13 @@ namespace Windows_Website_Monitoring
             
             chartResponseTime.Series["Response Time"].Points.AddXY(DateTime.Now, responseTimeFormatToInt);
 
-            //czas oś X chart
-            // TODO
+            //limit chart
+            if (chartResponseTime.Series[0].Points.Count > 10)
+            {
+                chartResponseTime.Series[0].Points.RemoveAt(0);
+                chartResponseTime.ResetAutoValues();
+            }
+
 
         }
 

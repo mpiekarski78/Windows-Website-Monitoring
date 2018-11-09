@@ -58,11 +58,11 @@
             this.labelStatusOverview.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tableLayoutPanelMain.SetColumnSpan(this.labelStatusOverview, 2);
             this.labelStatusOverview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelStatusOverview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.labelStatusOverview.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.labelStatusOverview.Location = new System.Drawing.Point(0, 40);
             this.labelStatusOverview.Margin = new System.Windows.Forms.Padding(0);
             this.labelStatusOverview.Name = "labelStatusOverview";
-            this.labelStatusOverview.Size = new System.Drawing.Size(270, 30);
+            this.labelStatusOverview.Size = new System.Drawing.Size(270, 25);
             this.labelStatusOverview.TabIndex = 1;
             this.labelStatusOverview.Text = "Status Overview";
             this.labelStatusOverview.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -85,9 +85,9 @@
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             this.tableLayoutPanelMain.RowCount = 7;
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -137,12 +137,12 @@
             this.listViewWebsites.FullRowSelect = true;
             this.listViewWebsites.GridLines = true;
             this.listViewWebsites.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listViewWebsites.Location = new System.Drawing.Point(0, 70);
+            this.listViewWebsites.Location = new System.Drawing.Point(0, 65);
             this.listViewWebsites.Margin = new System.Windows.Forms.Padding(0);
             this.listViewWebsites.MultiSelect = false;
             this.listViewWebsites.Name = "listViewWebsites";
             this.listViewWebsites.OwnerDraw = true;
-            this.listViewWebsites.Size = new System.Drawing.Size(230, 444);
+            this.listViewWebsites.Size = new System.Drawing.Size(230, 451);
             this.listViewWebsites.TabIndex = 0;
             this.listViewWebsites.UseCompatibleStateImageBehavior = false;
             this.listViewWebsites.View = System.Windows.Forms.View.Details;
@@ -174,11 +174,11 @@
             this.flowLayoutPanelSideBar.Controls.Add(this.buttonDetails);
             this.flowLayoutPanelSideBar.Controls.Add(this.buttonLayout);
             this.flowLayoutPanelSideBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelSideBar.Location = new System.Drawing.Point(230, 70);
+            this.flowLayoutPanelSideBar.Location = new System.Drawing.Point(230, 65);
             this.flowLayoutPanelSideBar.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanelSideBar.Name = "flowLayoutPanelSideBar";
             this.tableLayoutPanelMain.SetRowSpan(this.flowLayoutPanelSideBar, 3);
-            this.flowLayoutPanelSideBar.Size = new System.Drawing.Size(40, 664);
+            this.flowLayoutPanelSideBar.Size = new System.Drawing.Size(40, 669);
             this.flowLayoutPanelSideBar.TabIndex = 2;
             // 
             // buttonConfig
@@ -252,13 +252,13 @@
             this.labelEventOverview.AutoSize = true;
             this.labelEventOverview.BackColor = System.Drawing.Color.WhiteSmoke;
             this.labelEventOverview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelEventOverview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.labelEventOverview.Location = new System.Drawing.Point(0, 514);
+            this.labelEventOverview.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelEventOverview.Location = new System.Drawing.Point(0, 516);
             this.labelEventOverview.Margin = new System.Windows.Forms.Padding(0);
             this.labelEventOverview.Name = "labelEventOverview";
-            this.labelEventOverview.Size = new System.Drawing.Size(230, 30);
+            this.labelEventOverview.Size = new System.Drawing.Size(230, 25);
             this.labelEventOverview.TabIndex = 1;
-            this.labelEventOverview.Text = "Event Overview";
+            this.labelEventOverview.Text = "Real-Time Event Log";
             this.labelEventOverview.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // listViewEvents
@@ -273,13 +273,13 @@
             this.listViewEvents.FullRowSelect = true;
             this.listViewEvents.GridLines = true;
             this.listViewEvents.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listViewEvents.Location = new System.Drawing.Point(0, 544);
+            this.listViewEvents.Location = new System.Drawing.Point(0, 541);
             this.listViewEvents.Margin = new System.Windows.Forms.Padding(0);
             this.listViewEvents.MultiSelect = false;
             this.listViewEvents.Name = "listViewEvents";
             this.listViewEvents.OwnerDraw = true;
             this.tableLayoutPanelMain.SetRowSpan(this.listViewEvents, 2);
-            this.listViewEvents.Size = new System.Drawing.Size(230, 230);
+            this.listViewEvents.Size = new System.Drawing.Size(230, 233);
             this.listViewEvents.TabIndex = 0;
             this.listViewEvents.UseCompatibleStateImageBehavior = false;
             this.listViewEvents.View = System.Windows.Forms.View.Details;
@@ -294,12 +294,12 @@
             // 
             // columnHeaderEventError
             // 
-            this.columnHeaderEventError.Text = "Error";
+            this.columnHeaderEventError.Text = "Event";
             this.columnHeaderEventError.Width = 50;
             // 
             // columnHeaderEventEvents
             // 
-            this.columnHeaderEventEvents.Text = "Events";
+            this.columnHeaderEventEvents.Text = "Count";
             this.columnHeaderEventEvents.Width = 68;
             // 
             // MainForm

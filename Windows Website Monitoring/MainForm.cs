@@ -55,6 +55,27 @@ namespace Windows_Website_Monitoring
             listViewWebsites.Items.Add(item);
         }
 
+
+        private void AddToEvents(string name, string url, string error, string eventsNum)
+        {
+            String[] row = { name, error, eventsNum };
+
+            ListViewItem item = new ListViewItem(row);
+
+            item.Tag = url;
+
+            item.Name = name;
+            item.Name = error;
+            item.Name = eventsNum;
+            
+
+            item.BackColor = Color.Yellow;
+            item.ForeColor = Color.Black;
+            
+            listViewEvents.Items.Add(item);
+        }
+
+
         private void PopulateWebsiteList() {
             foreach (var website in _websitesList) {
                 if (website.Key != "" && website.Value != "") {
@@ -122,6 +143,31 @@ namespace Windows_Website_Monitoring
                     } else {
                         status = "Error"; // Text
                         item.SubItems[2].Text = "-";
+
+                        //check if error exists
+                        if (listViewEvents.Items.Count == 0)
+                        {
+                            AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
+                        }
+                        else
+                        {
+                            foreach (ListViewItem i in listViewEvents.Items)
+                            {
+                                Console.WriteLine(item.SubItems[0].Text);
+                                Console.WriteLine(i.SubItems[0].Text);
+
+                                if (item.SubItems[0].Text != i.SubItems[0].Text)
+                                {
+                                    AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
+                                }
+                                else
+                                {
+                                    int eventNum = Int32.Parse(i.SubItems[2].Text) + 1 ;
+                                    i.SubItems[2].Text = eventNum.ToString();
+                                }
+                            }
+                        }
+
                     }
 
                     item.SubItems[1].Text = status;
