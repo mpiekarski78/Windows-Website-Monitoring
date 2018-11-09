@@ -67,11 +67,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormDetailedView.cs">
+    <Compile Include="DetailVewForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormDetailedView.Designer.cs">
-      <DependentUpon>FormDetailedView.cs</DependentUpon>
+    <Compile Include="DetailVewForm.Designer.cs">
+      <DependentUpon>DetailVewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Library\BaseForm.cs">
       <SubType>Form</SubType>
@@ -97,8 +97,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormDetailedView.resx">
-      <DependentUpon>FormDetailedView.cs</DependentUpon>
+    <EmbeddedResource Include="DetailVewForm.resx">
+      <DependentUpon>DetailVewForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Library\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>

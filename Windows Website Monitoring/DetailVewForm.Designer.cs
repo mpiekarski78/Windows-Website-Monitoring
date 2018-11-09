@@ -1,6 +1,6 @@
 ﻿namespace Windows_Website_Monitoring
 {
-    partial class FormDetailedView
+    partial class DetailVewForm
     {
         /// <summary>
         /// Required designer variable.
@@ -83,11 +83,14 @@
             // 
             // chartResponseTime
             // 
+            chartArea1.AxisX.LabelStyle.Format = "HH:mm:ss";
+            chartArea1.AxisX2.LabelStyle.Format = "mm:ss";
+            chartArea1.AxisX2.Title = "Time";
             chartArea1.Name = "ChartArea1";
             this.chartResponseTime.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chartResponseTime.Legends.Add(legend1);
-            this.chartResponseTime.Location = new System.Drawing.Point(490, 41);
+            this.chartResponseTime.Location = new System.Drawing.Point(494, 8);
             this.chartResponseTime.Name = "chartResponseTime";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
@@ -101,7 +104,6 @@
             this.chartResponseTime.Size = new System.Drawing.Size(1030, 442);
             this.chartResponseTime.TabIndex = 2;
             this.chartResponseTime.Text = "chart1";
-            this.chartResponseTime.Click += new System.EventHandler(this.chartResponseTime_Click);
             // 
             // labelWebsiteName
             // 
@@ -112,7 +114,7 @@
             this.labelWebsiteName.Size = new System.Drawing.Size(0, 20);
             this.labelWebsiteName.TabIndex = 3;
             // 
-            // FormDetailedView
+            // DetailVewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -120,7 +122,7 @@
             this.Controls.Add(this.labelWebsiteName);
             this.Controls.Add(this.chartResponseTime);
             this.Controls.Add(this.listViewMain);
-            this.Name = "FormDetailedView";
+            this.Name = "DetailVewForm";
             this.Text = "FormDetailedView";
             this.Load += new System.EventHandler(this.FormDetailedView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chartResponseTime)).EndInit();

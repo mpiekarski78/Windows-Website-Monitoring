@@ -14,7 +14,7 @@ using Windows_Website_Monitoring.Library;
 
 namespace Windows_Website_Monitoring
 {
-    public partial class FormDetailedView : Form
+    public partial class DetailVewForm : Form
     {
 
         private Dictionary<string, string> _websitesList = new Dictionary<string, string>();
@@ -25,7 +25,7 @@ namespace Windows_Website_Monitoring
 
         string checkSelected;
 
-        public FormDetailedView()
+        public DetailVewForm()
         {
             InitializeComponent();
         }
@@ -145,12 +145,11 @@ namespace Windows_Website_Monitoring
             responseTimeFormatToInt = responseTimeFormatToInt.Replace(" ", "");
             //update chart
             
-            chartResponseTime.Series["Response Time"].Points.AddY(responseTimeFormatToInt);
+            chartResponseTime.Series["Response Time"].Points.AddXY(DateTime.Now, responseTimeFormatToInt);
 
             //czas oś X chart
-
             // TODO
-            
+
         }
 
         //pierwsze uruchomienie
@@ -212,13 +211,5 @@ namespace Windows_Website_Monitoring
                 }
             }
         }
-
-        private void chartResponseTime_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-   
     }
 }

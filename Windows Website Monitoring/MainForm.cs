@@ -160,10 +160,10 @@ namespace Windows_Website_Monitoring
         }
 
         private void buttonDetails_Click(object sender, EventArgs e) {
-            FormDetailedView formDetailedView = new FormDetailedView();
-            formDetailedView.InitializeForm(_websitesList);
-            formDetailedView.WebstitesListChanged += settingsForm_WebstitesListChanged;
-            formDetailedView.ShowDialog(); // Shows SettingsForm
+            DetailVewForm detailViewForm = new DetailVewForm();
+            detailViewForm.InitializeForm(_websitesList);
+            detailViewForm.WebstitesListChanged += settingsForm_WebstitesListChanged;
+            detailViewForm.ShowDialog(); // Shows SettingsForm
         }
 
         private void buttonLayout_Click(object sender, EventArgs e) {
