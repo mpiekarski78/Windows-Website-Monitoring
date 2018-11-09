@@ -52,7 +52,7 @@ namespace Windows_Website_Monitoring
             item.BackColor = Color.Yellow;
             item.ForeColor = Color.Black;
 
-            listViewMain.Items.Add(item);
+            listViewWebsites.Items.Add(item);
         }
 
         private void PopulateWebsiteList() {
@@ -68,7 +68,7 @@ namespace Windows_Website_Monitoring
                     item.BackColor = Color.Yellow;
                     item.ForeColor = Color.Black;
 
-                    listViewMain.Items.Add(item);
+                    listViewWebsites.Items.Add(item);
                 }
             }
         }
@@ -81,8 +81,8 @@ namespace Windows_Website_Monitoring
         }
 
         private void CheckStatus() {
-            if (listViewMain.Items.Count > 0) {
-                foreach (ListViewItem item in listViewMain.Items) {
+            if (listViewWebsites.Items.Count > 0) {
+                foreach (ListViewItem item in listViewWebsites.Items) {
                     UpdateStatus(item);
                 }
             }
@@ -194,13 +194,13 @@ namespace Windows_Website_Monitoring
             _websitesList = ConfigManager.GetSectionSettings(CustomConfigSections.Websites);
 
             foreach (var removedWebsite in removedWebsites) {
-                listViewMain.Items.RemoveByKey(removedWebsite);
+                listViewWebsites.Items.RemoveByKey(removedWebsite);
             }
 
             foreach (var website in _websitesList) {
-                if (!listViewMain.Items.ContainsKey(website.Key)) {
+                if (!listViewWebsites.Items.ContainsKey(website.Key)) {
                     Add(website.Key, website.Value);
-                    UpdateStatus(listViewMain.Items[listViewMain.Items.IndexOfKey(website.Key)]);
+                    UpdateStatus(listViewWebsites.Items[listViewWebsites.Items.IndexOfKey(website.Key)]);
                 }
             }
         }
@@ -215,18 +215,30 @@ namespace Windows_Website_Monitoring
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
-        #endregion
 
-        private void listViewMain_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {
-            ListViewExtensions.ListView_DrawColumnHeader(this.listViewMain, sender, e);
+        private void listViewWebsites_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {
+            ListViewExtensions.ListView_DrawColumnHeader(this.listViewWebsites, sender, e);
         }
 
-        private void listViewMain_DrawItem(object sender, DrawListViewItemEventArgs e) {
+        private void listViewWebsites_DrawItem(object sender, DrawListViewItemEventArgs e) {
             ListViewExtensions.ListView_DrawItem(sender, e);
         }
 
-        private void listViewMain_DrawSubItem(object sender, DrawListViewSubItemEventArgs e) {
+        private void listViewWebsites_DrawSubItem(object sender, DrawListViewSubItemEventArgs e) {
             ListViewExtensions.ListView_DrawSubItem(sender, e);
         }
+
+        private void listViewEvents_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {
+            ListViewExtensions.ListView_DrawColumnHeader(this.listViewEvents, sender, e);
+        }
+
+        private void listViewEvents_DrawItem(object sender, DrawListViewItemEventArgs e) {
+            ListViewExtensions.ListView_DrawItem(sender, e);
+        }
+
+        private void listViewEvents_DrawSubItem(object sender, DrawListViewSubItemEventArgs e) {
+            ListViewExtensions.ListView_DrawSubItem(sender, e);
+        }
+        #endregion
     }
 }
