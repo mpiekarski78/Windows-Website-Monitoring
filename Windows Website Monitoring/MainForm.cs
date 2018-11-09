@@ -148,6 +148,7 @@ namespace Windows_Website_Monitoring
                         if (listViewEvents.Items.Count == 0)
                         {
                             AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
+
                         }
                         else
                         {
@@ -156,7 +157,7 @@ namespace Windows_Website_Monitoring
                                 Console.WriteLine(item.SubItems[0].Text);
                                 Console.WriteLine(i.SubItems[0].Text);
 
-                                if (item.SubItems[0].Text != i.SubItems[0].Text)
+                                if (item.SubItems[1].Text != i.SubItems[1].Text)
                                 {
                                     AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
                                 }
