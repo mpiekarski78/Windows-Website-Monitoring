@@ -67,10 +67,16 @@ namespace Windows_Website_Monitoring
 
         #region Private Methods
         //add rows - nowa metoda do dodawania nowych pozycji URL + name
-        private void Add(string url, String name, string status, string response) {
-            String[] row = { url, name, status, response };
+        private void Add(String name, string url) {
+            String[] row = { name, "Wait", "-" };
+
             ListViewItem item = new ListViewItem(row);
-            item.Name = url;
+
+            item.Name = name;
+            item.Tag = url;
+
+            item.BackColor = Color.Yellow;
+            item.ForeColor = Color.Black;
 
             listViewMain.Items.Add(item);
         }
@@ -78,11 +84,13 @@ namespace Windows_Website_Monitoring
         private void PopulateWebsiteList() {
             foreach (var website in _websitesList) {
                 if (website.Key != "" && website.Value != "") {
-                    String[] row = { website.Value, website.Key, "Wait", "-" };
+                    String[] row = { website.Key, "Wait", "-" };
                     ListViewItem item = new ListViewItem(row);
 
-                    item.Name = website.Value;
-                    item.SubItems[2].Text = "Wait";
+                    item.Name = website.Key;
+                    item.Tag = website.Value;
+
+                    item.SubItems[1].Text = "Wait";
                     item.BackColor = Color.Yellow;
                     item.ForeColor = Color.Black;
 
@@ -113,7 +121,7 @@ namespace Windows_Website_Monitoring
             if (item.Text != "") {
                 //checking websites
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(item.Text);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(item.Tag.ToString());
                 request.Timeout = 15000;
                 request.Method = "HEAD";
 
@@ -136,13 +144,13 @@ namespace Windows_Website_Monitoring
 
                     if (urlStatus == true) {
                         status = "Online"; // Text
-                        item.SubItems[3].Text = elapsedTime + " sec";
+                        item.SubItems[2].Text = elapsedTime + " sec";
                     } else {
                         status = "Error"; // Text
-                        item.SubItems[3].Text = "-";
+                        item.SubItems[2].Text = "-";
                     }
 
-                    item.SubItems[2].Text = status;
+                    item.SubItems[1].Text = status;
 
                     if (urlStatus == true) {
                         item.BackColor = Color.Green;
@@ -161,8 +169,6 @@ namespace Windows_Website_Monitoring
         #region Private Event Handlers
         private void MainForm_Load(object sender, EventArgs e) {
             Control.CheckForIllegalCrossThreadCalls = false;
-
-            listViewMain.Columns[0].Width = 0;
 
             _websitesList = ConfigManager.GetSectionSettings(CustomConfigSections.Websites);
 
@@ -214,9 +220,9 @@ namespace Windows_Website_Monitoring
             }
 
             foreach (var website in _websitesList) {
-                if (!listViewMain.Items.ContainsKey(website.Value)) {
-                    Add(website.Value, website.Key, "Wait", "-");
-                    UpdateStatus(listViewMain.Items[listViewMain.Items.IndexOfKey(website.Value)]);
+                if (!listViewMain.Items.ContainsKey(website.Key)) {
+                    Add(website.Key, website.Value);
+                    UpdateStatus(listViewMain.Items[listViewMain.Items.IndexOfKey(website.Key)]);
                 }
             }
 

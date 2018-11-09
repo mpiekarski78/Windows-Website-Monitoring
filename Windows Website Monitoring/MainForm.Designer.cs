@@ -35,7 +35,6 @@
             this.labelFooter = new System.Windows.Forms.Label();
             this.buttonExit = new System.Windows.Forms.Button();
             this.listViewMain = new System.Windows.Forms.ListView();
-            this.columnHeaderWebsiteUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderWebsiteName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderResponse = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -121,7 +120,6 @@
             // 
             this.listViewMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listViewMain.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderWebsiteUrl,
             this.columnHeaderWebsiteName,
             this.columnHeaderStatus,
             this.columnHeaderResponse});
@@ -138,11 +136,6 @@
             this.listViewMain.TabIndex = 0;
             this.listViewMain.UseCompatibleStateImageBehavior = false;
             this.listViewMain.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeaderWebsiteUrl
-            // 
-            this.columnHeaderWebsiteUrl.Text = "Website Url";
-            this.columnHeaderWebsiteUrl.Width = 0;
             // 
             // columnHeaderWebsiteName
             // 
@@ -268,7 +261,6 @@
         private System.Windows.Forms.Label labelStatusOverview;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
         private System.Windows.Forms.ListView listViewMain;
-        private System.Windows.Forms.ColumnHeader columnHeaderWebsiteUrl;
         private System.Windows.Forms.ColumnHeader columnHeaderWebsiteName;
         private System.Windows.Forms.ColumnHeader columnHeaderStatus;
         private System.Windows.Forms.ColumnHeader columnHeaderResponse;

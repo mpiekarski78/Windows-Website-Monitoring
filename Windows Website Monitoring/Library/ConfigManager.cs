@@ -34,5 +34,12 @@ namespace Windows_Website_Monitoring.Library {
             configFile.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
         }
+
+        public static bool SettingExists(CustomConfigSections customConfigSection, string settingName) {
+            var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            var settings = ((AppSettingsSection)configFile.GetSection(customConfigSection.ToString())).Settings;
+
+            return settings.AllKeys.Any(s => s == settingName);
+        }
     }
 }
