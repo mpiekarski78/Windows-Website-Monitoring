@@ -73,6 +73,7 @@
     <Compile Include="FormDetailedView.Designer.cs">
       <DependentUpon>FormDetailedView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Library\LayoutTypes.cs" />
     <Compile Include="Library\CustomConfigSections.cs" />
     <Compile Include="Library\ConfigManager.cs" />
     <Compile Include="MainForm.cs">
