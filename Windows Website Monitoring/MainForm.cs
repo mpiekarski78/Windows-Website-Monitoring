@@ -24,7 +24,10 @@ namespace Windows_Website_Monitoring
         private Dictionary<string, string> _websitesList = new Dictionary<string, string>();
         private System.Windows.Forms.Timer _timer; 
         private LayoutTypes _layout = LayoutTypes.Standard; //początkowy layout
+        public List<KeyValuePair<string, string>> eventTime = new List<KeyValuePair<string, string>>();
+        public string checkSelected;
         #endregion
+
 
         #region Constructor
         public MainForm() {
@@ -36,9 +39,11 @@ namespace Windows_Website_Monitoring
             buttonExit.Image = IconChar.PowerOff.ToBitmap(30, Color.Black);
 
             this.AddMoveEnabledControl(this.labelTitleBar);
+
+
         }
         #endregion
-
+     
         #region Private Methods
         //add rows - nowa metoda do dodawania nowych pozycji URL + name
         private void Add(String name, string url) {
@@ -144,6 +149,9 @@ namespace Windows_Website_Monitoring
                         status = "Error"; // Text
                         item.SubItems[2].Text = "-";
 
+                        //add time to eventTime list
+                        eventTime.Add(new KeyValuePair<string, string>(item.SubItems[0].Text, DateTime.Now.ToString()));
+
                         //check if error exists
                         if (listViewEvents.Items.Count == 0)
                         {
@@ -152,19 +160,22 @@ namespace Windows_Website_Monitoring
                         }
                         else
                         {
-                            foreach (ListViewItem i in listViewEvents.Items)
-                            {
-                                Console.WriteLine(item.SubItems[0].Text);
-                                Console.WriteLine(i.SubItems[0].Text);
+                        foreach (ListViewItem i in listViewEvents.Items)
+                        {
 
-                                if (item.SubItems[1].Text != i.SubItems[1].Text)
-                                {
-                                    AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
+
+                            if (!(item.SubItems[0].Text).Equals(i.SubItems[0].Text))
+                            {
+                                    // Console.WriteLine("Nowe:" + item.SubItems[0].Text.Trim() + item.SubItems[0].Text.Trim().Length + i.SubItems[0].Text.Trim() + i.SubItems[0].Text.Trim().Length);
+                                     //AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1"); //BUGGG
+                                    
+
                                 }
                                 else
                                 {
                                     int eventNum = Int32.Parse(i.SubItems[2].Text) + 1 ;
                                     i.SubItems[2].Text = eventNum.ToString();
+                                    
                                 }
                             }
                         }
@@ -184,8 +195,29 @@ namespace Windows_Website_Monitoring
                 }));
 
             }
+
+
+            //otwieranie okienka jeżeli zaznaczony event
+            checkSelected = listViewEvents.SelectedItems[0].ToString();
+            if (checkSelected != null)
+            {
+                // Console.WriteLine(checkSelected);
+                EventTime eventTimeForm = new EventTime();
+                listViewEvents.SelectedItems.Clear();
+                                
+                eventTimeForm.ShowDialog(this); // Shows Event Time Form
+
+                checkSelected = "";
+                
+
+            }
+            
+
+
         }
         #endregion
+
+
 
         #region Private Event Handlers
         private void MainForm_Load(object sender, EventArgs e) {
@@ -210,7 +242,7 @@ namespace Windows_Website_Monitoring
             DetailVewForm detailViewForm = new DetailVewForm();
             detailViewForm.InitializeForm(_websitesList);
             detailViewForm.WebstitesListChanged += settingsForm_WebstitesListChanged;
-            detailViewForm.ShowDialog(); // Shows SettingsForm
+            detailViewForm.ShowDialog(); // Shows Detailed View Form
         }
 
         private void buttonLayout_Click(object sender, EventArgs e) {

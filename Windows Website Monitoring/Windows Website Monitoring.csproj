@@ -73,6 +73,12 @@
     <Compile Include="DetailVewForm.Designer.cs">
       <DependentUpon>DetailVewForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EventTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EventTime.Designer.cs">
+      <DependentUpon>EventTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Library\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DetailVewForm.resx">
       <DependentUpon>DetailVewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EventTime.resx">
+      <DependentUpon>EventTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Library\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
