@@ -270,7 +270,13 @@ namespace Windows_Website_Monitoring
         }
 
         private void buttonExit_Click(object sender, EventArgs e) {
-            this.Close();
+            //reset pozycji przed zamknięciem
+            if (_layout == LayoutTypes.Docked)
+            {
+             
+                 AppBarHelper.SetAppBar(this, AppBarEdge.None);
+            }
+                this.Close();
         }
 
         private void settingsForm_WebstitesListChanged(List<string> removedWebsites) {
