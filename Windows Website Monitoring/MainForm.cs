@@ -283,7 +283,7 @@ namespace Windows_Website_Monitoring
         }
 
         private void buttonDetails_Click(object sender, EventArgs e) {
-            DetailVewForm detailViewForm = new DetailVewForm();
+            DetailViewForm detailViewForm = new DetailViewForm();
             detailViewForm.InitializeForm(_websitesList);
             detailViewForm.WebstitesListChanged += settingsForm_WebstitesListChanged;
             detailViewForm.ShowDialog(); // Shows Detailed View Form

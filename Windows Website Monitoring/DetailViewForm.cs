@@ -14,7 +14,7 @@ using Windows_Website_Monitoring.Library;
 
 namespace Windows_Website_Monitoring
 {
-    public partial class DetailVewForm : Form
+    public partial class DetailViewForm : Form
     {
 
         private Dictionary<string, string> _websitesList = new Dictionary<string, string>();
@@ -25,7 +25,7 @@ namespace Windows_Website_Monitoring
 
         string checkSelected;
 
-        public DetailVewForm()
+        public DetailViewForm()
         {
             InitializeComponent();
         }

@@ -1,6 +1,6 @@
 ﻿namespace Windows_Website_Monitoring
 {
-    partial class DetailVewForm
+    partial class DetailViewForm
     {
         /// <summary>
         /// Required designer variable.
