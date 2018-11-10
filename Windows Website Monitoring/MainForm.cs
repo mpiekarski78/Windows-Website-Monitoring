@@ -246,20 +246,24 @@ namespace Windows_Website_Monitoring
         }
 
         private void buttonLayout_Click(object sender, EventArgs e) {
+            Console.WriteLine(_layout);
             if (_layout == LayoutTypes.Standard) {
                 // przekierowanie okienka na prawą stronię
+                this.ShowInTaskbar = false;
                 AppBarHelper.AppBarMessage = "Website Monitoring";
                 AppBarHelper.SetAppBar(this, AppBarEdge.Right);
 
-                this.ShowInTaskbar = false;
-
+                
+                
                 _layout = LayoutTypes.Docked;
+
             } else if (_layout == LayoutTypes.Docked) {
                 // przekierowanie okienka -reset
+                this.ShowInTaskbar = true;
                 AppBarHelper.AppBarMessage = "Website Monitoring";
                 AppBarHelper.SetAppBar(this, AppBarEdge.None);
 
-                this.ShowInTaskbar = true;
+                
 
                 _layout = LayoutTypes.Standard;
             }
