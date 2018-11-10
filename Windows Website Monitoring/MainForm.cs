@@ -14,6 +14,7 @@ using tip2tail.WinFormAppBarLib;
 using Windows_Website_Monitoring.Library;
 using FontAwesome.Sharp;
 using System.Diagnostics;
+using System.Net.Http;
 
 //Formularz (MainForm) - głowny form - strona głowna
 namespace Windows_Website_Monitoring
@@ -115,85 +116,128 @@ namespace Windows_Website_Monitoring
         }
 
         private async Task UpdateStatus(ListViewItem item) {
-            bool urlStatus;
+            string urlStatus;
             string status;
 
-            if (item.Text != "") {
-                //checking websites
-
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(item.Tag.ToString());
-                request.Timeout = 15000;
-                request.Method = "HEAD";
-
+            if (item.Text != "")
+            {
                 System.Diagnostics.Stopwatch timer = new Stopwatch(); //response time
                 timer.Start(); //response time
 
-                List<Task> tasks = new List<Task>();
-                tasks.Add(Task.Run(() => {
-                    try {
-                        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse()) {
-                            urlStatus = (response.StatusCode == HttpStatusCode.OK);
-                        }
-                    } catch (WebException) {
-                        urlStatus = false;
+                try
+                {
+                    using (HttpClient client = new HttpClient())
+                    {
+                        client.Timeout = TimeSpan.FromMilliseconds(10000);
+                        HttpResponseMessage response = await client.GetAsync(item.Tag.ToString());
+                        
+
+
+                        string content = await response.Content.ReadAsStringAsync();
+                        var statusCode = response.StatusCode;
+                        Console.WriteLine(statusCode);
+                        urlStatus = statusCode.ToString();
                     }
 
-                    timer.Stop(); //response time
-                    TimeSpan ts = timer.Elapsed;  //response time
-                    var elapsedTime = ts.ToString(@"ms\:ff");  //response time
+                }
+                 // timeout is not propagated as TimeoutException, but as TaskCanceledException.
+                catch (TaskCanceledException)
+                {
+                    // handle somehow
+                    Console.WriteLine("TaskCanceledException");
+                    urlStatus = "Timeout";
+                }
+                catch (HttpRequestException)
+                {
+                    
+                    Console.WriteLine("HttpRequestException");
+                    urlStatus = "Error";
 
-                    if (urlStatus == true) {
-                        status = "Online"; // Text
-                        item.SubItems[2].Text = elapsedTime + " sec";
-                    } else {
-                        status = "Error"; // Text
-                        item.SubItems[2].Text = "-";
+                }
 
-                        //add time to eventTime list
-                        eventTime.Add(new KeyValuePair<string, string>(item.SubItems[0].Text, DateTime.Now.ToString()));
+                timer.Stop(); //response time
+                TimeSpan ts = timer.Elapsed;  //response time
+                var elapsedTime = ts.ToString(@"ms\:ff");  //response time
 
-                        //check if error exists
-                        if (listViewEvents.Items.Count == 0)
-                        {
-                            AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
+                if (urlStatus == "OK")
+                {
+                    status = "Online"; // Text
+                    item.SubItems[2].Text = elapsedTime + " sec";
+                }
+                else if (urlStatus == "NotFound")
+                {
+                    status = "404"; // Text
+                    item.SubItems[2].Text = elapsedTime + " sec";
+                }
+                else
+                {
+                    status = "Error"; // Text
+                    item.SubItems[2].Text = "-";
 
-                        }
-                        else
-                        {
+                    //add time to eventTime list
+                    eventTime.Add(new KeyValuePair<string, string>(item.SubItems[0].Text, DateTime.Now.ToString()));
+
+                    //check if error exists
+                    if (listViewEvents.Items.Count == 0)
+                    {
+                        AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
+
+                    }
+                    else
+                    {
+                        bool checkIfexists = false; // sprawdzenie czy strona istnieje w liście Eventów
                         foreach (ListViewItem i in listViewEvents.Items)
                         {
-
-
-                            if (!(item.SubItems[0].Text).Equals(i.SubItems[0].Text))
+                            if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text))
                             {
-                                    // Console.WriteLine("Nowe:" + item.SubItems[0].Text.Trim() + item.SubItems[0].Text.Trim().Length + i.SubItems[0].Text.Trim() + i.SubItems[0].Text.Trim().Length);
-                                     //AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1"); //BUGGG
-                                    
-
-                                }
-                                else
-                                {
-                                    int eventNum = Int32.Parse(i.SubItems[2].Text) + 1 ;
-                                    i.SubItems[2].Text = eventNum.ToString();
-                                    
-                                }
+                                checkIfexists = true; //istnieje
                             }
                         }
 
+                        foreach (ListViewItem i in listViewEvents.Items) //update eventów
+                        {
+
+
+                            if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text))
+                            {
+
+                                int eventNum = Int32.Parse(i.SubItems[2].Text) + 1;
+                                i.SubItems[2].Text = eventNum.ToString();
+
+
+                            }
+                            else if (checkIfexists == false)
+                            {
+
+                                AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
+                                checkIfexists = true;
+
+                            }
+                        }
                     }
 
-                    item.SubItems[1].Text = status;
+                }
 
-                    if (urlStatus == true) {
-                        item.BackColor = Color.Green;
-                        item.ForeColor = Color.White;
-                    } else {
-                        item.BackColor = Color.Red;
-                        item.ForeColor = Color.White;
-                    }
+                item.SubItems[1].Text = status;
 
-                }));
+                if (urlStatus == "OK")
+                {
+                    item.BackColor = Color.Green;
+                    item.ForeColor = Color.White;
+                }
+                else if (urlStatus == "NotFound")
+                {
+                    item.BackColor = Color.DarkOrange;
+                    item.ForeColor = Color.White;
+                }
+                else
+                {
+                    item.BackColor = Color.Red;
+                    item.ForeColor = Color.White;
+                }
 
+                //}));
+            
             }
 
 
