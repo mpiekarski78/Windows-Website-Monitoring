@@ -29,7 +29,6 @@ namespace Windows_Website_Monitoring
         public string checkSelected;
         #endregion
 
-
         #region Constructor
         public MainForm() {
             InitializeComponent();
@@ -61,7 +60,6 @@ namespace Windows_Website_Monitoring
             listViewWebsites.Items.Add(item);
         }
 
-
         private void AddToEvents(string name, string url, string error, string eventsNum)
         {
             String[] row = { name, error, eventsNum };
@@ -74,13 +72,11 @@ namespace Windows_Website_Monitoring
             item.Name = error;
             item.Name = eventsNum;
             
-
             item.BackColor = Color.Yellow;
             item.ForeColor = Color.Black;
             
             listViewEvents.Items.Add(item);
         }
-
 
         private void PopulateWebsiteList() {
             foreach (var website in _websitesList) {
@@ -130,27 +126,27 @@ namespace Windows_Website_Monitoring
                     {
                         client.Timeout = TimeSpan.FromMilliseconds(10000);
                         HttpResponseMessage response = await client.GetAsync(item.Tag.ToString());
-                        
-
 
                         string content = await response.Content.ReadAsStringAsync();
                         var statusCode = response.StatusCode;
-                        Console.WriteLine(statusCode);
+                        //Console.WriteLine(statusCode);
+                        LogSiteInfo(item, statusCode);
                         urlStatus = statusCode.ToString();
                     }
 
                 }
                  // timeout is not propagated as TimeoutException, but as TaskCanceledException.
-                catch (TaskCanceledException)
+                catch (TaskCanceledException e)
                 {
                     // handle somehow
-                    Console.WriteLine("TaskCanceledException");
+                    //Console.WriteLine("TaskCanceledException");
+                    LogSiteWarning(item, e);
                     urlStatus = "Timeout";
                 }
-                catch (HttpRequestException)
+                catch (HttpRequestException e)
                 {
-                    
-                    Console.WriteLine("HttpRequestException");
+                    //Console.WriteLine("HttpRequestException");
+                    LogSiteError(item, e, true);
                     urlStatus = "Error";
 
                 }
@@ -181,7 +177,6 @@ namespace Windows_Website_Monitoring
                     if (listViewEvents.Items.Count == 0)
                     {
                         AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
-
                     }
                     else
                     {
@@ -196,26 +191,18 @@ namespace Windows_Website_Monitoring
 
                         foreach (ListViewItem i in listViewEvents.Items) //update eventów
                         {
-
-
                             if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text))
                             {
-
                                 int eventNum = Int32.Parse(i.SubItems[2].Text) + 1;
                                 i.SubItems[2].Text = eventNum.ToString();
-
-
                             }
                             else if (checkIfexists == false)
                             {
-
                                 AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
                                 checkIfexists = true;
-
                             }
                         }
                     }
-
                 }
 
                 item.SubItems[1].Text = status;
@@ -237,13 +224,10 @@ namespace Windows_Website_Monitoring
                 }
 
                 //}));
-            
             }
 
-
             //otwieranie okienka jeżeli zaznaczony event
-            checkSelected = listViewEvents.SelectedItems[0].ToString();
-            if (checkSelected != null)
+            if (listViewEvents.SelectedItems.Count > 0)
             {
                 // Console.WriteLine(checkSelected);
                 EventTime eventTimeForm = new EventTime();
@@ -252,16 +236,25 @@ namespace Windows_Website_Monitoring
                 eventTimeForm.ShowDialog(this); // Shows Event Time Form
 
                 checkSelected = "";
-                
-
             }
-            
+        }
 
+        private void LogSiteInfo(ListViewItem item, HttpStatusCode httpStatusCode) {
+            LogManager.LogInformation($"{item.Text} ({item.Tag.ToString()}) - {httpStatusCode.ToString()}");
+        }
 
+        private void LogSiteWarning(ListViewItem item, Exception exception) {
+            LogManager.LogWarning($"Site {item.Text}({item.Tag.ToString()}) logged {exception.GetType()}: {exception.Message} ---> {exception.InnerException?.GetType()}: {exception.InnerException?.Message}");
+        }
+
+        private void LogSiteError(ListViewItem item, Exception exception, bool includeExceptionDetails = false) {
+            if (includeExceptionDetails) {
+                LogManager.LogError($"{item.Text} ({item.Tag.ToString()}) logged {exception.GetType()}: {exception.Message} ---> {exception.InnerException?.GetType()}: {exception.InnerException?.Message}", exception); 
+            } else {
+                LogManager.LogError($"{item.Text} ({item.Tag.ToString()}) logged {exception.GetType()}: {exception.Message} ---> {exception.InnerException?.GetType()}: {exception.InnerException?.Message}");
+            }
         }
         #endregion
-
-
 
         #region Private Event Handlers
         private void MainForm_Load(object sender, EventArgs e) {
@@ -272,7 +265,12 @@ namespace Windows_Website_Monitoring
             PopulateWebsiteList();
 
             InitTimer(); //uruchomienie sprawdzania działania stron
+        }
 
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+            if (_layout == LayoutTypes.Docked) {
+                AppBarHelper.SetAppBar(this, AppBarEdge.None);
+            }
         }
 
         private void buttonConfig_Click(object sender, EventArgs e) {
@@ -290,14 +288,12 @@ namespace Windows_Website_Monitoring
         }
 
         private void buttonLayout_Click(object sender, EventArgs e) {
-            Console.WriteLine(_layout);
+            var prevLayout = _layout;
             if (_layout == LayoutTypes.Standard) {
                 // przekierowanie okienka na prawą stronię
                 this.ShowInTaskbar = false;
                 AppBarHelper.AppBarMessage = "Website Monitoring";
                 AppBarHelper.SetAppBar(this, AppBarEdge.Right);
-
-                
                 
                 _layout = LayoutTypes.Docked;
 
@@ -307,20 +303,14 @@ namespace Windows_Website_Monitoring
                 AppBarHelper.AppBarMessage = "Website Monitoring";
                 AppBarHelper.SetAppBar(this, AppBarEdge.None);
 
-                
-
                 _layout = LayoutTypes.Standard;
             }
+
+            LogManager.LogDebug($"Changed layout from {prevLayout.ToString()} to {_layout.ToString()}");
         }
 
         private void buttonExit_Click(object sender, EventArgs e) {
-            //reset pozycji przed zamknięciem
-            if (_layout == LayoutTypes.Docked)
-            {
-             
-                 AppBarHelper.SetAppBar(this, AppBarEdge.None);
-            }
-                this.Close();
+            this.Close();
         }
 
         private void settingsForm_WebstitesListChanged(List<string> removedWebsites) {
