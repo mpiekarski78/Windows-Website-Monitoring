@@ -25,10 +25,11 @@ namespace Windows_Website_Monitoring
         private Dictionary<string, string> _websitesList = new Dictionary<string, string>();
         private System.Windows.Forms.Timer _timer; 
         private LayoutTypes _layout = LayoutTypes.Standard; //początkowy layout
-        public List<KeyValuePair<string, string>> eventTime = new List<KeyValuePair<string, string>>();
+        public List<EventClass> eventsList = new List<EventClass>();
         public string checkSelected;
         #endregion
 
+     
         #region Constructor
         public MainForm() {
             InitializeComponent();
@@ -60,6 +61,8 @@ namespace Windows_Website_Monitoring
             listViewWebsites.Items.Add(item);
         }
 
+      
+
         private void AddToEvents(string name, string url, string error, string eventsNum)
         {
             String[] row = { name, error, eventsNum };
@@ -71,10 +74,16 @@ namespace Windows_Website_Monitoring
             item.Name = name;
             item.Name = error;
             item.Name = eventsNum;
-            
-            item.BackColor = Color.Yellow;
-            item.ForeColor = Color.Black;
-            
+            if (error == "404")
+            {
+                item.BackColor = Color.DodgerBlue;
+                item.ForeColor = Color.White;
+            }
+            else
+            {
+                item.BackColor = Color.OrangeRed;
+                item.ForeColor = Color.White;
+            }
             listViewEvents.Items.Add(item);
         }
 
@@ -103,10 +112,10 @@ namespace Windows_Website_Monitoring
             _timer.Start();
         }
 
-        private void CheckStatus() {
+        private async void CheckStatus() {
             if (listViewWebsites.Items.Count > 0) {
                 foreach (ListViewItem item in listViewWebsites.Items) {
-                    UpdateStatus(item);
+                    await UpdateStatus(item);
                 }
             }
         }
@@ -147,7 +156,7 @@ namespace Windows_Website_Monitoring
                 {
                     //Console.WriteLine("HttpRequestException");
                     LogSiteError(item, e, true);
-                    urlStatus = "Error";
+                    urlStatus = "Down";
 
                 }
 
@@ -164,16 +173,63 @@ namespace Windows_Website_Monitoring
                 {
                     status = "404"; // Text
                     item.SubItems[2].Text = elapsedTime + " sec";
+
+                    //add 404 Not Found to eventTime list with a custom class
+                    eventsList.Add(new EventClass
+                    {
+                        eventWebsite = item.SubItems[0].Text,
+                        eventType = "404 Not Found",
+                        eventDateTime = DateTime.Now
+                    });
+                    //check if error exists (TODO - duplikacja kodu)
+                    if (listViewEvents.Items.Count == 0)
+                    {
+                        AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
+                       
+                    }
+                    else
+                    {
+                        bool checkIfexists = false; // sprawdzenie czy strona istnieje w liście Eventów
+                        foreach (ListViewItem i in listViewEvents.Items)
+                        {
+                            if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text))
+                            {
+                                checkIfexists = true; //istnieje
+                            }
+                        }
+
+                        foreach (ListViewItem i in listViewEvents.Items) //update eventów
+                        {
+                            if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text))
+                            {
+                                int eventNum = Int32.Parse(i.SubItems[2].Text) + 1;
+                                i.SubItems[2].Text = eventNum.ToString();
+                            }
+                            else if (checkIfexists == false)
+                            {
+                                AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
+                                checkIfexists = true;
+                            }
+                        }
+                    }
                 }
                 else
                 {
-                    status = "Error"; // Text
+                    status = "Down"; // Text
                     item.SubItems[2].Text = "-";
 
-                    //add time to eventTime list
-                    eventTime.Add(new KeyValuePair<string, string>(item.SubItems[0].Text, DateTime.Now.ToString()));
+                    //add TIMEOUT to eventTime list with a custom class
+                    
+                    eventsList.Add(new EventClass
+                    {
+                        eventWebsite = item.SubItems[0].Text,
+                        eventType  = "Unreachable",
+                        eventDateTime = DateTime.Now
+                    }
+                        );
+                    
 
-                    //check if error exists
+                    //check if error exists  (TODO - duplikacja kodu)
                     if (listViewEvents.Items.Count == 0)
                     {
                         AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
@@ -214,12 +270,12 @@ namespace Windows_Website_Monitoring
                 }
                 else if (urlStatus == "NotFound")
                 {
-                    item.BackColor = Color.DarkOrange;
+                    item.BackColor = Color.DodgerBlue;
                     item.ForeColor = Color.White;
                 }
                 else
                 {
-                    item.BackColor = Color.Red;
+                    item.BackColor = Color.OrangeRed;
                     item.ForeColor = Color.White;
                 }
 
@@ -314,7 +370,7 @@ namespace Windows_Website_Monitoring
             this.Close();
         }
 
-        private void settingsForm_WebstitesListChanged(List<string> removedWebsites) {
+        private async void settingsForm_WebstitesListChanged(List<string> removedWebsites) {
             _websitesList = ConfigManager.GetSectionSettings(CustomConfigSections.Websites);
 
             foreach (var removedWebsite in removedWebsites) {
@@ -324,7 +380,7 @@ namespace Windows_Website_Monitoring
             foreach (var website in _websitesList) {
                 if (!listViewWebsites.Items.ContainsKey(website.Key)) {
                     Add(website.Key, website.Value);
-                    UpdateStatus(listViewWebsites.Items[listViewWebsites.Items.IndexOfKey(website.Key)]);
+                    await UpdateStatus(listViewWebsites.Items[listViewWebsites.Items.IndexOfKey(website.Key)]);
                 }
             }
         }

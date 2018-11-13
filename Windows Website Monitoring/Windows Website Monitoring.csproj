@@ -80,6 +80,7 @@
     <Compile Include="DetailViewForm.Designer.cs">
       <DependentUpon>DetailViewForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EventClass.cs" />
     <Compile Include="EventTime.cs">
       <SubType>Form</SubType>
     </Compile>

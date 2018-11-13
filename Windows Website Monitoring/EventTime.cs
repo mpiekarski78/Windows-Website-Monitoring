@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,13 +27,10 @@ namespace Windows_Website_Monitoring
 
 
 
-            foreach (var element in MainForm.eventTime)
+            foreach (var element in MainForm.eventsList)
             {
-                //   Console.WriteLine(element); //debug
-                if (element.Key.ToString() == selectedWebsite) {
-                    //richTextBoxEvents.AppendText("\r\n" + ExtractString(MainForm.checkSelected,"{","}")); //debug
-                    //richTextBoxEvents.AppendText("\r\n" + element.Key.ToString()); //debug
-                    richTextBoxEvents.AppendText("\r\n" + element);
+                if (element.eventWebsite == selectedWebsite) {
+                    richTextBoxEvents.AppendText("\r\n" + element.eventWebsite + " - " + element.eventType + " at  " + element.eventDateTime.ToString("HH:mm:ss:tt") + " on " + element.eventDateTime.ToString("dddd, dd MMMM yyyy"));
                 }
                 
             }
@@ -47,5 +45,17 @@ namespace Windows_Website_Monitoring
             return s.Substring(startIndex, endIndex - startIndex);
         }
 
+        private void buttonSaveToFile_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog oSaveFileDialog = new SaveFileDialog();
+            oSaveFileDialog.Filter = "All files (*.txt) | *.txt";
+            if (oSaveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = oSaveFileDialog.FileName;
+                using (File.Create(Path.GetFullPath(oSaveFileDialog.FileName))) ;
+                richTextBoxEvents.SaveFile(Path.GetFullPath(oSaveFileDialog.FileName), RichTextBoxStreamType.PlainText);
+            }
+
+        }
     }
 }
