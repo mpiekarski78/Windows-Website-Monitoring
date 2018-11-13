@@ -229,6 +229,7 @@ namespace Windows_Website_Monitoring
             //otwieranie okienka jeżeli zaznaczony event
             if (listViewEvents.SelectedItems.Count > 0)
             {
+                checkSelected = listViewEvents.SelectedItems[0].ToString();
                 // Console.WriteLine(checkSelected);
                 EventTime eventTimeForm = new EventTime();
                 listViewEvents.SelectedItems.Clear();
