@@ -27,10 +27,10 @@ namespace Windows_Website_Monitoring
 
 
 
-            foreach (var element in MainForm.eventsList)
+            foreach (var element in MainForm._eventDetailsList)
             {
-                if (element.eventWebsite == selectedWebsite) {
-                    richTextBoxEvents.AppendText("\r\n" + element.eventWebsite + " - " + element.eventType + " at  " + element.eventDateTime.ToString("HH:mm:ss:tt") + " on " + element.eventDateTime.ToString("dddd, dd MMMM yyyy"));
+                if (element.WebsiteName == selectedWebsite) {
+                    richTextBoxEvents.AppendText("\r\n" + element.WebsiteName + " - " + element.Description + " at  " + element.EventTime.ToString("HH:mm:ss:tt") + " on " + element.EventTime.ToString("dddd, dd MMMM yyyy"));
                 }
                 
             }
@@ -52,7 +52,7 @@ namespace Windows_Website_Monitoring
             if (oSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string fileName = oSaveFileDialog.FileName;
-                using (File.Create(Path.GetFullPath(oSaveFileDialog.FileName))) ;
+                using (File.Create(Path.GetFullPath(oSaveFileDialog.FileName)));
                 richTextBoxEvents.SaveFile(Path.GetFullPath(oSaveFileDialog.FileName), RichTextBoxStreamType.PlainText);
             }
 

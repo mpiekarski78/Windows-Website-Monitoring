@@ -8,7 +8,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading;
 using System.Configuration;
 using tip2tail.WinFormAppBarLib;
 using Windows_Website_Monitoring.Library;
@@ -23,13 +22,12 @@ namespace Windows_Website_Monitoring
         #region Private Members
         private HashSet<Control> _controlsToMove = new HashSet<Control>();
         private Dictionary<string, string> _websitesList = new Dictionary<string, string>();
-        private System.Windows.Forms.Timer _timer; 
+        private Timer _timer; 
         private LayoutTypes _layout = LayoutTypes.Standard; //początkowy layout
-        public List<EventClass> eventsList = new List<EventClass>();
+        public List<EventDetail> _eventDetailsList = new List<EventDetail>();
         public string checkSelected;
         #endregion
 
-     
         #region Constructor
         public MainForm() {
             InitializeComponent();
@@ -47,7 +45,7 @@ namespace Windows_Website_Monitoring
      
         #region Private Methods
         //add rows - nowa metoda do dodawania nowych pozycji URL + name
-        private void Add(String name, string url) {
+        private void Add(string name, string url) {
             String[] row = { name, "Wait", "-" };
 
             ListViewItem item = new ListViewItem(row);
@@ -61,19 +59,16 @@ namespace Windows_Website_Monitoring
             listViewWebsites.Items.Add(item);
         }
 
-      
-
-        private void AddToEvents(string name, string url, string error, string eventsNum)
+        private void AddToEvents(string name, string url, string error)
         {
-            String[] row = { name, error, eventsNum };
+            string[] row = { name, error, "1" };
 
             ListViewItem item = new ListViewItem(row);
 
             item.Tag = url;
 
             item.Name = name;
-            item.Name = error;
-            item.Name = eventsNum;
+
             if (error == "404")
             {
                 item.BackColor = Color.DodgerBlue;
@@ -106,7 +101,7 @@ namespace Windows_Website_Monitoring
         }
 
         private void InitTimer() {
-            _timer = new System.Windows.Forms.Timer();
+            _timer = new Timer();
             _timer.Tick += new EventHandler(timer_Tick);
             _timer.Interval = 2000; // in miliseconds
             _timer.Start();
@@ -121,12 +116,14 @@ namespace Windows_Website_Monitoring
         }
 
         private async Task UpdateStatus(ListViewItem item) {
-            string urlStatus;
-            string status;
+            HttpStatusCode statusCode = HttpStatusCode.NotImplemented;
+            string statusDescription = "";
+            bool errorOccured = false;
+            DateTime eventTime = DateTime.MinValue;
 
             if (item.Text != "")
             {
-                System.Diagnostics.Stopwatch timer = new Stopwatch(); //response time
+                Stopwatch timer = new Stopwatch(); //response time
                 timer.Start(); //response time
 
                 try
@@ -136,150 +133,115 @@ namespace Windows_Website_Monitoring
                         client.Timeout = TimeSpan.FromMilliseconds(10000);
                         HttpResponseMessage response = await client.GetAsync(item.Tag.ToString());
 
-                        string content = await response.Content.ReadAsStringAsync();
-                        var statusCode = response.StatusCode;
-                        //Console.WriteLine(statusCode);
+                        statusCode = response.StatusCode;
                         LogSiteInfo(item, statusCode);
-                        urlStatus = statusCode.ToString();
+                        statusDescription = statusCode.ToString();
                     }
-
                 }
+
                  // timeout is not propagated as TimeoutException, but as TaskCanceledException.
                 catch (TaskCanceledException e)
                 {
                     // handle somehow
                     //Console.WriteLine("TaskCanceledException");
                     LogSiteWarning(item, e);
-                    urlStatus = "Timeout";
+                    statusCode = HttpStatusCode.GatewayTimeout;
+                    statusDescription = "Timeout";
                 }
                 catch (HttpRequestException e)
                 {
                     //Console.WriteLine("HttpRequestException");
                     LogSiteError(item, e, true);
-                    urlStatus = "Down";
-
+                    statusCode = HttpStatusCode.BadGateway;
+                    statusDescription = "Down";
                 }
 
                 timer.Stop(); //response time
                 TimeSpan ts = timer.Elapsed;  //response time
-                var elapsedTime = ts.ToString(@"ms\:ff");  //response time
+                var elapsedTime = $"{ts.ToString(@"ms\:ff")} sec";  //response time
 
-                if (urlStatus == "OK")
-                {
-                    status = "Online"; // Text
-                    item.SubItems[2].Text = elapsedTime + " sec";
+                switch (statusCode) {
+                    case HttpStatusCode.OK: {
+                            statusDescription = "Online";
+                            
+                            item.BackColor = Color.Green;
+                            item.ForeColor = Color.White;
+
+                            break;
+                        }
+                    case HttpStatusCode.NotFound: {
+                            statusDescription = "404";
+
+                            item.BackColor = Color.DodgerBlue;
+                            item.ForeColor = Color.White;
+
+                            errorOccured = true;
+                            eventTime = DateTime.Now;
+
+                            break;
+                        }
+                    default: {
+                            statusDescription = "Down";
+                            elapsedTime = "-";
+
+                            item.BackColor = Color.OrangeRed;
+                            item.ForeColor = Color.White;
+
+                            errorOccured = true;
+                            eventTime = DateTime.Now;
+
+                            break;
+                        }
                 }
-                else if (urlStatus == "NotFound")
-                {
-                    status = "404"; // Text
-                    item.SubItems[2].Text = elapsedTime + " sec";
 
-                    //add 404 Not Found to eventTime list with a custom class
-                    eventsList.Add(new EventClass
-                    {
-                        eventWebsite = item.SubItems[0].Text,
-                        eventType = "404 Not Found",
-                        eventDateTime = DateTime.Now
+                item.SubItems[1].Text = statusDescription;
+                item.SubItems[2].Text = elapsedTime;
+
+                if (errorOccured) {
+                    _eventDetailsList.Add(new EventDetail {
+                        WebsiteName = item.SubItems[0].Text,
+                        Description = $"{statusDescription} ({statusCode})",
+                        EventTime = eventTime
                     });
-                    //check if error exists (TODO - duplikacja kodu)
-                    if (listViewEvents.Items.Count == 0)
-                    {
-                        AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
-                       
-                    }
-                    else
-                    {
-                        bool checkIfexists = false; // sprawdzenie czy strona istnieje w liście Eventów
-                        foreach (ListViewItem i in listViewEvents.Items)
-                        {
-                            if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text))
-                            {
-                                checkIfexists = true; //istnieje
-                            }
-                        }
 
-                        foreach (ListViewItem i in listViewEvents.Items) //update eventów
-                        {
-                            if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text))
-                            {
-                                int eventNum = Int32.Parse(i.SubItems[2].Text) + 1;
-                                i.SubItems[2].Text = eventNum.ToString();
-                            }
-                            else if (checkIfexists == false)
-                            {
-                                AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
-                                checkIfexists = true;
-                            }
+                    if (listViewEvents.Items.Count == 0) {
+                        AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription);
+                    } else {
+                        if (listViewEvents.Items.ContainsKey(item.SubItems[0].Text)) {
+                            var eventItemIndex = listViewEvents.Items.IndexOfKey(item.SubItems[0].Text);
+                            var eventItem = listViewEvents.Items[eventItemIndex];
+                            int eventNum = Int32.Parse(eventItem.SubItems[2].Text) + 1;
+
+                            eventItem.SubItems[2].Text = eventNum.ToString();
+                        } else {
+                            AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription);
                         }
                     }
+
+                    //// if error exists(TODO - duplikacja kodu)
+                    //if (listViewEvents.Items.Count == 0) {
+                    //    AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription, "1");
+
+                    //} else {
+                    //    bool checkIfexists = false; // sprawdzenie czy strona istnieje w liście Eventów
+                    //    foreach (ListViewItem i in listViewEvents.Items) {
+                    //        if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text)) {
+                    //            checkIfexists = true; //istnieje
+                    //        }
+                    //    }
+
+                    //    foreach (ListViewItem i in listViewEvents.Items) //update eventów
+                    //    {
+                    //        if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text)) {
+                    //            int eventNum = Int32.Parse(i.SubItems[2].Text) + 1;
+                    //            i.SubItems[2].Text = eventNum.ToString();
+                    //        } else if (checkIfexists == false) {
+                    //            AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription, "1");
+                    //            checkIfexists = true;
+                    //        }
+                    //    }
+                    //}
                 }
-                else
-                {
-                    status = "Down"; // Text
-                    item.SubItems[2].Text = "-";
-
-                    //add TIMEOUT to eventTime list with a custom class
-                    
-                    eventsList.Add(new EventClass
-                    {
-                        eventWebsite = item.SubItems[0].Text,
-                        eventType  = "Unreachable",
-                        eventDateTime = DateTime.Now
-                    }
-                        );
-                    
-
-                    //check if error exists  (TODO - duplikacja kodu)
-                    if (listViewEvents.Items.Count == 0)
-                    {
-                        AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
-                    }
-                    else
-                    {
-                        bool checkIfexists = false; // sprawdzenie czy strona istnieje w liście Eventów
-                        foreach (ListViewItem i in listViewEvents.Items)
-                        {
-                            if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text))
-                            {
-                                checkIfexists = true; //istnieje
-                            }
-                        }
-
-                        foreach (ListViewItem i in listViewEvents.Items) //update eventów
-                        {
-                            if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text))
-                            {
-                                int eventNum = Int32.Parse(i.SubItems[2].Text) + 1;
-                                i.SubItems[2].Text = eventNum.ToString();
-                            }
-                            else if (checkIfexists == false)
-                            {
-                                AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, status, "1");
-                                checkIfexists = true;
-                            }
-                        }
-                    }
-                }
-
-                item.SubItems[1].Text = status;
-
-                if (urlStatus == "OK")
-                {
-                    item.BackColor = Color.Green;
-                    item.ForeColor = Color.White;
-                }
-                else if (urlStatus == "NotFound")
-                {
-                    item.BackColor = Color.DodgerBlue;
-                    item.ForeColor = Color.White;
-                }
-                else
-                {
-                    item.BackColor = Color.OrangeRed;
-                    item.ForeColor = Color.White;
-                }
-
-                //}));
             }
 
             //otwieranie okienka jeżeli zaznaczony event
