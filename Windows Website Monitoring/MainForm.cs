@@ -108,10 +108,10 @@ namespace Windows_Website_Monitoring
             _timer.Start();
         }
 
-        private async void CheckStatus() {
+        private void CheckStatus() {
             if (listViewWebsites.Items.Count > 0) {
                 foreach (ListViewItem item in listViewWebsites.Items) {
-                    await UpdateStatus(item);
+                     UpdateStatus(item);
                 }
             }
         }
@@ -234,9 +234,9 @@ namespace Windows_Website_Monitoring
                 //Add to _fullDetailsList
                 _fullDetailsList.Add(new FullDetail
                 {
-                    WebsiteUrl = "jakis url",
+                    WebsiteUrl = item.Tag.ToString(),
                     WebsiteName = item.SubItems[0].Text,
-                    WebsiteStatus = $"{statusDescription} ({statusCode})",
+                    WebsiteStatus = statusDescription,
                     WebsiteResponse = elapsedTime
                 });
 
@@ -382,5 +382,10 @@ namespace Windows_Website_Monitoring
             ListViewExtensions.ListView_DrawSubItem(sender, e);
         }
         #endregion
+
+        private void labelTitleBar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

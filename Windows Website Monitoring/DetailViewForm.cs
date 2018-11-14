@@ -39,7 +39,7 @@ namespace Windows_Website_Monitoring
         {
             Timer timer1 = new Timer();
             timer1.Tick += new EventHandler(timer1_Tick);
-            timer1.Interval = 2000; // in miliseconds
+            timer1.Interval = 1000; // in miliseconds
             timer1.Start();
         }
 
@@ -51,92 +51,55 @@ namespace Windows_Website_Monitoring
                 foreach (ListViewItem item in listViewMain.Items)
                 {
                     // UpdateStatus(item); //TODO
-
+                    getFullDetails(item);  //TODO
                 }
-                showFullDetails();  //TODO
+                
 
             }
         }
-        
-         //TODO
-        public void showFullDetails() {
+
+        //getFullDetails -> ListViewItem
+        private void getFullDetails(ListViewItem item) {
 
             foreach (var element in MainForm._fullDetailsList)
             {
 
-                Console.WriteLine(element.WebsiteName);
-            }
-
-
-         }
-
-
-
-        private async Task UpdateStatus(ListViewItem item)
-        {
-            bool urlStatus;
-            string status;
-            
-            if (item.Text != "")
-            {
-                //checking websites
-
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(item.Text);
-                request.Timeout = 15000;
-                request.Method = "HEAD";
-
-                System.Diagnostics.Stopwatch timer = new Stopwatch(); //response time
-                timer.Start(); //response time
-
-                List<Task> tasks = new List<Task>();
-                tasks.Add(Task.Run(() =>
+                if (item.SubItems[0].Text == element.WebsiteUrl)
                 {
-                    try
-                    {
-                        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                        {
-                            urlStatus = (response.StatusCode == HttpStatusCode.OK);
-                        }
-                    }
-                    catch (WebException)
-                    {
-                        urlStatus = false;
-                    }
 
-                    timer.Stop(); //response time
-                    TimeSpan ts = timer.Elapsed;  //response time
-                    var elapsedTime = ts.ToString(@"ms\:ff");  //response time
-
-                    if (urlStatus == true)
-                    {
-                        status = "Online"; // Text
-                        item.SubItems[3].Text = elapsedTime + " sec";
-                    }
-                    else
-                    {
-                        status = "Error"; // Text
-                        item.SubItems[3].Text = "-";
-                    }
-
-                    item.SubItems[2].Text = status;
-
-                    if (urlStatus == true)
+                    //Console.WriteLine(element.WebsiteName);
+                    item.SubItems[0].Text = element.WebsiteUrl;
+                    item.SubItems[1].Text = element.WebsiteName;
+                    item.SubItems[2].Text = element.WebsiteStatus;
+                    item.SubItems[3].Text = element.WebsiteResponse;
+                    item.SubItems[4].Text = "ToDo";
+                    item.SubItems[5].Text = "ToDo";
+           
+            switch (element.WebsiteStatus)
+            {
+                case "Online":
                     {
                         item.BackColor = Color.Green;
                         item.ForeColor = Color.White;
+                        break;
                     }
-                    else
+                case "404":
                     {
-                        item.BackColor = Color.Red;
+                        item.BackColor = Color.DodgerBlue;
                         item.ForeColor = Color.White;
+                        break;
                     }
-
-                }));
-
+                default:
+                    {
+                   
+                        item.BackColor = Color.OrangeRed;
+                        item.ForeColor = Color.White;
+                        break;
+                    }
+            }
+                }
             }
         }
-
-
       
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -164,6 +127,9 @@ namespace Windows_Website_Monitoring
             //update chart
             
             chartResponseTime.Series["Response Time"].Points.AddXY(DateTime.Now, responseTimeFormatToInt);
+
+            chartResponseTime.Palette = ChartColorPalette.SemiTransparent;
+
 
             //limit chart
             if (chartResponseTime.Series[0].Points.Count > 10)
@@ -226,13 +192,23 @@ namespace Windows_Website_Monitoring
             {
                 if (website.Key != "" && website.Value != "")
                 {
-                    String[] row = { website.Value, website.Key, "Wait", "-" };
+                    String[] row = { website.Value, website.Key, "Wait", "-" ,"",""};
                     ListViewItem item = new ListViewItem(row);
                     item.Name = website.Value;
 
                     listViewMain.Items.Add(item);
                 }
             }
+        }
+
+        private void listViewMain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chartResponseTime_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

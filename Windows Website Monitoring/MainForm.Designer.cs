@@ -246,6 +246,7 @@
             this.labelTitleBar.TabIndex = 4;
             this.labelTitleBar.Text = "Website Monitoring";
             this.labelTitleBar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelTitleBar.Click += new System.EventHandler(this.labelTitleBar_Click);
             // 
             // labelEventOverview
             // 
