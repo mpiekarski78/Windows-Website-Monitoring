@@ -1,6 +1,5 @@
 ﻿using System;
-
-//Formularz (MainForm) - głowny form - strona głowna
+//NOTE: Used in the MainForm
 namespace Windows_Website_Monitoring.Library
 {
     public class EventDetail

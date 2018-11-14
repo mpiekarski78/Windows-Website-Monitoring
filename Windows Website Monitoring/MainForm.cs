@@ -15,7 +15,7 @@ using FontAwesome.Sharp;
 using System.Diagnostics;
 using System.Net.Http;
 
-//Formularz (MainForm) - głowny form - strona głowna
+//NOTE: Main form (MainForm) - main app screen
 namespace Windows_Website_Monitoring
 {
     public partial class MainForm : BaseForm {
@@ -23,9 +23,9 @@ namespace Windows_Website_Monitoring
         private HashSet<Control> _controlsToMove = new HashSet<Control>();
         private Dictionary<string, string> _websitesList = new Dictionary<string, string>();
         private Timer _timer; 
-        private LayoutTypes _layout = LayoutTypes.Standard; //początkowy layout
+        private LayoutTypes _layout = LayoutTypes.Standard; //NOTE: initial layout
         public List<EventDetail> _eventDetailsList = new List<EventDetail>();
-        public static List<FullDetail> _fullDetailsList = new List<FullDetail>(); // MainForm -> DetailsViewForm
+        public static List<FullDetail> _fullDetailsList = new List<FullDetail>(); //NOTE: MainForm -> DetailsViewForm
         public string checkSelected;
         #endregion
 
@@ -43,9 +43,9 @@ namespace Windows_Website_Monitoring
 
         }
         #endregion
-     
+
         #region Private Methods
-        //add rows - nowa metoda do dodawania nowych pozycji URL + name
+        //NOTE: add rows - add new items to the listView
         private void Add(string name, string url) {
             String[] row = { name, "Wait", "-" };
 
@@ -104,14 +104,14 @@ namespace Windows_Website_Monitoring
         private void InitTimer() {
             _timer = new Timer();
             _timer.Tick += new EventHandler(timer_Tick);
-            _timer.Interval = 2000; // in miliseconds
+            _timer.Interval = 2000; //NOTE: in miliseconds
             _timer.Start();
         }
 
         private void CheckStatus() {
             if (listViewWebsites.Items.Count > 0) {
                 foreach (ListViewItem item in listViewWebsites.Items) {
-                     UpdateStatus(item);
+                     UpdateStatus(item);  //TODO: (optional) async wasn't working the wait it suppose to. 
                 }
             }
         }
@@ -124,8 +124,8 @@ namespace Windows_Website_Monitoring
 
             if (item.Text != "")
             {
-                Stopwatch timer = new Stopwatch(); //response time
-                timer.Start(); //response time
+                Stopwatch timer = new Stopwatch(); //NOTE: for the response time 
+                timer.Start(); //NOTE: for the response time (START)
 
                 try
                 {
@@ -140,26 +140,26 @@ namespace Windows_Website_Monitoring
                     }
                 }
 
-                 // timeout is not propagated as TimeoutException, but as TaskCanceledException.
+                //NOTE: timeout is not propagated as TimeoutException, but as TaskCanceledException.
                 catch (TaskCanceledException e)
                 {
-                    // handle somehow
-                    //Console.WriteLine("TaskCanceledException");
+                    //NOTE: handle somehow
+                    //DEBUG: Console.WriteLine("TaskCanceledException");
                     LogSiteWarning(item, e);
                     statusCode = HttpStatusCode.GatewayTimeout;
                     statusDescription = "Timeout";
                 }
                 catch (HttpRequestException e)
                 {
-                    //Console.WriteLine("HttpRequestException");
+                    //DEBUG: Console.WriteLine("HttpRequestException");
                     LogSiteError(item, e, true);
                     statusCode = HttpStatusCode.BadGateway;
                     statusDescription = "Down";
                 }
 
-                timer.Stop(); //response time
-                TimeSpan ts = timer.Elapsed;  //response time
-                var elapsedTime = $"{ts.ToString(@"ms\:ff")} sec";  //response time
+                timer.Stop(); //NOTE: for the response time (END)
+                TimeSpan ts = timer.Elapsed;  //NOTE: from the response time
+                var elapsedTime = $"{ts.ToString(@"ms\:ff")} sec";  //NOTE: from the response time
 
                 switch (statusCode) {
                     case HttpStatusCode.OK: {
@@ -221,17 +221,7 @@ namespace Windows_Website_Monitoring
                     
                 }
 
-                //Remove if exists in _fullDetailsList (option - not sure if I want to add this, since with the full list I will be able to 
-                // calculate average resposnse time) - used for debug atm.
-
-//                foreach (var element in _fullDetailsList)
-//                {
-//                    Console.WriteLine(element.WebsiteName);
-//               }
-//                Console.WriteLine("----------");
-
-
-                //Add to _fullDetailsList
+                //NOTE: Add to _fullDetailsList
                 _fullDetailsList.Add(new FullDetail
                 {
                     WebsiteUrl = item.Tag.ToString(),
@@ -244,15 +234,15 @@ namespace Windows_Website_Monitoring
 
             }
 
-            //otwieranie okienka jeżeli zaznaczony event
+            //NOTE: open the event window if any item is selected 
             if (listViewEvents.SelectedItems.Count > 0)
             {
                 checkSelected = listViewEvents.SelectedItems[0].ToString();
-                // Console.WriteLine(checkSelected);
+                //DEBUG: Console.WriteLine(checkSelected);
                 EventTime eventTimeForm = new EventTime();
                 listViewEvents.SelectedItems.Clear();
                                 
-                eventTimeForm.ShowDialog(this); // Shows Event Time Form
+                eventTimeForm.ShowDialog(this); //NOTE: Open EventTime Form
 
                 checkSelected = "";
             }
@@ -283,7 +273,7 @@ namespace Windows_Website_Monitoring
 
             PopulateWebsiteList();
 
-            InitTimer(); //uruchomienie sprawdzania działania stron
+            InitTimer(); //NOTE: checking websites in a loop
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
@@ -296,14 +286,14 @@ namespace Windows_Website_Monitoring
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.InitializeForm(_websitesList);
             settingsForm.WebstitesListChanged += settingsForm_WebstitesListChanged;
-            settingsForm.ShowDialog(); // Shows SettingsForm
+            settingsForm.ShowDialog(); //NOTE: open SettingsForm
         }
 
         private void buttonDetails_Click(object sender, EventArgs e) {
             DetailViewForm detailViewForm = new DetailViewForm();
             detailViewForm.InitializeForm(_websitesList);
             detailViewForm.WebstitesListChanged += settingsForm_WebstitesListChanged;
-            detailViewForm.ShowDialog(); // Shows Detailed View Form
+            detailViewForm.ShowDialog(); //NOTE: open Detailed View Form
         }
 
         private void buttonLayout_Click(object sender, EventArgs e) {

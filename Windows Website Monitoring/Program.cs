@@ -21,7 +21,7 @@ namespace Windows_Website_Monitoring
             {
                 icon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
                 icon.ContextMenu = new ContextMenu(new MenuItem[] {
-                // new MenuItem("Show form", (s, e) => {new Form1().Show();}),
+                //DEBUG: new MenuItem("Show form", (s, e) => {new Form1().Show();}),
                 new MenuItem("Exit", (s, e) => { Application.Exit(); }),
             });
                 icon.Visible = true;

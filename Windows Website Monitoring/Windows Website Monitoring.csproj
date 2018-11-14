@@ -99,6 +99,7 @@
     <Compile Include="Library\ConfigManager.cs" />
     <Compile Include="Library\ListViewExtensions.cs" />
     <Compile Include="Library\LogManager.cs" />
+    <Compile Include="Library\TODO.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

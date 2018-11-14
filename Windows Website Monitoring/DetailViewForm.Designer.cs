@@ -36,10 +36,10 @@
             this.columnHeaderWebsiteName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderResponse = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chartResponseTime = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.labelWebsiteName = new System.Windows.Forms.Label();
             this.columnHeaderAverageResponse = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderEvents = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chartResponseTime = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.labelWebsiteName = new System.Windows.Forms.Label();
             this.labelTitleBar = new System.Windows.Forms.Label();
             this.labelDetailed = new System.Windows.Forms.Label();
             this.richTextBoxEventLog = new System.Windows.Forms.RichTextBox();
@@ -95,6 +95,14 @@
             this.columnHeaderResponse.Text = "Response Time";
             this.columnHeaderResponse.Width = 100;
             // 
+            // columnHeaderAverageResponse
+            // 
+            this.columnHeaderAverageResponse.Text = "Average";
+            // 
+            // columnHeaderEvents
+            // 
+            this.columnHeaderEvents.Text = "Events";
+            // 
             // chartResponseTime
             // 
             chartArea1.AxisX.LabelStyle.Format = "HH:mm:ss";
@@ -128,14 +136,6 @@
             this.labelWebsiteName.Size = new System.Drawing.Size(82, 20);
             this.labelWebsiteName.TabIndex = 3;
             this.labelWebsiteName.Text = "loading...";
-            // 
-            // columnHeaderAverageResponse
-            // 
-            this.columnHeaderAverageResponse.Text = "Average";
-            // 
-            // columnHeaderEvents
-            // 
-            this.columnHeaderEvents.Text = "Events";
             // 
             // labelTitleBar
             // 

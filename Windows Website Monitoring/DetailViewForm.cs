@@ -39,7 +39,7 @@ namespace Windows_Website_Monitoring
         {
             Timer timer1 = new Timer();
             timer1.Tick += new EventHandler(timer1_Tick);
-            timer1.Interval = 1000; // in miliseconds
+            timer1.Interval = 1000; //NOTE: in miliseconds
             timer1.Start();
         }
 
@@ -50,15 +50,14 @@ namespace Windows_Website_Monitoring
             {
                 foreach (ListViewItem item in listViewMain.Items)
                 {
-                    // UpdateStatus(item); //TODO
-                    getFullDetails(item);  //TODO
+                    getFullDetails(item); 
                 }
                 
 
             }
         }
 
-        //getFullDetails -> ListViewItem
+        //NOTE: getFullDetails -> ListViewItem
         private void getFullDetails(ListViewItem item) {
 
             foreach (var element in MainForm._fullDetailsList)
@@ -67,7 +66,7 @@ namespace Windows_Website_Monitoring
                 if (item.SubItems[0].Text == element.WebsiteUrl)
                 {
 
-                    //Console.WriteLine(element.WebsiteName);
+                    //DEBUG: Console.WriteLine(element.WebsiteName);
                     item.SubItems[0].Text = element.WebsiteUrl;
                     item.SubItems[1].Text = element.WebsiteName;
                     item.SubItems[2].Text = element.WebsiteStatus;
@@ -108,7 +107,7 @@ namespace Windows_Website_Monitoring
             labelWebsiteName.Text = listViewMain.SelectedItems[0].SubItems[1].Text;
 
 
-            //czyszczenie chart
+            //NOTE: clear chart
             if (checkSelected != listViewMain.SelectedItems[0].ToString())
             {
                 checkSelected = listViewMain.SelectedItems[0].ToString();
@@ -118,20 +117,20 @@ namespace Windows_Website_Monitoring
                 }
             }
 
-            //przygotowanie formatu int ze stringa z listView [3] - na około QQ
+            //NOTE: string format from string to int from listView[3] - crappy version
             string responseTimeFormatToInt = listViewMain.SelectedItems[0].SubItems[3].Text.Replace(":", ".");
             responseTimeFormatToInt = responseTimeFormatToInt.Replace("s", "");
             responseTimeFormatToInt = responseTimeFormatToInt.Replace("e", "");
             responseTimeFormatToInt = responseTimeFormatToInt.Replace("c", "");
             responseTimeFormatToInt = responseTimeFormatToInt.Replace(" ", "");
-            //update chart
-            
-            chartResponseTime.Series["Response Time"].Points.AddXY(DateTime.Now, responseTimeFormatToInt);
 
+            //NOTE: update chart
+            chartResponseTime.Series["Response Time"].Points.AddXY(DateTime.Now, responseTimeFormatToInt);
+            //NOTE: chart colors (not for points)
             chartResponseTime.Palette = ChartColorPalette.SemiTransparent;
 
 
-            //limit chart
+            //NOTE: limit chart (display up-to x columns)
             if (chartResponseTime.Series[0].Points.Count > 10)
             {
                 chartResponseTime.Series[0].Points.RemoveAt(0);
@@ -141,7 +140,7 @@ namespace Windows_Website_Monitoring
 
         }
 
-        //pierwsze uruchomienie
+        //NOTE: first run
         private void first_run()
         {
             if (listViewMain.Items.Count > 0)
@@ -166,17 +165,15 @@ namespace Windows_Website_Monitoring
 
             PopulateWebsiteList();
 
-            first_run(); //pierwsze sprawdzenie
+            first_run(); //NOTE: first run
+            listViewMain.Items[0].Selected = true; //NOTE: mark first listViewMain item (default)
+            checkSelected = listViewMain.Items[0].ToString(); //NOTE: marked item -> checkSelected
 
-            listViewMain.Items[0].Selected = true; //zaznaczenie pierwszego wpisu w listViewMain
-
-            checkSelected = listViewMain.Items[0].ToString(); //przypisanie pierwszego zaznaczenia.
-
-            InitTimer(); //uruchomienie sprawdzania działania stron
+            InitTimer(); //checking website in a loop
         }
 
 
-        //add rows - nowa metoda do dodawania nowych pozycji URL + name
+        //NOTE:add rows to listViewMain
         public void Add(string url, String name, string status, string response)
         {
             String[] row = { url, name, status, response };
@@ -203,17 +200,17 @@ namespace Windows_Website_Monitoring
 
         private void listViewMain_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            //NOTE: Probably will never be used.
         }
 
         private void chartResponseTime_Click(object sender, EventArgs e)
         {
-
+            //NOTE: Probably will never be used.
         }
 
         private void labelUrlInfo_Click(object sender, EventArgs e)
         {
-
+            //NOTE: Probably will never be used.
         }
     }
 }
