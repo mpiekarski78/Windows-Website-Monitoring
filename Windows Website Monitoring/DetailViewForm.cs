@@ -45,14 +45,32 @@ namespace Windows_Website_Monitoring
 
         private void status_check()
         {
+
             if (listViewMain.Items.Count > 0)
             {
                 foreach (ListViewItem item in listViewMain.Items)
                 {
-                    UpdateStatus(item);
+                    // UpdateStatus(item); //TODO
+
                 }
+                showFullDetails();  //TODO
+
             }
         }
+        
+         //TODO
+        public void showFullDetails() {
+
+            foreach (var element in MainForm._fullDetailsList)
+            {
+
+                Console.WriteLine(element.WebsiteName);
+            }
+
+
+         }
+
+
 
         private async Task UpdateStatus(ListViewItem item)
         {

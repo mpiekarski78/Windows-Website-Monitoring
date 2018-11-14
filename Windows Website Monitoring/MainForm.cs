@@ -25,6 +25,7 @@ namespace Windows_Website_Monitoring
         private Timer _timer; 
         private LayoutTypes _layout = LayoutTypes.Standard; //początkowy layout
         public List<EventDetail> _eventDetailsList = new List<EventDetail>();
+        public static List<FullDetail> _fullDetailsList = new List<FullDetail>(); // MainForm -> DetailsViewForm
         public string checkSelected;
         #endregion
 
@@ -217,31 +218,30 @@ namespace Windows_Website_Monitoring
                             AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription);
                         }
                     }
-
-                    //// if error exists(TODO - duplikacja kodu)
-                    //if (listViewEvents.Items.Count == 0) {
-                    //    AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription, "1");
-
-                    //} else {
-                    //    bool checkIfexists = false; // sprawdzenie czy strona istnieje w liście Eventów
-                    //    foreach (ListViewItem i in listViewEvents.Items) {
-                    //        if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text)) {
-                    //            checkIfexists = true; //istnieje
-                    //        }
-                    //    }
-
-                    //    foreach (ListViewItem i in listViewEvents.Items) //update eventów
-                    //    {
-                    //        if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text)) {
-                    //            int eventNum = Int32.Parse(i.SubItems[2].Text) + 1;
-                    //            i.SubItems[2].Text = eventNum.ToString();
-                    //        } else if (checkIfexists == false) {
-                    //            AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription, "1");
-                    //            checkIfexists = true;
-                    //        }
-                    //    }
-                    //}
+                    
                 }
+
+                //Remove if exists in _fullDetailsList (option - not sure if I want to add this, since with the full list I will be able to 
+                // calculate average resposnse time) - used for debug atm.
+
+//                foreach (var element in _fullDetailsList)
+//                {
+//                    Console.WriteLine(element.WebsiteName);
+//               }
+//                Console.WriteLine("----------");
+
+
+                //Add to _fullDetailsList
+                _fullDetailsList.Add(new FullDetail
+                {
+                    WebsiteUrl = "jakis url",
+                    WebsiteName = item.SubItems[0].Text,
+                    WebsiteStatus = $"{statusDescription} ({statusCode})",
+                    WebsiteResponse = elapsedTime
+                });
+
+                
+
             }
 
             //otwieranie okienka jeżeli zaznaczony event
