@@ -42,6 +42,13 @@
             this.columnHeaderEvents = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.labelTitleBar = new System.Windows.Forms.Label();
             this.labelDetailed = new System.Windows.Forms.Label();
+            this.richTextBoxEventLog = new System.Windows.Forms.RichTextBox();
+            this.labelEventOverview = new System.Windows.Forms.Label();
+            this.buttonSaveToFile = new System.Windows.Forms.Button();
+            this.labelWebsiteInfo = new System.Windows.Forms.Label();
+            this.richTextBoxWebsiteOverview = new System.Windows.Forms.RichTextBox();
+            this.richTextBox3rdParty = new System.Windows.Forms.RichTextBox();
+            this.label3rdParty = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chartResponseTime)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,7 +114,7 @@
             series1.YValuesPerPoint = 4;
             series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             this.chartResponseTime.Series.Add(series1);
-            this.chartResponseTime.Size = new System.Drawing.Size(918, 484);
+            this.chartResponseTime.Size = new System.Drawing.Size(918, 473);
             this.chartResponseTime.TabIndex = 2;
             this.chartResponseTime.Text = "chart1";
             this.chartResponseTime.Click += new System.EventHandler(this.chartResponseTime_Click);
@@ -155,12 +162,92 @@
             this.labelDetailed.TabIndex = 6;
             this.labelDetailed.Text = "Viewing details for: ";
             // 
+            // richTextBoxEventLog
+            // 
+            this.richTextBoxEventLog.Location = new System.Drawing.Point(5, 551);
+            this.richTextBoxEventLog.Name = "richTextBoxEventLog";
+            this.richTextBoxEventLog.Size = new System.Drawing.Size(621, 231);
+            this.richTextBoxEventLog.TabIndex = 7;
+            this.richTextBoxEventLog.Text = "not working - TODO";
+            // 
+            // labelEventOverview
+            // 
+            this.labelEventOverview.AutoSize = true;
+            this.labelEventOverview.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.labelEventOverview.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelEventOverview.Location = new System.Drawing.Point(2, 532);
+            this.labelEventOverview.Margin = new System.Windows.Forms.Padding(0);
+            this.labelEventOverview.Name = "labelEventOverview";
+            this.labelEventOverview.Size = new System.Drawing.Size(154, 16);
+            this.labelEventOverview.TabIndex = 8;
+            this.labelEventOverview.Text = "Real-Time Event Log";
+            this.labelEventOverview.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // buttonSaveToFile
+            // 
+            this.buttonSaveToFile.Location = new System.Drawing.Point(5, 802);
+            this.buttonSaveToFile.Name = "buttonSaveToFile";
+            this.buttonSaveToFile.Size = new System.Drawing.Size(75, 23);
+            this.buttonSaveToFile.TabIndex = 9;
+            this.buttonSaveToFile.Text = "Save";
+            this.buttonSaveToFile.UseVisualStyleBackColor = true;
+            // 
+            // labelWebsiteInfo
+            // 
+            this.labelWebsiteInfo.AutoSize = true;
+            this.labelWebsiteInfo.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.labelWebsiteInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelWebsiteInfo.Location = new System.Drawing.Point(636, 532);
+            this.labelWebsiteInfo.Margin = new System.Windows.Forms.Padding(0);
+            this.labelWebsiteInfo.Name = "labelWebsiteInfo";
+            this.labelWebsiteInfo.Size = new System.Drawing.Size(133, 16);
+            this.labelWebsiteInfo.TabIndex = 10;
+            this.labelWebsiteInfo.Text = "Website Overview";
+            this.labelWebsiteInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelWebsiteInfo.Click += new System.EventHandler(this.labelUrlInfo_Click);
+            // 
+            // richTextBoxWebsiteOverview
+            // 
+            this.richTextBoxWebsiteOverview.Location = new System.Drawing.Point(639, 554);
+            this.richTextBoxWebsiteOverview.Name = "richTextBoxWebsiteOverview";
+            this.richTextBoxWebsiteOverview.Size = new System.Drawing.Size(422, 231);
+            this.richTextBoxWebsiteOverview.TabIndex = 11;
+            this.richTextBoxWebsiteOverview.Text = "not working - TODO";
+            // 
+            // richTextBox3rdParty
+            // 
+            this.richTextBox3rdParty.Location = new System.Drawing.Point(1075, 551);
+            this.richTextBox3rdParty.Name = "richTextBox3rdParty";
+            this.richTextBox3rdParty.Size = new System.Drawing.Size(422, 231);
+            this.richTextBox3rdParty.TabIndex = 12;
+            this.richTextBox3rdParty.Text = "not working - TODO";
+            // 
+            // label3rdParty
+            // 
+            this.label3rdParty.AutoSize = true;
+            this.label3rdParty.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.label3rdParty.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label3rdParty.Location = new System.Drawing.Point(1072, 532);
+            this.label3rdParty.Margin = new System.Windows.Forms.Padding(0);
+            this.label3rdParty.Name = "label3rdParty";
+            this.label3rdParty.Size = new System.Drawing.Size(212, 16);
+            this.label3rdParty.TabIndex = 13;
+            this.label3rdParty.Text = "Third Party Service Providers";
+            this.label3rdParty.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // DetailViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1532, 990);
+            this.Controls.Add(this.label3rdParty);
+            this.Controls.Add(this.richTextBox3rdParty);
+            this.Controls.Add(this.richTextBoxWebsiteOverview);
+            this.Controls.Add(this.labelWebsiteInfo);
+            this.Controls.Add(this.buttonSaveToFile);
+            this.Controls.Add(this.labelEventOverview);
+            this.Controls.Add(this.richTextBoxEventLog);
             this.Controls.Add(this.labelDetailed);
             this.Controls.Add(this.labelTitleBar);
             this.Controls.Add(this.labelWebsiteName);
@@ -188,5 +275,12 @@
         private System.Windows.Forms.ColumnHeader columnHeaderEvents;
         private System.Windows.Forms.Label labelTitleBar;
         private System.Windows.Forms.Label labelDetailed;
+        private System.Windows.Forms.RichTextBox richTextBoxEventLog;
+        private System.Windows.Forms.Label labelEventOverview;
+        private System.Windows.Forms.Button buttonSaveToFile;
+        private System.Windows.Forms.Label labelWebsiteInfo;
+        private System.Windows.Forms.RichTextBox richTextBoxWebsiteOverview;
+        private System.Windows.Forms.RichTextBox richTextBox3rdParty;
+        private System.Windows.Forms.Label label3rdParty;
     }
 }

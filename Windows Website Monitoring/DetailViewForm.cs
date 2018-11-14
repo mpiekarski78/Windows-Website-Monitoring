@@ -210,5 +210,10 @@ namespace Windows_Website_Monitoring
         {
 
         }
+
+        private void labelUrlInfo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

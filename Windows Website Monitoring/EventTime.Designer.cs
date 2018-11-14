@@ -44,7 +44,7 @@
             // 
             // buttonSaveToFile
             // 
-            this.buttonSaveToFile.Location = new System.Drawing.Point(515, 611);
+            this.buttonSaveToFile.Location = new System.Drawing.Point(515, 615);
             this.buttonSaveToFile.Name = "buttonSaveToFile";
             this.buttonSaveToFile.Size = new System.Drawing.Size(75, 23);
             this.buttonSaveToFile.TabIndex = 1;
