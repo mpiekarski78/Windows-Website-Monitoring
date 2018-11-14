@@ -59,9 +59,9 @@ namespace Windows_Website_Monitoring
             listViewWebsites.Items.Add(item);
         }
 
-        private void AddToEvents(string name, string url, string error, string eventsNum)
+        private void AddToEvents(string name, string url, string error)
         {
-            string[] row = { name, error, eventsNum };
+            string[] row = { name, error, "1" };
 
             ListViewItem item = new ListViewItem(row);
 
@@ -204,29 +204,43 @@ namespace Windows_Website_Monitoring
                         EventTime = eventTime
                     });
 
-                    //check if error exists (TODO - duplikacja kodu)
                     if (listViewEvents.Items.Count == 0) {
-                        AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription, "1");
-
+                        AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription);
                     } else {
-                        bool checkIfexists = false; // sprawdzenie czy strona istnieje w liście Eventów
-                        foreach (ListViewItem i in listViewEvents.Items) {
-                            if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text)) {
-                                checkIfexists = true; //istnieje
-                            }
-                        }
+                        if (listViewEvents.Items.ContainsKey(item.SubItems[0].Text)) {
+                            var eventItemIndex = listViewEvents.Items.IndexOfKey(item.SubItems[0].Text);
+                            var eventItem = listViewEvents.Items[eventItemIndex];
+                            int eventNum = Int32.Parse(eventItem.SubItems[2].Text) + 1;
 
-                        foreach (ListViewItem i in listViewEvents.Items) //update eventów
-                        {
-                            if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text)) {
-                                int eventNum = Int32.Parse(i.SubItems[2].Text) + 1;
-                                i.SubItems[2].Text = eventNum.ToString();
-                            } else if (checkIfexists == false) {
-                                AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription, "1");
-                                checkIfexists = true;
-                            }
+                            eventItem.SubItems[2].Text = eventNum.ToString();
+                        } else {
+                            AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription);
                         }
-                    } 
+                    }
+
+                    //// if error exists(TODO - duplikacja kodu)
+                    //if (listViewEvents.Items.Count == 0) {
+                    //    AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription, "1");
+
+                    //} else {
+                    //    bool checkIfexists = false; // sprawdzenie czy strona istnieje w liście Eventów
+                    //    foreach (ListViewItem i in listViewEvents.Items) {
+                    //        if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text)) {
+                    //            checkIfexists = true; //istnieje
+                    //        }
+                    //    }
+
+                    //    foreach (ListViewItem i in listViewEvents.Items) //update eventów
+                    //    {
+                    //        if ((item.SubItems[0].Text).Equals(i.SubItems[0].Text)) {
+                    //            int eventNum = Int32.Parse(i.SubItems[2].Text) + 1;
+                    //            i.SubItems[2].Text = eventNum.ToString();
+                    //        } else if (checkIfexists == false) {
+                    //            AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription, "1");
+                    //            checkIfexists = true;
+                    //        }
+                    //    }
+                    //}
                 }
             }
 
