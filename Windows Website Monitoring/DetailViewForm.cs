@@ -76,8 +76,8 @@ namespace Windows_Website_Monitoring
                     item.SubItems[1].Text = element.WebsiteName;
                     item.SubItems[2].Text = element.WebsiteStatus;
                     item.SubItems[3].Text = element.WebsiteResponse;
-                    item.SubItems[4].Text = "ToDo";
-                    item.SubItems[5].Text = "ToDo";
+                    item.SubItems[4].Text = "0";
+                    item.SubItems[5].Text = "0";
            
             switch (element.WebsiteStatus)
             {
@@ -102,6 +102,10 @@ namespace Windows_Website_Monitoring
                     }
             }
                 }
+
+                //NOTE: update events num
+                item.SubItems[5].Text=eventsNum(item.SubItems[1].Text);
+
             }
         }
       
@@ -164,18 +168,34 @@ namespace Windows_Website_Monitoring
 
         }
 
+        //NOTE: Events count
+        private string eventsNum(string websiteName) {
+            var numEvents = 0;
+
+            foreach (var element in MainForm._eventDetailsList)
+            {
+                if (element.WebsiteName == websiteName)
+                {
+                    numEvents +=1;
+                }
+            }
+            return numEvents.ToString();
+        }
+        
+        
+
+        //NOTE: EVENTS Box update
         private void eventsBoxUpdate()
         {
-            //NOTE: EVENTS Box update
-            richTextBoxEventLog.Clear();
-
+          richTextBoxEventLog.Clear();
+           
             foreach (var element in MainForm._eventDetailsList)
             {
                 //Console.WriteLine(element.WebsiteName); //DEBUG
                 //Console.WriteLine(listViewMain.SelectedItems[0].SubItems[1].Text); //DEBUG
                 if (element.WebsiteName == listViewMain.SelectedItems[0].SubItems[1].Text)
-                {                    
-                    richTextBoxEventLog.AppendText("\r\n" + element.WebsiteName + " - " + element.Description + " at  " + element.EventTime.ToString("HH:mm:ss:tt") + " on " + element.EventTime.ToString("dddd, dd MMMM yyyy"));
+                {
+                   richTextBoxEventLog.AppendText(element.WebsiteName + " - " + element.Description + " at  " + element.EventTime.ToString("HH:mm:ss:tt") + " on " + element.EventTime.ToString("dddd, dd MMMM yyyy")+ "\r\n");
                 }
 
 }
