@@ -86,30 +86,32 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\CustomListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DetailViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DetailViewForm.Designer.cs">
       <DependentUpon>DetailViewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Library\FullDetail.cs" />
-    <Compile Include="Library\EventDetail.cs" />
+    <Compile Include="Models\FullDetail.cs" />
+    <Compile Include="Models\EventDetail.cs" />
     <Compile Include="EventTime.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EventTime.Designer.cs">
       <DependentUpon>EventTime.cs</DependentUpon>
     </Compile>
-    <Compile Include="Library\BaseForm.cs">
+    <Compile Include="Controls\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Library\BaseForm.Designer.cs">
+    <Compile Include="Controls\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Library\LayoutTypes.cs" />
-    <Compile Include="Library\CustomConfigSections.cs" />
+    <Compile Include="Library\Enumerations\LayoutTypes.cs" />
+    <Compile Include="Library\Enumerations\CustomConfigSections.cs" />
     <Compile Include="Library\ConfigManager.cs" />
-    <Compile Include="Library\ListViewExtensions.cs" />
     <Compile Include="Library\LogManager.cs" />
     <Compile Include="Library\TODO.cs" />
     <Compile Include="MainForm.cs">
@@ -132,7 +134,7 @@
     <EmbeddedResource Include="EventTime.resx">
       <DependentUpon>EventTime.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Library\BaseForm.resx">
+    <EmbeddedResource Include="Controls\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
@@ -174,5 +176,6 @@
     <Content Include="Power On Button.ico" />
     <Content Include="Resources\Power On Button.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

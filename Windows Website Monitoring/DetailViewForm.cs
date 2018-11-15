@@ -10,17 +10,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using Windows_Website_Monitoring.Library;
 using ARSoft.Tools.Net.Dns;
 using ARSoft.Tools.Net;
 using Whois;
 using System.IO;
 
+using Windows_Website_Monitoring.Library;
+
 namespace Windows_Website_Monitoring
 {
     public partial class DetailViewForm : Form
     {
-
         private Dictionary<string, string> _websitesList = new Dictionary<string, string>();
         private List<string> _removedWebsites = new List<string>();
 
@@ -354,12 +354,12 @@ namespace Windows_Website_Monitoring
 
         private void buttonSaveToFile_Click(object sender, EventArgs e)
         {
-            SaveFileDialog oSaveFileDialog = new SaveFileDialog();
-            oSaveFileDialog.Filter = "All files (*.txt) | *.txt";
+            SaveFileDialog oSaveFileDialog = new SaveFileDialog {
+                Filter = "All files (*.txt) | *.txt"
+            };
+
             if (oSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string fileName = oSaveFileDialog.FileName;
-                using (File.Create(Path.GetFullPath(oSaveFileDialog.FileName))) ;
                 richTextBoxEventLog.SaveFile(Path.GetFullPath(oSaveFileDialog.FileName), RichTextBoxStreamType.PlainText);
             }
         }

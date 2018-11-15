@@ -9,11 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
-using tip2tail.WinFormAppBarLib;
-using Windows_Website_Monitoring.Library;
 using FontAwesome.Sharp;
 using System.Diagnostics;
 using System.Net.Http;
+using tip2tail.WinFormAppBarLib;
+
+using Windows_Website_Monitoring.Controls;
+using Windows_Website_Monitoring.Library;
+using Windows_Website_Monitoring.Models;
 
 //NOTE: Main form (MainForm) - main app screen
 namespace Windows_Website_Monitoring
@@ -39,8 +42,6 @@ namespace Windows_Website_Monitoring
             buttonExit.Image = IconChar.PowerOff.ToBitmap(30, Color.Black);
 
             this.AddMoveEnabledControl(this.labelTitleBar);
-
-
         }
         #endregion
 
@@ -346,30 +347,6 @@ namespace Windows_Website_Monitoring
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
-        }
-
-        private void listViewWebsites_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {
-            ListViewExtensions.ListView_DrawColumnHeader(this.listViewWebsites, sender, e);
-        }
-
-        private void listViewWebsites_DrawItem(object sender, DrawListViewItemEventArgs e) {
-            ListViewExtensions.ListView_DrawItem(sender, e);
-        }
-
-        private void listViewWebsites_DrawSubItem(object sender, DrawListViewSubItemEventArgs e) {
-            ListViewExtensions.ListView_DrawSubItem(sender, e);
-        }
-
-        private void listViewEvents_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {
-            ListViewExtensions.ListView_DrawColumnHeader(this.listViewEvents, sender, e);
-        }
-
-        private void listViewEvents_DrawItem(object sender, DrawListViewItemEventArgs e) {
-            ListViewExtensions.ListView_DrawItem(sender, e);
-        }
-
-        private void listViewEvents_DrawSubItem(object sender, DrawListViewSubItemEventArgs e) {
-            ListViewExtensions.ListView_DrawSubItem(sender, e);
         }
         #endregion
 

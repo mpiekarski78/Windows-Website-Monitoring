@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.labelTitleBar = new System.Windows.Forms.Label();
-            this.listViewWebsites = new System.Windows.Forms.ListView();
+            this.listViewWebsites = new Windows_Website_Monitoring.Controls.CustomListView();
             this.columnHeaderWebsiteName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderWebsiteUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonAdd = new System.Windows.Forms.Button();
@@ -83,14 +83,10 @@
             this.listViewWebsites.Margin = new System.Windows.Forms.Padding(0);
             this.listViewWebsites.MultiSelect = false;
             this.listViewWebsites.Name = "listViewWebsites";
-            this.listViewWebsites.OwnerDraw = true;
             this.listViewWebsites.Size = new System.Drawing.Size(800, 280);
             this.listViewWebsites.TabIndex = 3;
             this.listViewWebsites.UseCompatibleStateImageBehavior = false;
             this.listViewWebsites.View = System.Windows.Forms.View.Details;
-            this.listViewWebsites.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.listViewWebsites_DrawColumnHeader);
-            this.listViewWebsites.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.listViewWebsites_DrawItem);
-            this.listViewWebsites.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.listViewWebsites_DrawSubItem);
             this.listViewWebsites.SelectedIndexChanged += new System.EventHandler(this.listViewWebsites_SelectedIndexChanged);
             // 
             // columnHeaderWebsiteName
@@ -364,7 +360,7 @@
 
         #endregion
         private System.Windows.Forms.Label labelTitleBar;
-        private System.Windows.Forms.ListView listViewWebsites;
+        private Windows_Website_Monitoring.Controls.CustomListView listViewWebsites;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Label labelNewUrl;
         private System.Windows.Forms.Label labelWebsiteName;

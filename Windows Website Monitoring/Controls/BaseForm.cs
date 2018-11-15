@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Windows_Website_Monitoring.Library {
+namespace Windows_Website_Monitoring.Controls {
     public partial class BaseForm : Form, IMessageFilter {
         #region Imports
         public const int WM_NCLBUTTONDOWN = 0xA1;

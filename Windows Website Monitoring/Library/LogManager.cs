@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Windows_Website_Monitoring.Library {
     public static class LogManager {
         private static string _templateWithoutCaller = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj} {NewLine}{Exception}";
-        private static string _templateWithCaller = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj} (Method: {SourceMember}, File: {SourceFile}, Line: {SourceLine}){NewLine}{Exception}";
+        //private static string _templateWithCaller = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj} (Method: {SourceMember}, File: {SourceFile}, Line: {SourceLine}){NewLine}{Exception}";
 
         static LogManager() {
             Log.Logger = new LoggerConfiguration()

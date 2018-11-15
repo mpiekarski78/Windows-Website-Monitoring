@@ -31,7 +31,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.listViewMain = new System.Windows.Forms.ListView();
+            this.listViewMain = new Windows_Website_Monitoring.Controls.CustomListView();
             this.columnHeaderWebsiteUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderWebsiteName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -267,7 +267,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView listViewMain;
+        private Windows_Website_Monitoring.Controls.CustomListView listViewMain;
         private System.Windows.Forms.ColumnHeader columnHeaderWebsiteUrl;
         private System.Windows.Forms.ColumnHeader columnHeaderWebsiteName;
         private System.Windows.Forms.ColumnHeader columnHeaderStatus;

@@ -1,5 +1,4 @@
-﻿namespace Windows_Website_Monitoring
-{
+﻿namespace Windows_Website_Monitoring.Models {
     public class FullDetail
     {
         public string WebsiteUrl { get; set; }

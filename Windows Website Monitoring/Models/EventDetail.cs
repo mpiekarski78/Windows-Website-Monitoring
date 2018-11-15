@@ -1,6 +1,6 @@
 ﻿using System;
 //NOTE: Used in the MainForm
-namespace Windows_Website_Monitoring.Library
+namespace Windows_Website_Monitoring.Models
 {
     public class EventDetail
     {

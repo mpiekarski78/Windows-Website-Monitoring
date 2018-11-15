@@ -51,8 +51,6 @@ namespace Windows_Website_Monitoring
             oSaveFileDialog.Filter = "All files (*.txt) | *.txt";
             if (oSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string fileName = oSaveFileDialog.FileName;
-                using (File.Create(Path.GetFullPath(oSaveFileDialog.FileName)));
                 richTextBoxEvents.SaveFile(Path.GetFullPath(oSaveFileDialog.FileName), RichTextBoxStreamType.PlainText);
             }
 

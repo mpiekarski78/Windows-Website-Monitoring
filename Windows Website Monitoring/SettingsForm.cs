@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using Windows_Website_Monitoring.Controls;
 using Windows_Website_Monitoring.Library;
 
 //Formularz (Form2) - otwiera konfigurację stron URLs+names. Dodawanie i usuwanie
@@ -43,7 +45,7 @@ namespace Windows_Website_Monitoring
         #region Public Methods
         public void InitializeForm(Dictionary<string, string> websitesList) {
             _websitesList = websitesList;
-            ListViewExtensions.SetLastColumnTofill(this.listViewWebsites);
+            this.listViewWebsites.SetLastColumnTofill();
         }
         #endregion
 
@@ -139,18 +141,6 @@ namespace Windows_Website_Monitoring
             } else {
                 buttonAdd.Enabled = false;
             }
-        }
-
-        private void listViewWebsites_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {
-            ListViewExtensions.ListView_DrawColumnHeader(this.listViewWebsites, sender, e);
-        }
-
-        private void listViewWebsites_DrawItem(object sender, DrawListViewItemEventArgs e) {
-            ListViewExtensions.ListView_DrawItem(sender, e);
-        }
-
-        private void listViewWebsites_DrawSubItem(object sender, DrawListViewSubItemEventArgs e) {
-            ListViewExtensions.ListView_DrawSubItem(sender, e);
         }
         #endregion
     }

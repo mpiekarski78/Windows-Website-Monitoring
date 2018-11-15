@@ -1,7 +1,5 @@
-﻿namespace Windows_Website_Monitoring
-{
-    partial class MainForm
-    {
+﻿namespace Windows_Website_Monitoring {
+    partial class MainForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -11,10 +9,8 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (components != null)) {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -26,15 +22,14 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.labelStatusOverview = new System.Windows.Forms.Label();
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
             this.labelFooter = new System.Windows.Forms.Label();
             this.buttonExit = new System.Windows.Forms.Button();
-            this.listViewWebsites = new System.Windows.Forms.ListView();
+            this.listViewWebsites = new Windows_Website_Monitoring.Controls.CustomListView();
             this.columnHeaderWebsiteName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderResponse = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -44,7 +39,7 @@
             this.buttonLayout = new System.Windows.Forms.Button();
             this.labelTitleBar = new System.Windows.Forms.Label();
             this.labelEventOverview = new System.Windows.Forms.Label();
-            this.listViewEvents = new System.Windows.Forms.ListView();
+            this.listViewEvents = new Windows_Website_Monitoring.Controls.CustomListView();
             this.columnHeaderEventWebsiteName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderEventError = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderEventEvents = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -141,14 +136,10 @@
             this.listViewWebsites.Margin = new System.Windows.Forms.Padding(0);
             this.listViewWebsites.MultiSelect = false;
             this.listViewWebsites.Name = "listViewWebsites";
-            this.listViewWebsites.OwnerDraw = true;
             this.listViewWebsites.Size = new System.Drawing.Size(230, 451);
             this.listViewWebsites.TabIndex = 0;
             this.listViewWebsites.UseCompatibleStateImageBehavior = false;
             this.listViewWebsites.View = System.Windows.Forms.View.Details;
-            this.listViewWebsites.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.listViewWebsites_DrawColumnHeader);
-            this.listViewWebsites.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.listViewWebsites_DrawItem);
-            this.listViewWebsites.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.listViewWebsites_DrawSubItem);
             // 
             // columnHeaderWebsiteName
             // 
@@ -278,15 +269,11 @@
             this.listViewEvents.Margin = new System.Windows.Forms.Padding(0);
             this.listViewEvents.MultiSelect = false;
             this.listViewEvents.Name = "listViewEvents";
-            this.listViewEvents.OwnerDraw = true;
             this.tableLayoutPanelMain.SetRowSpan(this.listViewEvents, 2);
             this.listViewEvents.Size = new System.Drawing.Size(230, 233);
             this.listViewEvents.TabIndex = 0;
             this.listViewEvents.UseCompatibleStateImageBehavior = false;
             this.listViewEvents.View = System.Windows.Forms.View.Details;
-            this.listViewEvents.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.listViewEvents_DrawColumnHeader);
-            this.listViewEvents.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.listViewEvents_DrawItem);
-            this.listViewEvents.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.listViewEvents_DrawSubItem);
             // 
             // columnHeaderEventWebsiteName
             // 
@@ -329,7 +316,7 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.Label labelStatusOverview;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
-        private System.Windows.Forms.ListView listViewWebsites;
+        private Windows_Website_Monitoring.Controls.CustomListView listViewWebsites;
         private System.Windows.Forms.ColumnHeader columnHeaderWebsiteName;
         private System.Windows.Forms.ColumnHeader columnHeaderStatus;
         private System.Windows.Forms.ColumnHeader columnHeaderResponse;
@@ -341,10 +328,9 @@
         private System.Windows.Forms.Label labelTitleBar;
         private System.Windows.Forms.Button buttonExit;
         private System.Windows.Forms.Label labelEventOverview;
-        private System.Windows.Forms.ListView listViewEvents;
+        private Windows_Website_Monitoring.Controls.CustomListView listViewEvents;
         private System.Windows.Forms.ColumnHeader columnHeaderEventWebsiteName;
         private System.Windows.Forms.ColumnHeader columnHeaderEventError;
         private System.Windows.Forms.ColumnHeader columnHeaderEventEvents;
     }
 }
-

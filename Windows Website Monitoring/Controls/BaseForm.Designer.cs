@@ -1,4 +1,4 @@
-﻿namespace Windows_Website_Monitoring.Library {
+﻿namespace Windows_Website_Monitoring.Controls {
     partial class BaseForm {
         /// <summary>
         /// Required designer variable.
