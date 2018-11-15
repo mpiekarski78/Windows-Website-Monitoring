@@ -7,9 +7,6 @@
 //TODO: Event number in the Detailed View window (listView)
 
 
-
-//TODO: 3rd Party Service Providers - domain registrar, .... ?
-
 //TODO: Create Login and registration panel overlay
 //TODO: Create Login and registration system (?)
 //TODO: Implement licencing system
