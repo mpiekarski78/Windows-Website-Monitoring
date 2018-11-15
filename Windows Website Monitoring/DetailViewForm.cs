@@ -14,6 +14,7 @@ using Windows_Website_Monitoring.Library;
 using ARSoft.Tools.Net.Dns;
 using ARSoft.Tools.Net;
 using Whois;
+using System.IO;
 
 namespace Windows_Website_Monitoring
 {
@@ -120,7 +121,7 @@ namespace Windows_Website_Monitoring
                     series.Points.Clear();
                 }
 
-                richTextBoxWebsiteOverviewUpdate(listViewMain.SelectedItems[0].SubItems[0].Text);
+                WebsiteIntoUpdate(listViewMain.SelectedItems[0].SubItems[0].Text); //NOTE: Update richboxes 
             }
 
             //NOTE: string format from string to int from listView[3] - crappy version
@@ -143,7 +144,7 @@ namespace Windows_Website_Monitoring
                 chartResponseTime.ResetAutoValues();
             }
 
-
+            eventsBoxUpdate(); //NOTE: update events box
         }
 
         //NOTE: first run
@@ -159,13 +160,34 @@ namespace Windows_Website_Monitoring
 
                 }
             }
+            eventsBoxUpdate(); //NOTE: update events box
+
         }
 
-        //NOTE richTextBoxWebsiteOverview section
-        private void richTextBoxWebsiteOverviewUpdate(string URL)
+        private void eventsBoxUpdate()
         {
-            
-            //NOTE Clear richTextBoxWebsiteOverview
+            //NOTE: EVENTS Box update
+            richTextBoxEventLog.Clear();
+
+            foreach (var element in MainForm._eventDetailsList)
+            {
+                //Console.WriteLine(element.WebsiteName); //DEBUG
+                //Console.WriteLine(listViewMain.SelectedItems[0].SubItems[1].Text); //DEBUG
+                if (element.WebsiteName == listViewMain.SelectedItems[0].SubItems[1].Text)
+                {                    
+                    richTextBoxEventLog.AppendText("\r\n" + element.WebsiteName + " - " + element.Description + " at  " + element.EventTime.ToString("HH:mm:ss:tt") + " on " + element.EventTime.ToString("dddd, dd MMMM yyyy"));
+                }
+
+}
+
+
+        }
+
+        //NOTE richTextBoxWebsiteOverview / WHOIS and events sections update
+        private void WebsiteIntoUpdate(string URL)
+        {
+
+            //NOTE: Clear richTextBoxWebsiteOverview
             richTextBoxWebsiteOverview.Clear();
             //NOTE: Get IP from URL
             Uri webUri = new Uri(URL);
@@ -266,7 +288,7 @@ namespace Windows_Website_Monitoring
             listViewMain.Items[0].Selected = true; //NOTE: mark first listViewMain item (default)
             checkSelected = listViewMain.Items[0].ToString(); //NOTE: marked item -> checkSelected
 
-            richTextBoxWebsiteOverviewUpdate(listViewMain.SelectedItems[0].SubItems[0].Text);
+            WebsiteIntoUpdate(listViewMain.SelectedItems[0].SubItems[0].Text);
 
 
             InitTimer(); //checking website in a loop
@@ -312,6 +334,18 @@ namespace Windows_Website_Monitoring
         private void labelUrlInfo_Click(object sender, EventArgs e)
         {
             //NOTE: Probably will never be used.
+        }
+
+        private void buttonSaveToFile_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog oSaveFileDialog = new SaveFileDialog();
+            oSaveFileDialog.Filter = "All files (*.txt) | *.txt";
+            if (oSaveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = oSaveFileDialog.FileName;
+                using (File.Create(Path.GetFullPath(oSaveFileDialog.FileName))) ;
+                richTextBoxEventLog.SaveFile(Path.GetFullPath(oSaveFileDialog.FileName), RichTextBoxStreamType.PlainText);
+            }
         }
     }
 }

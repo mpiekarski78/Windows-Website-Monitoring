@@ -24,7 +24,7 @@ namespace Windows_Website_Monitoring
         private Dictionary<string, string> _websitesList = new Dictionary<string, string>();
         private Timer _timer; 
         private LayoutTypes _layout = LayoutTypes.Standard; //NOTE: initial layout
-        public List<EventDetail> _eventDetailsList = new List<EventDetail>();
+        public static List<EventDetail> _eventDetailsList = new List<EventDetail>();
         public static List<FullDetail> _fullDetailsList = new List<FullDetail>(); //NOTE: MainForm -> DetailsViewForm
         public string checkSelected;
         #endregion

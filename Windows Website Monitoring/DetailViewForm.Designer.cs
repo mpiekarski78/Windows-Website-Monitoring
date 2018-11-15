@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.listViewMain = new System.Windows.Forms.ListView();
             this.columnHeaderWebsiteUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderWebsiteName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -105,23 +105,23 @@
             // 
             // chartResponseTime
             // 
-            chartArea2.AxisX.LabelStyle.Format = "HH:mm:ss";
-            chartArea2.AxisX2.LabelStyle.Format = "mm:ss";
-            chartArea2.AxisX2.Title = "Time";
-            chartArea2.Name = "ChartArea1";
-            this.chartResponseTime.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartResponseTime.Legends.Add(legend2);
+            chartArea3.AxisX.LabelStyle.Format = "HH:mm:ss";
+            chartArea3.AxisX2.LabelStyle.Format = "mm:ss";
+            chartArea3.AxisX2.Title = "Time";
+            chartArea3.Name = "ChartArea1";
+            this.chartResponseTime.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chartResponseTime.Legends.Add(legend3);
             this.chartResponseTime.Location = new System.Drawing.Point(579, 75);
             this.chartResponseTime.Name = "chartResponseTime";
-            series2.ChartArea = "ChartArea1";
-            series2.IsValueShownAsLabel = true;
-            series2.Legend = "Legend1";
-            series2.Name = "Response Time";
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
-            series2.YValuesPerPoint = 4;
-            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chartResponseTime.Series.Add(series2);
+            series3.ChartArea = "ChartArea1";
+            series3.IsValueShownAsLabel = true;
+            series3.Legend = "Legend1";
+            series3.Name = "Response Time";
+            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
+            series3.YValuesPerPoint = 4;
+            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chartResponseTime.Series.Add(series3);
             this.chartResponseTime.Size = new System.Drawing.Size(918, 473);
             this.chartResponseTime.TabIndex = 2;
             this.chartResponseTime.Text = "chart1";
@@ -168,7 +168,7 @@
             this.richTextBoxEventLog.Name = "richTextBoxEventLog";
             this.richTextBoxEventLog.Size = new System.Drawing.Size(621, 231);
             this.richTextBoxEventLog.TabIndex = 7;
-            this.richTextBoxEventLog.Text = "not working - TODO";
+            this.richTextBoxEventLog.Text = "";
             // 
             // labelEventOverview
             // 
@@ -191,6 +191,7 @@
             this.buttonSaveToFile.TabIndex = 9;
             this.buttonSaveToFile.Text = "Save";
             this.buttonSaveToFile.UseVisualStyleBackColor = true;
+            this.buttonSaveToFile.Click += new System.EventHandler(this.buttonSaveToFile_Click);
             // 
             // labelWebsiteInfo
             // 
