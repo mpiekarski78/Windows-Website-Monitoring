@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.listViewMain = new System.Windows.Forms.ListView();
             this.columnHeaderWebsiteUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderWebsiteName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -105,23 +105,23 @@
             // 
             // chartResponseTime
             // 
-            chartArea3.AxisX.LabelStyle.Format = "HH:mm:ss";
-            chartArea3.AxisX2.LabelStyle.Format = "mm:ss";
-            chartArea3.AxisX2.Title = "Time";
-            chartArea3.Name = "ChartArea1";
-            this.chartResponseTime.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chartResponseTime.Legends.Add(legend3);
+            chartArea2.AxisX.LabelStyle.Format = "HH:mm:ss";
+            chartArea2.AxisX2.LabelStyle.Format = "mm:ss";
+            chartArea2.AxisX2.Title = "Time";
+            chartArea2.Name = "ChartArea1";
+            this.chartResponseTime.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartResponseTime.Legends.Add(legend2);
             this.chartResponseTime.Location = new System.Drawing.Point(579, 75);
             this.chartResponseTime.Name = "chartResponseTime";
-            series3.ChartArea = "ChartArea1";
-            series3.IsValueShownAsLabel = true;
-            series3.Legend = "Legend1";
-            series3.Name = "Response Time";
-            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
-            series3.YValuesPerPoint = 4;
-            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chartResponseTime.Series.Add(series3);
+            series2.ChartArea = "ChartArea1";
+            series2.IsValueShownAsLabel = true;
+            series2.Legend = "Legend1";
+            series2.Name = "Response Time";
+            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
+            series2.YValuesPerPoint = 4;
+            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chartResponseTime.Series.Add(series2);
             this.chartResponseTime.Size = new System.Drawing.Size(918, 473);
             this.chartResponseTime.TabIndex = 2;
             this.chartResponseTime.Text = "chart1";
@@ -208,7 +208,7 @@
             // 
             // richTextBoxWebsiteOverview
             // 
-            this.richTextBoxWebsiteOverview.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.richTextBoxWebsiteOverview.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.richTextBoxWebsiteOverview.Location = new System.Drawing.Point(639, 554);
             this.richTextBoxWebsiteOverview.Name = "richTextBoxWebsiteOverview";
             this.richTextBoxWebsiteOverview.Size = new System.Drawing.Size(422, 231);
@@ -217,11 +217,12 @@
             // 
             // richTextBox3rdParty
             // 
+            this.richTextBox3rdParty.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.richTextBox3rdParty.Location = new System.Drawing.Point(1075, 551);
             this.richTextBox3rdParty.Name = "richTextBox3rdParty";
             this.richTextBox3rdParty.Size = new System.Drawing.Size(422, 231);
             this.richTextBox3rdParty.TabIndex = 12;
-            this.richTextBox3rdParty.Text = "not working - TODO";
+            this.richTextBox3rdParty.Text = "";
             // 
             // label3rdParty
             // 
@@ -231,9 +232,9 @@
             this.label3rdParty.Location = new System.Drawing.Point(1072, 532);
             this.label3rdParty.Margin = new System.Windows.Forms.Padding(0);
             this.label3rdParty.Name = "label3rdParty";
-            this.label3rdParty.Size = new System.Drawing.Size(212, 16);
+            this.label3rdParty.Size = new System.Drawing.Size(58, 16);
             this.label3rdParty.TabIndex = 13;
-            this.label3rdParty.Text = "Third Party Service Providers";
+            this.label3rdParty.Text = "WHOIS";
             this.label3rdParty.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DetailViewForm

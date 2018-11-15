@@ -7,7 +7,7 @@
 //TODO: Event number in the Detailed View window (listView)
 
 
-//TODO: Website Overview - IP number, DNS information, server type, platform type, .... ?
+
 //TODO: 3rd Party Service Providers - domain registrar, .... ?
 
 //TODO: Create Login and registration panel overlay

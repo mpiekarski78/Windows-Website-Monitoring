@@ -13,6 +13,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using Windows_Website_Monitoring.Library;
 using ARSoft.Tools.Net.Dns;
 using ARSoft.Tools.Net;
+using Whois;
 
 namespace Windows_Website_Monitoring
 {
@@ -184,8 +185,13 @@ namespace Windows_Website_Monitoring
             richTextBoxWebsiteOverview.AppendText("IP Address: " + ip.ToString() + "\r\n\r\n");
 
 
-            //NOTE Get DNS info
-            string host = webUri.Host;
+            //NOTE: Get DNS info
+            string host = webUri.Host.ToLower();
+            if (host.StartsWith("www."))
+            {
+                host = host.Replace("www.", "");
+            }
+
             DnsMessage dnsMessage = DnsClient.Default.Resolve(DomainName.Parse(host), RecordType.A);
             if ((dnsMessage == null) || ((dnsMessage.ReturnCode != ReturnCode.NoError) && (dnsMessage.ReturnCode != ReturnCode.NxDomain)))
             {
@@ -204,6 +210,45 @@ namespace Windows_Website_Monitoring
                     }
                 }
             }
+            //NOTE: Get server type
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+            try
+            {
+                WebResponse response = request.GetResponse();
+                //Console.Out.WriteLine(response.Headers.Get("Server")); //DEBUG
+                richTextBoxWebsiteOverview.AppendText("\r\n Web Server Type: " + response.Headers.Get("Server") + "\r\n");
+
+            }
+            catch (System.Net.WebException)
+            {
+                //handle Exception
+                richTextBoxWebsiteOverview.AppendText("Web Server Type: Unknown"  + "\r\n");
+            }
+
+
+            //WHOIS
+            richTextBox3rdParty.Clear();
+            richTextBox3rdParty.AppendText("Loading WHOIS information...");
+
+            Task.Run(() =>
+            {
+                var whois = new WhoisLookup();
+                try
+                {
+                    var whoisResponse = whois.Lookup(host);
+
+                    //Console.WriteLine(whoisResponse.Content); //DEBUG
+                    richTextBox3rdParty.Clear();
+                    richTextBox3rdParty.AppendText(whoisResponse.Content);
+                }
+                catch (Whois.WhoisException)
+                {
+                    //handle exception
+                    richTextBox3rdParty.Clear();
+                    richTextBox3rdParty.AppendText("Unable to perform WHOIS action.");
+                }
+
+            });
         }
 
 
@@ -238,6 +283,7 @@ namespace Windows_Website_Monitoring
             listViewMain.Items.Add(item);
         }
 
+               
         public void PopulateWebsiteList()
         {
             foreach (var website in _websitesList)

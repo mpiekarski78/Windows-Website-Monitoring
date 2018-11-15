@@ -71,11 +71,17 @@
     <Reference Include="t2tWinFormAppBarLib, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\tip2tail.WinFormAppBarLib.1.1.1\lib\net46\t2tWinFormAppBarLib.dll</HintPath>
     </Reference>
+    <Reference Include="Tokenizer, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Tokenizer.2.0.3\lib\net452\Tokenizer.dll</HintPath>
+    </Reference>
     <Reference Include="VirtualDesktop, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\VirtualDesktop.1.0.3\lib\net46\VirtualDesktop.dll</HintPath>
     </Reference>
     <Reference Include="VirtualDesktop.WinForms, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\VirtualDesktop.WinForms.1.0.3\lib\net46\VirtualDesktop.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Whois, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Whois.2.0.0\lib\net452\Whois.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
