@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Windows_Website_Monitoring.Library;
+using ARSoft.Tools.Net.Dns;
+using ARSoft.Tools.Net;
 
 namespace Windows_Website_Monitoring
 {
@@ -24,6 +26,7 @@ namespace Windows_Website_Monitoring
         public delegate void WebstitesListChangedHandler(List<string> removedWebsites);
 
         string checkSelected;
+        string ip;
 
         public DetailViewForm()
         {
@@ -84,7 +87,7 @@ namespace Windows_Website_Monitoring
                     }
                 case "404":
                     {
-                        item.BackColor = Color.DodgerBlue;
+                        item.BackColor = Color.DimGray;
                         item.ForeColor = Color.White;
                         break;
                     }
@@ -115,6 +118,8 @@ namespace Windows_Website_Monitoring
                 {
                     series.Points.Clear();
                 }
+
+                richTextBoxWebsiteOverviewUpdate(listViewMain.SelectedItems[0].SubItems[0].Text);
             }
 
             //NOTE: string format from string to int from listView[3] - crappy version
@@ -155,6 +160,53 @@ namespace Windows_Website_Monitoring
             }
         }
 
+        //NOTE richTextBoxWebsiteOverview section
+        private void richTextBoxWebsiteOverviewUpdate(string URL)
+        {
+            
+            //NOTE Clear richTextBoxWebsiteOverview
+            richTextBoxWebsiteOverview.Clear();
+            //NOTE: Get IP from URL
+            Uri webUri = new Uri(URL);
+            try
+            {
+                ip = Dns.GetHostAddresses(webUri.Host)[0].ToString();
+            }
+            catch (System.Net.Sockets.SocketException)
+            {
+                //handle Exception
+            }
+            //Console.WriteLine(ip); //DEBUG
+            if (ip == null)
+            {
+                ip = "Can't resolve host server IP. Try again later. ";
+            }
+            richTextBoxWebsiteOverview.AppendText("IP Address: " + ip.ToString() + "\r\n\r\n");
+
+
+            //NOTE Get DNS info
+            string host = webUri.Host;
+            DnsMessage dnsMessage = DnsClient.Default.Resolve(DomainName.Parse(host), RecordType.A);
+            if ((dnsMessage == null) || ((dnsMessage.ReturnCode != ReturnCode.NoError) && (dnsMessage.ReturnCode != ReturnCode.NxDomain)))
+            {
+                throw new Exception("DNS request failed");
+            }
+            else
+            {
+                richTextBoxWebsiteOverview.AppendText("Nameserver records: \r\n");
+                foreach (DnsRecordBase dnsRecord in dnsMessage.AnswerRecords)
+                {
+                    ARecord aRecord = dnsRecord as ARecord;
+                    if (aRecord != null)
+                    {
+                        //Console.WriteLine(aRecord.Address.ToString()); //DEBUG
+                        richTextBoxWebsiteOverview.AppendText(aRecord.Address.ToString() + "\r\n");
+                    }
+                }
+            }
+        }
+
+
 
         private void FormDetailedView_Load(object sender, EventArgs e)
         {
@@ -168,6 +220,9 @@ namespace Windows_Website_Monitoring
             first_run(); //NOTE: first run
             listViewMain.Items[0].Selected = true; //NOTE: mark first listViewMain item (default)
             checkSelected = listViewMain.Items[0].ToString(); //NOTE: marked item -> checkSelected
+
+            richTextBoxWebsiteOverviewUpdate(listViewMain.SelectedItems[0].SubItems[0].Text);
+
 
             InitTimer(); //checking website in a loop
         }
