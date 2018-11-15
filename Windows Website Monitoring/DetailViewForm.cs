@@ -164,8 +164,8 @@ namespace Windows_Website_Monitoring
 
                 }
             }
-            eventsBoxUpdate(); //NOTE: update events box
 
+            eventsBoxUpdate(); //NOTE: update events box
         }
 
         //NOTE: Events count
@@ -181,26 +181,22 @@ namespace Windows_Website_Monitoring
             }
             return numEvents.ToString();
         }
-        
-        
+
+
 
         //NOTE: EVENTS Box update
-        private void eventsBoxUpdate()
-        {
-          richTextBoxEventLog.Clear();
-           
-            foreach (var element in MainForm._eventDetailsList)
-            {
-                //Console.WriteLine(element.WebsiteName); //DEBUG
-                //Console.WriteLine(listViewMain.SelectedItems[0].SubItems[1].Text); //DEBUG
-                if (element.WebsiteName == listViewMain.SelectedItems[0].SubItems[1].Text)
-                {
-                   richTextBoxEventLog.AppendText(element.WebsiteName + " - " + element.Description + " at  " + element.EventTime.ToString("HH:mm:ss:tt") + " on " + element.EventTime.ToString("dddd, dd MMMM yyyy")+ "\r\n");
-                }
+        private void eventsBoxUpdate() {
+            if (listViewMain.SelectedItems.Count != 0) {
+                richTextBoxEventLog.Clear();
 
-}
-
-
+                foreach (var element in MainForm._eventDetailsList) {
+                    //Console.WriteLine(element.WebsiteName); //DEBUG
+                    //Console.WriteLine(listViewMain.SelectedItems[0].SubItems[1].Text); //DEBUG
+                    if (element.WebsiteName == listViewMain.SelectedItems[0].SubItems[1].Text) {
+                        richTextBoxEventLog.AppendText($"{element.WebsiteName} - {element.Description} at {element.EventTime.ToString("HH:mm:ss:tt")} on {element.EventTime.ToString("dddd, dd MMMM yyyy")}\r\n");
+                    }
+                } 
+            }
         }
 
         //NOTE richTextBoxWebsiteOverview / WHOIS and events sections update
