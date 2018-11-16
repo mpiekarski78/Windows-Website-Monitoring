@@ -27,6 +27,8 @@ namespace Windows_Website_Monitoring
         public event WebstitesListChangedHandler WebstitesListChanged;
         public delegate void WebstitesListChangedHandler(List<string> removedWebsites);
 
+        private List<Tuple<string, string>> _averageResponse = new List<Tuple<string, string>>();
+
         string checkSelected;
         string ip;
 
@@ -106,9 +108,58 @@ namespace Windows_Website_Monitoring
                 //NOTE: update events num
                 item.SubItems[5].Text=eventsNum(item.SubItems[1].Text);
 
+                //NOTE: update Average Response Time
+                string prepResponse = "";
+                try
+                {
+                    if (item.SubItems[3].Text.Contains("sec")){
+                         prepResponse = item.SubItems[3].Text.Remove(item.SubItems[3].Text.Length - 4);
+                    }
+                    else
+                    {
+                         prepResponse = item.SubItems[3].Text;
+                    }
+
+                    item.SubItems[4].Text = averageResponseTime(item.SubItems[0].Text, prepResponse).ToString();
+                }
+                catch (System.ArgumentOutOfRangeException)
+                {
+                    //handle exception
+                }
+
             }
         }
       
+        //NOTE: Count average response Time (TODO - doesn't work)
+       private string averageResponseTime (string url, string response)
+        {
+            _averageResponse.Add(new Tuple<string, string>(url, response)); //NOTE: for Average Response time
+
+            TimeSpan totalTime = new TimeSpan();
+            long averageTicks = 0;
+            for (int i = 0; i < _averageResponse.Count; i++)
+           {
+                /*if (!_averageResponse[i].Item2.Contains("-"))
+                {
+                    Console.WriteLine("sadsadsa: " + _averageResponse[i].Item2);
+                }
+                */
+                /*
+
+                                if (_averageResponse[i].Item1 == url && !_averageResponse[i].Item2.Contains("-")) {
+                                    TimeSpan prep_averageResponse = TimeSpan(Parse(_averageResponse[i].Item2.Replace(" ", "")));
+                                        totalTime += TimeSpan.Parse("00:" + prep_averageResponse);
+                                     averageTicks = (totalTime.Ticks / i);
+                                    Console.WriteLine("The average is {0}", new TimeSpan(averageTicks));
+                                }
+                  */
+            }
+
+
+            return averageTicks.ToString();
+        }
+
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             status_check();
@@ -315,7 +366,7 @@ namespace Windows_Website_Monitoring
         }
 
 
-        //NOTE:add rows to listViewMain
+        //NOTE:add rows to listViewMain  (NOT USED)
         public void Add(string url, String name, string status, string response)
         {
             String[] row = { url, name, status, response };
@@ -323,6 +374,7 @@ namespace Windows_Website_Monitoring
             item.Name = url;
 
             listViewMain.Items.Add(item);
+       
         }
 
                
