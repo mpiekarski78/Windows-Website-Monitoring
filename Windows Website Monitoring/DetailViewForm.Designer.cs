@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.listViewMain = new Windows_Website_Monitoring.Controls.CustomListView();
             this.columnHeaderWebsiteUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderWebsiteName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -69,6 +69,7 @@
             this.listViewMain.Margin = new System.Windows.Forms.Padding(0);
             this.listViewMain.MultiSelect = false;
             this.listViewMain.Name = "listViewMain";
+            this.listViewMain.OwnerDraw = true;
             this.listViewMain.Size = new System.Drawing.Size(580, 442);
             this.listViewMain.TabIndex = 1;
             this.listViewMain.UseCompatibleStateImageBehavior = false;
@@ -105,23 +106,24 @@
             // 
             // chartResponseTime
             // 
-            chartArea3.AxisX.LabelStyle.Format = "HH:mm:ss";
-            chartArea3.AxisX2.LabelStyle.Format = "mm:ss";
-            chartArea3.AxisX2.Title = "Time";
-            chartArea3.Name = "ChartArea1";
-            this.chartResponseTime.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chartResponseTime.Legends.Add(legend3);
+            chartArea1.AxisX.LabelStyle.Format = "HH:mm:ss";
+            chartArea1.AxisX2.LabelStyle.Format = "mm:ss";
+            chartArea1.AxisX2.Title = "Time";
+            chartArea1.Name = "ChartArea1";
+            this.chartResponseTime.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartResponseTime.Legends.Add(legend1);
             this.chartResponseTime.Location = new System.Drawing.Point(579, 75);
             this.chartResponseTime.Name = "chartResponseTime";
-            series3.ChartArea = "ChartArea1";
-            series3.IsValueShownAsLabel = true;
-            series3.Legend = "Legend1";
-            series3.Name = "Response Time";
-            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
-            series3.YValuesPerPoint = 4;
-            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chartResponseTime.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series1.IsValueShownAsLabel = true;
+            series1.Legend = "Legend1";
+            series1.Name = "Response Time";
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
+            series1.YValuesPerPoint = 4;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chartResponseTime.Series.Add(series1);
             this.chartResponseTime.Size = new System.Drawing.Size(918, 473);
             this.chartResponseTime.TabIndex = 2;
             this.chartResponseTime.Text = "chart1";

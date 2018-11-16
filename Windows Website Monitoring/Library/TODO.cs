@@ -1,7 +1,6 @@
 ﻿//TODO: Redesign of the Detailed View window
 
 //TODO: Average time of response in the Detailed View window  (listView)
-//TODO: Event number in the Detailed View window (listView)
 
 //TODO: block adding websites with already existing name or url
 

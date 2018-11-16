@@ -207,6 +207,8 @@ namespace Windows_Website_Monitoring
             richTextBoxWebsiteOverview.Clear();
             //NOTE: Get IP from URL
             Uri webUri = new Uri(URL);
+
+
             try
             {
                 ip = Dns.GetHostAddresses(webUri.Host)[0].ToString();
@@ -230,39 +232,41 @@ namespace Windows_Website_Monitoring
                 host = host.Replace("www.", "");
             }
 
-            DnsMessage dnsMessage = DnsClient.Default.Resolve(DomainName.Parse(host), RecordType.A);
-            if ((dnsMessage == null) || ((dnsMessage.ReturnCode != ReturnCode.NoError) && (dnsMessage.ReturnCode != ReturnCode.NxDomain)))
+            Task.Run(() =>
             {
-                throw new Exception("DNS request failed");
-            }
-            else
-            {
-                richTextBoxWebsiteOverview.AppendText("Nameserver records: \r\n");
-                foreach (DnsRecordBase dnsRecord in dnsMessage.AnswerRecords)
+                DnsMessage dnsMessage = DnsClient.Default.Resolve(DomainName.Parse(host), RecordType.A);
+                if ((dnsMessage == null) || ((dnsMessage.ReturnCode != ReturnCode.NoError) && (dnsMessage.ReturnCode != ReturnCode.NxDomain)))
                 {
-                    ARecord aRecord = dnsRecord as ARecord;
-                    if (aRecord != null)
+                    throw new Exception("DNS request failed");
+                }
+                else
+                {
+                    richTextBoxWebsiteOverview.AppendText("Nameserver records: \r\n");
+                    foreach (DnsRecordBase dnsRecord in dnsMessage.AnswerRecords)
                     {
-                        //Console.WriteLine(aRecord.Address.ToString()); //DEBUG
-                        richTextBoxWebsiteOverview.AppendText(aRecord.Address.ToString() + "\r\n");
+                        ARecord aRecord = dnsRecord as ARecord;
+                        if (aRecord != null)
+                        {
+                            //Console.WriteLine(aRecord.Address.ToString()); //DEBUG
+                            richTextBoxWebsiteOverview.AppendText(aRecord.Address.ToString() + "\r\n");
+                        }
                     }
                 }
-            }
-            //NOTE: Get server type
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
-            try
-            {
-                WebResponse response = request.GetResponse();
-                //Console.Out.WriteLine(response.Headers.Get("Server")); //DEBUG
-                richTextBoxWebsiteOverview.AppendText("\r\n Web Server Type: " + response.Headers.Get("Server") + "\r\n");
+                //NOTE: Get server type
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+                try
+                {
+                    WebResponse response = request.GetResponse();
+                    //Console.Out.WriteLine(response.Headers.Get("Server")); //DEBUG
+                    richTextBoxWebsiteOverview.AppendText("\r\n Web Server Type: " + response.Headers.Get("Server") + "\r\n");
 
-            }
-            catch (System.Net.WebException)
-            {
-                //handle Exception
-                richTextBoxWebsiteOverview.AppendText("Web Server Type: Unknown"  + "\r\n");
-            }
-
+                }
+                catch (System.Net.WebException)
+                {
+                    //handle Exception
+                    richTextBoxWebsiteOverview.AppendText("Web Server Type: Unknown" + "\r\n");
+                }
+            });
 
             //WHOIS
             richTextBox3rdParty.Clear();
