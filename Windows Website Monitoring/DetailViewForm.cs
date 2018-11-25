@@ -109,54 +109,63 @@ namespace Windows_Website_Monitoring
                 item.SubItems[5].Text=eventsNum(item.SubItems[1].Text);
 
                 //NOTE: update Average Response Time
-                string prepResponse = "";
-                try
+                if (item.SubItems[0].Text == element.WebsiteUrl)
                 {
-                    if (item.SubItems[3].Text.Contains("sec")){
-                         prepResponse = item.SubItems[3].Text.Remove(item.SubItems[3].Text.Length - 4);
-                    }
-                    else
+                    string prepResponse = "";
+                    try
                     {
-                         prepResponse = item.SubItems[3].Text;
-                    }
+                        if (item.SubItems[3].Text.Contains("sec"))
+                        {
+                            prepResponse = item.SubItems[3].Text.Remove(item.SubItems[3].Text.Length - 4);
+                        }
+                        else
+                        {
+                            prepResponse = item.SubItems[3].Text;
+                        }
+                        item.SubItems[4].Text = averageResponseTime(item.SubItems[0].Text, prepResponse).ToString();
 
-                    item.SubItems[4].Text = averageResponseTime(item.SubItems[0].Text, prepResponse).ToString();
-                }
-                catch (System.ArgumentOutOfRangeException)
-                {
-                    //handle exception
+                    }
+                    catch (System.ArgumentOutOfRangeException)
+                    {
+                        //handle exception
+                    }
                 }
 
             }
         }
       
-        //NOTE: Count average response Time (TODO - doesn't work)
+        //NOTE: Count average response Time 
        private string averageResponseTime (string url, string response)
         {
             _averageResponse.Add(new Tuple<string, string>(url, response)); //NOTE: for Average Response time
 
             TimeSpan totalTime = new TimeSpan();
-            long averageTicks = 0;
-            for (int i = 0; i < _averageResponse.Count; i++)
-           {
-                /*if (!_averageResponse[i].Item2.Contains("-"))
+            int averageResponseTicks = 1;
+            try
+            {
+                foreach (var resp in _averageResponse.ToList())
                 {
-                    Console.WriteLine("sadsadsa: " + _averageResponse[i].Item2);
+                    if (resp.Item1 == url && !resp.Item2.Contains("-"))
+                    {
+                        averageResponseTicks += 1;
+                        TimeSpan prep_averageResponse = TimeSpan.ParseExact(resp.Item2, "ss':'ff", null);
+                        totalTime += (prep_averageResponse);
+
+                    }
                 }
-                */
-                /*
-
-                                if (_averageResponse[i].Item1 == url && !_averageResponse[i].Item2.Contains("-")) {
-                                    TimeSpan prep_averageResponse = TimeSpan(Parse(_averageResponse[i].Item2.Replace(" ", "")));
-                                        totalTime += TimeSpan.Parse("00:" + prep_averageResponse);
-                                     averageTicks = (totalTime.Ticks / i);
-                                    Console.WriteLine("The average is {0}", new TimeSpan(averageTicks));
-                                }
-                  */
             }
+            catch (System.ArgumentException)
+            {
+                //handle exception
+            }
+            TimeSpan averageRespPerUrl = new TimeSpan();
+            if (averageResponseTicks > 0)
+            {
+                averageRespPerUrl = new TimeSpan(totalTime.Ticks / averageResponseTicks);
+            }
+       
+            return averageRespPerUrl.ToString("ss'.'ff").Replace('.', ':');
 
-
-            return averageTicks.ToString();
         }
 
 
