@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -35,13 +36,51 @@ namespace Windows_Website_Monitoring
 
                 Application.Exit();
 
-                Application.Run(new MainForm());
 
+                //NOTE: simple key verification (if X)
+                string appRegKey="";
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\WinRegistry");
+                if (key.GetValue("appRegKey") != null)
+                {
+                    appRegKey = key.GetValue("appRegKey").ToString().ToUpper();
+                    
+                    
+                }
+                try
+                {
+                    // Console.WriteLine(appRegKey[4]); //DEBUG
 
-                icon.Visible = false;
+                    //
+                    if (appRegKey[4] == 'X')
+                    {
+                        Application.Run(new MainForm());
+
+                        icon.Visible = false;
+                        
+                        //NOTE: uncomment to check product key FORM
+                        /*using (RegistryKey keyDel = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\WinRegistry", true))
+                        {
+
+                            keyDel.DeleteValue("appRegKey"); 
+                        }*/
+                        //NOTE: end uncomment
+
+                    }
+                }
+                catch (System.IndexOutOfRangeException)
+                {
+                    Application.Run(new Register());
+                }
+
+                
             }
         }
+
+
+
     }
+
+
 }
 
         

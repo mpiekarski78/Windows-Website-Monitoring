@@ -2,10 +2,6 @@
 
 //TODO: block adding websites with already existing name or url
 
-//TODO: Create Login and registration panel overlay
-//TODO: Create Login and registration system (?)
-//TODO: Implement licencing system
-
 //TODO: Add functionality - Check for updates (if a new version is available)
 
 //TODO: Use Wix (?) to create the app installer x64 and x86
