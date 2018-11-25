@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -8,6 +9,8 @@ namespace Windows_Website_Monitoring
 {
     static class Program
     {
+
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -17,6 +20,8 @@ namespace Windows_Website_Monitoring
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+
             using (NotifyIcon icon = new NotifyIcon())
             {
                 icon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
@@ -26,11 +31,21 @@ namespace Windows_Website_Monitoring
             });
                 icon.Visible = true;
 
+                Application.Run(new FormLoader(FormLoader.LoaderWorker));
+
+                Application.Exit();
+
                 Application.Run(new MainForm());
+
+
                 icon.Visible = false;
             }
-
         }
-
     }
 }
+
+        
+
+
+
+
