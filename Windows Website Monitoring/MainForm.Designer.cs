@@ -86,6 +86,7 @@
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelMain.Size = new System.Drawing.Size(270, 795);
             this.tableLayoutPanelMain.TabIndex = 4;
             // 
@@ -95,13 +96,13 @@
             this.labelFooter.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tableLayoutPanelMain.SetColumnSpan(this.labelFooter, 2);
             this.labelFooter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelFooter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelFooter.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.labelFooter.Location = new System.Drawing.Point(0, 774);
             this.labelFooter.Margin = new System.Windows.Forms.Padding(0);
             this.labelFooter.Name = "labelFooter";
             this.labelFooter.Size = new System.Drawing.Size(270, 21);
             this.labelFooter.TabIndex = 3;
-            this.labelFooter.Text = "Build ....";
+            this.labelFooter.Text = "2.1.01 -  Application is up to date";
             this.labelFooter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // buttonExit
@@ -226,11 +227,11 @@
             // labelTitleBar
             // 
             this.labelTitleBar.AutoSize = true;
-            this.labelTitleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.labelTitleBar.BackColor = System.Drawing.Color.DarkSlateGray;
             this.tableLayoutPanelMain.SetColumnSpan(this.labelTitleBar, 2);
             this.labelTitleBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelTitleBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelTitleBar.ForeColor = System.Drawing.Color.White;
+            this.labelTitleBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelTitleBar.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.labelTitleBar.Location = new System.Drawing.Point(0, 0);
             this.labelTitleBar.Margin = new System.Windows.Forms.Padding(0);
             this.labelTitleBar.Name = "labelTitleBar";

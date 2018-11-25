@@ -59,8 +59,11 @@
             this.ClientSize = new System.Drawing.Size(602, 646);
             this.Controls.Add(this.buttonSaveToFile);
             this.Controls.Add(this.richTextBoxEvents);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "EventTime";
-            this.Text = "EventTime";
+            this.ShowIcon = false;
+            this.Text = "Event Log";
             this.Load += new System.EventHandler(this.EventTime_Load);
             this.ResumeLayout(false);
 

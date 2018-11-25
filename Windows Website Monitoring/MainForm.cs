@@ -35,6 +35,7 @@ namespace Windows_Website_Monitoring
         #region Constructor
         public MainForm() {
             InitializeComponent();
+            CenterToScreen(); //NOTE: Center form
 
             buttonConfig.Image = IconChar.Cog.ToBitmap(30, Color.Black);
             buttonDetails.Image = IconChar.List.ToBitmap(30, Color.Black);

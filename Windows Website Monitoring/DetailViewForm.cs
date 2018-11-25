@@ -35,6 +35,8 @@ namespace Windows_Website_Monitoring
         public DetailViewForm()
         {
             InitializeComponent();
+            CenterToScreen();
+
         }
 
         public void InitializeForm(Dictionary<string, string> websitesList)
@@ -427,6 +429,11 @@ namespace Windows_Website_Monitoring
             {
                 richTextBoxEventLog.SaveFile(Path.GetFullPath(oSaveFileDialog.FileName), RichTextBoxStreamType.PlainText);
             }
+        }
+
+        private void pictureBoxDetails_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -49,6 +49,8 @@
             this.ClientSize = new System.Drawing.Size(397, 247);
             this.ControlBox = false;
             this.Controls.Add(this.metroProgressBarLoader);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimizeBox = false;
             this.Name = "FormLoader";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
