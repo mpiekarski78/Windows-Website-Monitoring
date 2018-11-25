@@ -28,49 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelLoading = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.metroProgressBarLoader = new MetroFramework.Controls.MetroProgressBar();
             this.SuspendLayout();
             // 
-            // labelLoading
+            // metroProgressBarLoader
             // 
-            this.labelLoading.AutoSize = true;
-            this.labelLoading.Location = new System.Drawing.Point(32, 36);
-            this.labelLoading.Name = "labelLoading";
-            this.labelLoading.Size = new System.Drawing.Size(54, 13);
-            this.labelLoading.TabIndex = 0;
-            this.labelLoading.Text = "Loading...";
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.ForeColor = System.Drawing.Color.Orange;
-            this.progressBar1.Location = new System.Drawing.Point(100, 200);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(300, 25);
-            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.progressBar1.TabIndex = 1;
+            this.metroProgressBarLoader.Location = new System.Drawing.Point(53, 164);
+            this.metroProgressBarLoader.Name = "metroProgressBarLoader";
+            this.metroProgressBarLoader.ProgressBarStyle = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.metroProgressBarLoader.Size = new System.Drawing.Size(300, 25);
+            this.metroProgressBarLoader.TabIndex = 2;
             // 
             // FormLoader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = global::Windows_Website_Monitoring.Properties.Resources.loading_screen_2;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(484, 284);
+            this.ClientSize = new System.Drawing.Size(397, 247);
             this.ControlBox = false;
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.labelLoading);
+            this.Controls.Add(this.metroProgressBarLoader);
             this.Name = "FormLoader";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label labelLoading;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private MetroFramework.Controls.MetroProgressBar metroProgressBarLoader;
     }
 }

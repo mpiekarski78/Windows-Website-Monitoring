@@ -136,6 +136,7 @@
             this.listViewWebsites.Margin = new System.Windows.Forms.Padding(0);
             this.listViewWebsites.MultiSelect = false;
             this.listViewWebsites.Name = "listViewWebsites";
+            this.listViewWebsites.OwnerDraw = true;
             this.listViewWebsites.Size = new System.Drawing.Size(230, 451);
             this.listViewWebsites.TabIndex = 0;
             this.listViewWebsites.UseCompatibleStateImageBehavior = false;
@@ -225,7 +226,7 @@
             // labelTitleBar
             // 
             this.labelTitleBar.AutoSize = true;
-            this.labelTitleBar.BackColor = System.Drawing.Color.Coral;
+            this.labelTitleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.tableLayoutPanelMain.SetColumnSpan(this.labelTitleBar, 2);
             this.labelTitleBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelTitleBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -269,6 +270,7 @@
             this.listViewEvents.Margin = new System.Windows.Forms.Padding(0);
             this.listViewEvents.MultiSelect = false;
             this.listViewEvents.Name = "listViewEvents";
+            this.listViewEvents.OwnerDraw = true;
             this.tableLayoutPanelMain.SetRowSpan(this.listViewEvents, 2);
             this.listViewEvents.Size = new System.Drawing.Size(230, 233);
             this.listViewEvents.TabIndex = 0;
