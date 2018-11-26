@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+  <Bundle Name="Windows Monitoring" Version="1.0.0.0" Manufacturer="Pragmio" UpgradeCode="5239fbc6-0c4c-43cb-8182-9771beaa5ca6">
+
+    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkLicense">
+      <bal:WixStandardBootstrapperApplication
+      LicenseUrl=""
+      LogoFile="pragmio_mark.png"
+      SuppressOptionsUI="yes"
+      xmlns:bal="http://wixtoolset.org/schemas/v4/wxs/bal" />      
+    </BootstrapperApplicationRef>
+    
+
+
+    <Chain>
+      <!-- TODO: Define the list of chained packages. -->
+      <!-- <MsiPackage SourceFile="path\to\your.msi" /> -->
+      <PackageGroupRef Id="NetFx462Redist" />
+
+      <RollbackBoundary />
+      <MsiPackage SourceFile="$(var.SetupWindowsMonitoring.TargetDir)SetupWindowsMonitoring.msi" DisplayInternalUI="yes" Vital="yes" />
+      
+    </Chain>
+  </Bundle>
+</Wix>
