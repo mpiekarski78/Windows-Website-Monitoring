@@ -24,6 +24,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="SetupWindowsMonitoring.wax" />
+    <Content Include="website-monitoring.ico" />
+    <Content Include="WMS-EULA.rtf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Windows Website Monitoring\Windows Website Monitoring.csproj">
@@ -34,6 +36,16 @@
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixNetFxExtension">
+      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+      <Name>WixNetFxExtension</Name>
+    </WixExtension>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" Condition=" Exists('$(WixTargetsPath)') " />
   <Target Name="EnsureWixToolsetInstalled" Condition=" !Exists('$(WixTargetsPath)') ">
