@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"><?define Windows Website Monitoring_TargetDir=$(var.Windows Website Monitoring.TargetDir)?>
+	<Product Id="*" Name="Website Monitoring" Language="1033" Version="1.0.0.0" Manufacturer="Pragmio" UpgradeCode="f6a4f454-b687-4d30-9878-294cf14d430c">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Description="Website Monitoring Software" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+		<Feature Id="ProductFeature" Title="Website Monitoring" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentGroupRef Id="Resources_files" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+        <Directory Id="ManufacturerFolder" Name="!(bind.property.Manufacturer)">
+          <Directory Id="INSTALLFOLDER" Name="!(bind.property.ProductName)">
+            <Directory Id="Resources" Name="Resources" />
+          </Directory>
+        </Directory>
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+		<Component Id="Windows_Website_Monitoring.exe" Guid="519837e6-91a7-49a7-ae1f-9d24fa52f40f">
+		  <File Id="Windows_Website_Monitoring.exe" Name="Windows Website Monitoring.exe" Source="$(var.Windows Website Monitoring_TargetDir)Windows Website Monitoring.exe" KeyPath="yes"/>
+		</Component>
+		<Component Id="Windows_Website_Monitoring.exe.config" Guid="0b12ae3b-3197-4fad-bd6d-233a22dd050e">
+		  <File Id="Windows_Website_Monitoring.exe.config" Name="Windows Website Monitoring.exe.config" Source="$(var.Windows Website Monitoring_TargetDir)Windows Website Monitoring.exe.config" KeyPath="yes"/>
+		</Component>
+		<Component Id="ARSoft.Tools.Net.dll" Guid="3dbfa9d9-edcb-4f2c-9f38-d23cb66d55b3">
+		  <File Id="ARSoft.Tools.Net.dll" Name="ARSoft.Tools.Net.dll" Source="$(var.Windows Website Monitoring_TargetDir)ARSoft.Tools.Net.dll" KeyPath="yes"/>
+		</Component>
+		<Component Id="Whois.dll" Guid="b0b230b3-b750-4380-8696-0e46c91d68bd">
+		  <File Id="Whois.dll" Name="Whois.dll" Source="$(var.Windows Website Monitoring_TargetDir)Whois.dll" KeyPath="yes"/>
+		</Component>
+		<Component Id="MetroFramework.dll" Guid="b4f746cd-e460-4bc7-b4f4-7725cde54246">
+		  <File Id="MetroFramework.dll" Name="MetroFramework.dll" Source="$(var.Windows Website Monitoring_TargetDir)MetroFramework.dll" KeyPath="yes"/>
+		</Component>
+		<Component Id="FontAwesome.Sharp.dll" Guid="ea70c1e1-8380-44e2-a5ea-ee82819c718b">
+		  <File Id="FontAwesome.Sharp.dll" Name="FontAwesome.Sharp.dll" Source="$(var.Windows Website Monitoring_TargetDir)FontAwesome.Sharp.dll" KeyPath="yes"/>
+		</Component>
+		<Component Id="Serilog.dll" Guid="51602dee-0b8e-471d-943e-ba3353b0b242">
+		  <File Id="Serilog.dll" Name="Serilog.dll" Source="$(var.Windows Website Monitoring_TargetDir)Serilog.dll" KeyPath="yes"/>
+		</Component>
+		<Component Id="t2tWinFormAppBarLib.dll" Guid="06cad92a-2d23-47c2-9059-0a7a613e5248">
+		  <File Id="t2tWinFormAppBarLib.dll" Name="t2tWinFormAppBarLib.dll" Source="$(var.Windows Website Monitoring_TargetDir)t2tWinFormAppBarLib.dll" KeyPath="yes"/>
+		</Component>
+		<Component Id="Serilog.Sinks.File.dll" Guid="b5396c58-734b-4931-bd54-9a93dd4f78d6">
+		  <File Id="Serilog.Sinks.File.dll" Name="Serilog.Sinks.File.dll" Source="$(var.Windows Website Monitoring_TargetDir)Serilog.Sinks.File.dll" KeyPath="yes"/>
+		</Component>
+		<Component Id="Flurl.Http.dll" Guid="c39e8ba8-1626-43d8-8c38-42c34506ff02">
+		  <File Id="Flurl.Http.dll" Name="Flurl.Http.dll" Source="$(var.Windows Website Monitoring_TargetDir)Flurl.Http.dll" KeyPath="yes"/>
+		</Component>
+		<Component Id="BouncyCastle.Crypto.dll" Guid="20d09adc-6f34-48c0-8d93-3ce027977fc7">
+		  <File Id="BouncyCastle.Crypto.dll" Name="BouncyCastle.Crypto.dll" Source="$(var.Windows Website Monitoring_TargetDir)BouncyCastle.Crypto.dll" KeyPath="yes"/>
+		</Component>
+		<Component Id="Tokenizer.dll" Guid="07bd4029-cf81-4b78-8db8-7010fe4058b1">
+		  <File Id="Tokenizer.dll" Name="Tokenizer.dll" Source="$(var.Windows Website Monitoring_TargetDir)Tokenizer.dll" KeyPath="yes"/>
+		</Component>
+		<Component Id="VirtualDesktop.dll" Guid="b2da0bfb-1f05-4658-94c6-b18828178ac6">
+		  <File Id="VirtualDesktop.dll" Name="VirtualDesktop.dll" Source="$(var.Windows Website Monitoring_TargetDir)VirtualDesktop.dll" KeyPath="yes"/>
+		</Component>
+		<Component Id="VirtualDesktop.WinForms.dll" Guid="4b120e10-5822-4c54-8303-ef6c76bdf493">
+		  <File Id="VirtualDesktop.WinForms.dll" Name="VirtualDesktop.WinForms.dll" Source="$(var.Windows Website Monitoring_TargetDir)VirtualDesktop.WinForms.dll" KeyPath="yes"/>
+		</Component>
+		<Component Id="Flurl.dll" Guid="707dec3d-f580-44ea-b348-032444e82d29">
+		  <File Id="Flurl.dll" Name="Flurl.dll" Source="$(var.Windows Website Monitoring_TargetDir)Flurl.dll" KeyPath="yes"/>
+		</Component>
+		<Component Id="Newtonsoft.Json.dll" Guid="21f4ff18-7d30-47a7-aaf5-92aa0c495558">
+		  <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.Windows Website Monitoring_TargetDir)Newtonsoft.Json.dll" KeyPath="yes"/>
+		</Component>
+
+		</ComponentGroup>
+	</Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="Resources_files" Directory="Resources">
+
+    </ComponentGroup>
+  </Fragment>
+</Wix>
