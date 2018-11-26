@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
-  <Bundle Name="Windows Monitoring Setup" Version="2.1.0.1" Manufacturer="Pragmio" UpgradeCode="5239fbc6-0c4c-43cb-8182-9771beaa5ca6">
+  <Bundle Name="Website Monitoring Installation" Version="2.1.0.1" Manufacturer="Pragmio" UpgradeCode="5239fbc6-0c4c-43cb-8182-9771beaa5ca6">
 
     <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkLicense">
       <bal:WixStandardBootstrapperApplication
