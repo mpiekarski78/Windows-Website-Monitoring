@@ -40,14 +40,16 @@ namespace Windows_Website_Monitoring
                 //NOTE: simple key verification (if X)
                 string appRegKey="";
                 RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\WinRegistry");
-                if (key.GetValue("appRegKey") != null)
+                try
+                {
+
+                    if (key.GetValue("appRegKey") != null)
                 {
                     appRegKey = key.GetValue("appRegKey").ToString().ToUpper();
                     
                     
                 }
-                try
-                {
+
                     // Console.WriteLine(appRegKey[4]); //DEBUG
 
                     //
