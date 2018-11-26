@@ -113,7 +113,7 @@ namespace Windows_Website_Monitoring
         private void CheckStatus() {
             if (listViewWebsites.Items.Count > 0) {
                 foreach (ListViewItem item in listViewWebsites.Items) {
-                     UpdateStatus(item);  //TODO: (optional) async wasn't working the wait it suppose to. 
+                     UpdateStatus(item);  //TODO: (optional) async wasn't working the way it suppose to. 
                 }
             }
         }
@@ -209,7 +209,13 @@ namespace Windows_Website_Monitoring
 
                     if (listViewEvents.Items.Count == 0) {
                         AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription);
-                    } else {
+                        //NOTE: play error sound                        
+                        System.IO.Stream str = Properties.Resources.error;
+                        System.Media.SoundPlayer snd = new System.Media.SoundPlayer(str);
+                        snd.Play();
+
+                    }
+                    else {
                         if (listViewEvents.Items.ContainsKey(item.SubItems[0].Text)) {
                             var eventItemIndex = listViewEvents.Items.IndexOfKey(item.SubItems[0].Text);
                             var eventItem = listViewEvents.Items[eventItemIndex];
