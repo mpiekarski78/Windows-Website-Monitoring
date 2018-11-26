@@ -13,6 +13,8 @@
     <!--EULA-->
     <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)WMS-EULA.rtf"/>
 
+    <WixVariable Id="WixUIBannerBmp" Value="pragmio_mark.png"/>
+
     <!--Installation type-->
     <UIRef Id="WixUI_InstallDir"/>
 

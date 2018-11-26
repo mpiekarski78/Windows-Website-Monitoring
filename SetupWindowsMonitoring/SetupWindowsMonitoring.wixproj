@@ -23,6 +23,7 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="pragmio_mark.png" />
     <Content Include="SetupWindowsMonitoring.wax" />
     <Content Include="website-monitoring.ico" />
     <Content Include="WMS-EULA.rtf" />
