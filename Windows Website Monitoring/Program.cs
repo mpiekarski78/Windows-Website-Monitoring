@@ -68,13 +68,13 @@ namespace Windows_Website_Monitoring
                         icon.Visible = false;
                         
                         //NOTE: uncomment to check product key FORM
-                        using (RegistryKey keyDel = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\WinRegistry", true))
+                      /*  using (RegistryKey keyDel = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\WinRegistry", true))
                         {
 
                             keyDel.DeleteValue("appRegKey"); 
                             
 
-                        }
+                        }*/
                         //NOTE: end uncomment
 
                     }
