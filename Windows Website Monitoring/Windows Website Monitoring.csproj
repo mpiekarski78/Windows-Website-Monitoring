@@ -218,6 +218,7 @@
     <None Include="Resources\loading screen 21.jpg" />
     <Content Include="Resources\error.wav" />
     <None Include="Resources\errorWavFile.bmp" />
+    <Content Include="Resources\error_notification.ico" />
     <Content Include="Resources\Power On Button.ico" />
   </ItemGroup>
   <ItemGroup />

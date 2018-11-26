@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.labelStatusOverview = new System.Windows.Forms.Label();
@@ -43,6 +44,7 @@
             this.columnHeaderEventWebsiteName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderEventError = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderEventEvents = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.notifyIconOnEvent = new System.Windows.Forms.NotifyIcon(this.components);
             this.tableLayoutPanelMain.SuspendLayout();
             this.flowLayoutPanelSideBar.SuspendLayout();
             this.SuspendLayout();
@@ -293,6 +295,12 @@
             this.columnHeaderEventEvents.Text = "Count";
             this.columnHeaderEventEvents.Width = 68;
             // 
+            // notifyIconOnEvent
+            // 
+            this.notifyIconOnEvent.Text = "notifyIcon1";
+            this.notifyIconOnEvent.Visible = true;
+            this.notifyIconOnEvent.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIconOnEvent_MouseDoubleClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -335,5 +343,6 @@
         private System.Windows.Forms.ColumnHeader columnHeaderEventWebsiteName;
         private System.Windows.Forms.ColumnHeader columnHeaderEventError;
         private System.Windows.Forms.ColumnHeader columnHeaderEventEvents;
+        private System.Windows.Forms.NotifyIcon notifyIconOnEvent;
     }
 }

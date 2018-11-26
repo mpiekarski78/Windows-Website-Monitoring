@@ -209,11 +209,6 @@ namespace Windows_Website_Monitoring
 
                     if (listViewEvents.Items.Count == 0) {
                         AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription);
-                        //NOTE: play error sound                        
-                        System.IO.Stream str = Properties.Resources.error;
-                        System.Media.SoundPlayer snd = new System.Media.SoundPlayer(str);
-                        snd.Play();
-
                     }
                     else {
                         if (listViewEvents.Items.ContainsKey(item.SubItems[0].Text)) {
@@ -224,6 +219,13 @@ namespace Windows_Website_Monitoring
                             eventItem.SubItems[2].Text = eventNum.ToString();
                         } else {
                             AddToEvents(item.SubItems[0].Text, item.SubItems[1].Text, statusDescription);
+
+                            //NOTE: play error sound                        
+                            System.IO.Stream str = Properties.Resources.error;
+                            System.Media.SoundPlayer snd = new System.Media.SoundPlayer(str);
+                            snd.Play();
+                            //NOTE: Display notification
+                            Displaynotify(item.SubItems[0].Text, statusDescription);
                         }
                     }
                     
@@ -255,6 +257,28 @@ namespace Windows_Website_Monitoring
                 checkSelected = "";
             }
         }
+
+        //NOTE: Display notification
+        protected void Displaynotify(string websiteName, string eventType)
+        {
+            try
+            {
+                
+                notifyIconOnEvent.Icon = Properties.Resources.error_notification;
+                notifyIconOnEvent.Text = "Website Monitoring Event";
+                notifyIconOnEvent.Visible = true;
+                notifyIconOnEvent.BalloonTipTitle = websiteName;
+                notifyIconOnEvent.BalloonTipText = eventType;
+                notifyIconOnEvent.ShowBalloonTip(100);
+
+                
+
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
 
         private void LogSiteInfo(ListViewItem item, HttpStatusCode httpStatusCode) {
             LogManager.LogInformation($"{item.Text} ({item.Tag.ToString()}) - {httpStatusCode.ToString()}");
@@ -328,6 +352,8 @@ namespace Windows_Website_Monitoring
 
         private void buttonExit_Click(object sender, EventArgs e) {
             this.Close();
+            
+
         }
 
         private async void settingsForm_WebstitesListChanged(List<string> removedWebsites) {
@@ -360,6 +386,15 @@ namespace Windows_Website_Monitoring
         private void labelTitleBar_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void notifyIconOnEvent_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            notifyIconOnEvent.Icon = null; //NOTE: Remove tray icon on click
+
+            this.WindowState = FormWindowState.Minimized; //NOTE: bring to front
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
         }
     }
 }
