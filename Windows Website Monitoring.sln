@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows Website Monitoring"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "SetupWindowsMonitoring", "SetupWindowsMonitoring\SetupWindowsMonitoring.wixproj", "{0F5FAE07-82D2-4A7C-86D8-699A70A66EA6}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "BundleWindowsMonitoring", "BundleWindowsMonitoring\BundleWindowsMonitoring.wixproj", "{5239FBC6-0C4C-43CB-8182-9771BEAA5CA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,12 @@ Global
 		{0F5FAE07-82D2-4A7C-86D8-699A70A66EA6}.Release|Any CPU.ActiveCfg = Release|x86
 		{0F5FAE07-82D2-4A7C-86D8-699A70A66EA6}.Release|x86.ActiveCfg = Release|x86
 		{0F5FAE07-82D2-4A7C-86D8-699A70A66EA6}.Release|x86.Build.0 = Release|x86
+		{5239FBC6-0C4C-43CB-8182-9771BEAA5CA6}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{5239FBC6-0C4C-43CB-8182-9771BEAA5CA6}.Debug|x86.ActiveCfg = Debug|x86
+		{5239FBC6-0C4C-43CB-8182-9771BEAA5CA6}.Debug|x86.Build.0 = Debug|x86
+		{5239FBC6-0C4C-43CB-8182-9771BEAA5CA6}.Release|Any CPU.ActiveCfg = Release|x86
+		{5239FBC6-0C4C-43CB-8182-9771BEAA5CA6}.Release|x86.ActiveCfg = Release|x86
+		{5239FBC6-0C4C-43CB-8182-9771BEAA5CA6}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
