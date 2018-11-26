@@ -44,27 +44,37 @@ namespace Windows_Website_Monitoring
                 {
 
                     if (key.GetValue("appRegKey") != null)
+                    {
+                        appRegKey = key.GetValue("appRegKey").ToString().ToUpper();
+
+
+                    }
+                }
+                catch (NullReferenceException)
                 {
-                    appRegKey = key.GetValue("appRegKey").ToString().ToUpper();
-                    
-                    
+                    //handle exception
                 }
 
-                    // Console.WriteLine(appRegKey[4]); //DEBUG
 
-                    //
-                    if (appRegKey[4] == 'X')
+                    try
+                    {
+                        // Console.WriteLine(appRegKey[4]); //DEBUG
+
+                        //
+                        if (appRegKey[4] == 'X')
                     {
                         Application.Run(new MainForm());
 
                         icon.Visible = false;
                         
                         //NOTE: uncomment to check product key FORM
-                        /*using (RegistryKey keyDel = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\WinRegistry", true))
+                        using (RegistryKey keyDel = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\WinRegistry", true))
                         {
 
                             keyDel.DeleteValue("appRegKey"); 
-                        }*/
+                            
+
+                        }
                         //NOTE: end uncomment
 
                     }
