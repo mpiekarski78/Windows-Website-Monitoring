@@ -41,7 +41,8 @@ namespace Windows_Website_Monitoring
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Unable to open link that was clicked.");
+                ///<remarks> handle excetion </remarks>
+                Console.WriteLine(ex);
             }
         }
 
@@ -78,7 +79,8 @@ namespace Windows_Website_Monitoring
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Unable to open link that was clicked.");
+                ///<remarks> handle excetion </remarks>
+                Console.WriteLine(ex);
             }
         }
 

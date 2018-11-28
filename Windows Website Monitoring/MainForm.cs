@@ -17,8 +17,9 @@ using tip2tail.WinFormAppBarLib;
 using Windows_Website_Monitoring.Controls;
 using Windows_Website_Monitoring.Library;
 using Windows_Website_Monitoring.Models;
+using Flurl.Http;
 
-//NOTE: Main form (MainForm) - main app screen
+///<summary> Main form (MainForm) - main app screen </summary>
 namespace Windows_Website_Monitoring
 {
     public partial class MainForm : BaseForm {
@@ -26,7 +27,7 @@ namespace Windows_Website_Monitoring
         private HashSet<Control> _controlsToMove = new HashSet<Control>();
         private Dictionary<string, string> _websitesList = new Dictionary<string, string>();
         private Timer _timer; 
-        private LayoutTypes _layout = LayoutTypes.Standard; //NOTE: initial layout
+        private LayoutTypes _layout = LayoutTypes.Standard; ///<remarks> initial layout</remarks>
         public static List<EventDetail> _eventDetailsList = new List<EventDetail>();
         public static List<FullDetail> _fullDetailsList = new List<FullDetail>(); //NOTE: MainForm -> DetailsViewForm
         public string checkSelected;
@@ -69,7 +70,6 @@ namespace Windows_Website_Monitoring
             ListViewItem item = new ListViewItem(row);
 
             item.Tag = url;
-
             item.Name = name;
 
             if (error == "404")
@@ -85,7 +85,7 @@ namespace Windows_Website_Monitoring
             listViewEvents.Items.Add(item);
         }
 
-        private void PopulateWebsiteList() {
+        private void PopulateWebsiteList() { ///<remarks>This should only be execute once - on the initial form load</remarks>
             foreach (var website in _websitesList) {
                 if (website.Key != "" && website.Value != "") {
                     String[] row = { website.Key, "Wait", "-" };
@@ -101,12 +101,40 @@ namespace Windows_Website_Monitoring
                     listViewWebsites.Items.Add(item);
                 }
             }
+
+            ///<remarks> Check for updates
+            checkUpdates("2.1.0.1");
         }
 
-        private void InitTimer() {
+        ///Check if there is a new version of the application available - this should connect to wms.pragmio.com 
+        ///version.txt file - consider this a temporary solution.
+        ///</remarks>
+        public async void checkUpdates(string appVersion)
+        {
+
+            try
+            {
+                var responseString = await "http://wms.pragmio.com/version.txt"
+              .PostUrlEncodedAsync(new { ver = appVersion }) ///<remarks>_POST doesn't really affect the response</remarks>
+              .ReceiveString();
+
+                if (responseString != appVersion)
+                {
+                    labelFooter.Text = "";
+                    labelFooter.Text = "There is a new version available...";
+                }
+            }
+           catch (Exception ex)
+            {
+                ///<remarks> handle exception </remarks>
+                Console.WriteLine(ex);
+            }
+        }
+
+            private void InitTimer() {
             _timer = new Timer();
             _timer.Tick += new EventHandler(timer_Tick);
-            _timer.Interval = 2000; //NOTE: in miliseconds
+            _timer.Interval = 2000; ///<remarks> in miliseconds </remarks>
             _timer.Start();
         }
 
@@ -276,6 +304,8 @@ namespace Windows_Website_Monitoring
             }
             catch (Exception ex)
             {
+                ///<remarks> handle excetion </remarks>
+                Console.WriteLine(ex);
             }
         }
 
@@ -395,6 +425,11 @@ namespace Windows_Website_Monitoring
             this.WindowState = FormWindowState.Minimized; //NOTE: bring to front
             this.Show();
             this.WindowState = FormWindowState.Normal;
+        }
+
+        private void labelFooter_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://pragmio.com/website-monitoring/");
         }
     }
 }

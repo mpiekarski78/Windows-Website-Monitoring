@@ -106,6 +106,7 @@
             this.labelFooter.TabIndex = 3;
             this.labelFooter.Text = "2.1.01 -  Application is up to date";
             this.labelFooter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelFooter.Click += new System.EventHandler(this.labelFooter_Click);
             // 
             // buttonExit
             // 
